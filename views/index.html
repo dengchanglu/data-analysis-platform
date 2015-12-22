@@ -36,24 +36,46 @@
      style="background: url('../public/images/index_bg.jpg') center no-repeat;z-index: -999;height: 1080px;position: fixed;overflow: hidden;width: 100%;">
     <div style="background-color: rgba(255,255,255,.2);height: 100%;width: 100%">
 
+
         <div class="container-fluid">
+
             <div class="row">
                 <div class="panel panel-default col-md-2"
                      style="margin-top: 100px;background-color: rgba(255,255,255,.2)">
-                    <div class="panel-body" style="text-align: center">
+
+
+                    <div>
+                        <h3 style="background-color: darkgray;border-radius: 5px">个人用户</h3>
+                        <img id="userHeadImage" src='../public/images/defaultImage.jpg' style="margin-top: 20px">
+
+
+                        <br>
+                        <select name="a" id="ss">
+                            <option value="1">未登录</option>
+                            <option value="2">已登录</option>
+                        </select>
+                        <div class="btn-group" data-toggle="buttons" style="margin: 10px">
+                            <button type="button" data-toggle="button" class="btn btn-primary"
+                                    style="padding-left: 20px;padding-right: 20px" ng-click="login()">登录
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="panel-body"
+                         style="text-align: center;margin-top: 50px;background-color: rgba(255,255,255,.2)">
                         <div class="navbar">
                             <div class="navbar-left">
                                 <ul id="left-content" class="nav">
-                                    <li ><a>基本指标</a></li>
-                                    <li ><a href="#">用户分析</a></li>
-                                    <li ><a href="#">使用分析</a></li>
+                                    <li><a>基本指标</a></li>
+                                    <li><a href="#">用户分析</a></li>
+                                    <li><a href="#">使用分析</a></li>
                                     <li><a ng-click="channelVersionMenu()">渠道版本</a>
 
                                         <div id="channelVersionMenu" class="navbar-right" style="display: none">
                                             <ul class="nav">
                                                 <li ui-sref=".channelDis"><a href="">渠道分析</a></li>
-                                                <li ><a href="#">版本分布</a></li>
-                                                <li  ><a href="/apps/">渠道来源细分</a></li>
+                                                <li><a href="#">版本分布</a></li>
+                                                <li><a href="/apps/">渠道来源细分</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -62,6 +84,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-md-10 offset1 content" ui-view style="height: 900px">
                 </div>
