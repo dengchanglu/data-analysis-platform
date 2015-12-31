@@ -20,10 +20,9 @@
             }
 
         };
-        $scope.changeUrl = function(url){
+        $scope.changeUrl = function (url) {
             $location.path(url)
         };
-
 
 
         //检查cookie缓存的用户信息
@@ -31,19 +30,25 @@
             $('#loginModal').modal('show');
         }
 
-        $scope.login=function(){
-            $('#loginModal').modal('show');
+        $scope.login = function () {
+            var str=document.getElementById("loginState").value;
+            if(str=="未登录"){
+                $('#loginModal').modal('show');
+            }else{
+                $('#loginModal').modal('hide');
+            }
+
 
         }
-        $scope.signIn=function(){
+        $scope.signIn = function () {
             $('#loginModal').modal('hide');
             alert('登录成功');
-           document.getElementById("userHeadImage").src='public/images/headImage.jpg'
-            var sl=$("#ss");
-            var ops=sl.find("option");
-            ops.eq(0).val("8").text("已登录").prop("selected",true);
+            document.getElementById("userHeadImage").src = 'public/images/headImage.jpg'
+            document.getElementById("loginState").value = '用户昵称';
+            document.getElementById("loginState").style.backgroundColor = 'darkgray'
 
 
         }
+
     }
 })();
