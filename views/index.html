@@ -33,66 +33,112 @@
     </div>
 </div>
 <div id="index_bg"
-     style="background: url('../public/images/index_bg.jpg') center no-repeat;z-index: -999;height: 1080px;position: fixed;overflow: hidden;width: 100%;">
-    <div style="background-color: rgba(255,255,255,.2);height: 100%;width: 100%">
+     style="z-index: -999;height:100%;position: fixed;overflow: hidden;width: 100%;">
+    <div class="panel-heading" style="height: 10%;">
 
-        <div class="row" style="padding: 0px">
-            <div class="col-md-1">
-                <div class="imgtest">
-                    <figure>
-                        <div>
-                            <img src='../public/images/defaultImage.jpg' id="userHeadImage"/>
-                        </div>
-                    </figure>
-                </div>
-            </div>
-            <div class="col-md-2" style="padding: 0px">
-                <input id="loginState" type="button" value="未登录" size="5" ng-click="login()"
-                       style="margin-top: 50px;margin-left: 0px ;background-color: #009900;border-radius: 5px;border:0px;color: white;text-align: center ">
+    </div>
+    <div class="panel-body" style="height: 80%;">
+        <div class="left panel panel-default" style="height: 100%;width: 10%;float: left">
+            <div class="navbar" style="padding-top: 20px">
+                <div class="navbar-left" style="width: 100%">
+                    <ul id="left-content" class="nav"  style="text-align: center;font-size: large">
+                        <li><a>基本指标</a></li>
+                        <li><a href="#">用户分析</a></li>
+                        <li><a href="#">使用分析</a></li>
+                        <li><a ng-click="channelVersionMenu()">渠道版本</a>
 
-            </div>
-
-        </div>
-
-
-        <div class="container-fluid">
-            <div class="row">
-                <div class="panel panel-default col-md-2"
-                     style="margin-top: 50px;background-color: rgba(255,255,255,.2)">
-                    <div class="row"></div>
-                    <div class="row">
-                        <div class="col-md-12"
-                             style="text-align: center;margin-top: 50px;background-color: rgba(255,255,255,.2)">
-                            <div class="panel-body">
-                                <div class="navbar">
-                                    <div class="navbar-left">
-                                        <ul id="left-content" class="nav">
-                                            <li><a>基本指标</a></li>
-                                            <li><a href="#">用户分析</a></li>
-                                            <li><a href="#">使用分析</a></li>
-                                            <li><a ng-click="channelVersionMenu()">渠道版本</a>
-
-                                                <div id="channelVersionMenu" class="navbar-right"
-                                                     style="display: none">
-                                                    <ul class="nav">
-                                                        <li ui-sref=".channelDis"><a href="">渠道分析</a></li>
-                                                        <li><a href="#">版本分布</a></li>
-                                                        <li><a href="/apps/">渠道来源细分</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                            <!--<li><a>分析五</a></li>-->
-                                        </ul>
-                                    </div>
-                                </div>
+                            <div id="channelVersionMenu" class="navbar"
+                                 style="display: none;font-size: 70%">
+                                <ul class="nav" >
+                                    <li ui-sref=".channelDis"><a href="">渠道分析</a></li>
+                                    <li><a href="#">版本分布</a></li>
+                                    <li><a href="/apps/">渠道来源细分</a></li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-10 offset1 content" ui-view style="height: 900px">
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
+        <div class="right panel panel-default" style="height: 100%;width: 90%;float: left">
+            <div class="content" ui-view style="height: 100%;width: 100%">
+        </div>
+    </div>
+    <div class="panel-footer" style="height: 10%;">
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<div style="background-color: rgba(255,255,255,.2);height: 100%;width: 100%">-->
+        <!--<div class="row" style="padding: 0px">-->
+            <!--<div class="col-md-1">-->
+                <!--<div class="imgtest">-->
+                    <!--<figure>-->
+                        <!--<div>-->
+                            <!--<img src='../public/images/defaultImage.jpg' id="userHeadImage"/>-->
+                        <!--</div>-->
+                    <!--</figure>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-2" style="padding: 0px">-->
+                <!--<input id="loginState" type="button" value="未登录" size="5" ng-click="login()"-->
+                       <!--style="margin-top: 50px;margin-left: 0px ;background-color: #009900;border-radius: 5px;border:0px;color: white;text-align: center ">-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<div class="container-fluid">-->
+            <!--<div class="row">-->
+                <!--<div class="panel panel-default col-md-2"-->
+                     <!--style="margin-top: 50px;background-color: rgba(255,255,255,.2)">-->
+                    <!--<div class="row"></div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12"-->
+                             <!--style="text-align: center;margin-top: 50px;background-color: rgba(255,255,255,.2)">-->
+                            <!--<div class="panel-body">-->
+                                <!--<div class="navbar">-->
+                                    <!--<div class="navbar-left">-->
+                                        <!--<ul  class="nav">-->
+                                            <!--<li><a>基本指标</a></li>-->
+                                            <!--<li><a href="#">用户分析</a></li>-->
+                                            <!--<li><a href="#">使用分析</a></li>-->
+                                            <!--<li><a ng-click="channelVersionMenu()">渠道版本</a>-->
+
+                                                <!--<div class="navbar-right"-->
+                                                     <!--style="display: none">-->
+                                                    <!--<ul class="nav">-->
+                                                        <!--<li ui-sref=".channelDis"><a href="">渠道分析</a></li>-->
+                                                        <!--<li><a href="#">版本分布</a></li>-->
+                                                        <!--<li><a href="/apps/">渠道来源细分</a></li>-->
+                                                    <!--</ul>-->
+                                                <!--</div>-->
+                                            <!--</li>-->
+                                            <!--&lt;!&ndash;<li><a>分析五</a></li>&ndash;&gt;-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-10 offset1 content" ui-view style="height: 900px">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 
