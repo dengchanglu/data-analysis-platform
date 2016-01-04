@@ -20,6 +20,14 @@
             }
 
         };
+        $scope.userMenu = function () {
+            if (document.getElementById("userMenu").style.display == "none") {
+                document.getElementById("userMenu").style.display = "block";
+            } else {
+                document.getElementById("userMenu").style.display = "none";
+            }
+
+        };
         $scope.changeUrl = function (url) {
             $location.path(url)
         };

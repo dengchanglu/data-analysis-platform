@@ -1,0 +1,404 @@
+<div style="height: 100%;width: 100%">
+    <div id="main">
+        <div class="mod_header" style="width: auto;">
+            <div class="title">
+                <span class="more"><a href="#" class="viewDataDetail" id="lnk_arg" style="display: none"></a></span>
+                <h2 id="h_title">终端设备</h2>
+                <span id="wrap_items_info_help" class="mod_help" style="">
+                    <a id="icon_items_info_help" href="javascript:;">?</a>
+                    <span class="help_content">
+                    点击查看指标说明
+                    </span>
+                </span>
+                <span class="eventBread" id="sp_navigation" style="display:none">
+                </span>
+                <!-- 	概览页面报表单独控制 -->
+
+            </div>
+            <!---- 右上角指标说明浮层 start -->
+            <div class="help" id="wrap_items_info" title="数据指标说明" style="display:none;">
+                <a class="toggle" href="javascript:;">显示/收起</a>
+                <div class="help_content">
+                    <dl class="help-change-list" id="pop_items_info">
+                    </dl>
+                    <div class="help-change-footer" id="footer_items_info">
+                    </div>
+                </div>
+            </div>
+            <!---- 右上角指标说明浮层 end -->
+
+            <!-- Menu 对象初始化 : start-->
+            <script type="text/javascript">
+                //数据初始化
+                var main_menu = {"1":{"m_id":1,"m_name":"\u5e94\u7528\u8d8b\u52bf","m_icon_css":"icon_app","m_url":"\/base\/ctr_session","m_type":1,"m_display":1,"m_order":1,"m_is_expanded":1},"2":{"m_id":2,"m_name":"\u6e20\u9053\u5206\u6790","m_icon_css":"icon_channel","m_url":"","m_type":1,"m_display":1,"m_order":2,"m_is_expanded":1},"3":{"m_id":3,"m_name":"\u884c\u4e3a\u5206\u6790","m_icon_css":"icon_run","m_url":"","m_type":1,"m_display":1,"m_order":3,"m_is_expanded":1},"4":{"m_id":4,"m_name":"\u7528\u6237\u5206\u6790","m_icon_css":"icon_user","m_url":"","m_type":1,"m_display":1,"m_order":4,"m_is_expanded":1},"5":{"m_id":5,"m_name":"\u81ea\u5b9a\u4e49\u5206\u6790","m_icon_css":"icon_setting","m_url":"","m_type":1,"m_display":1,"m_order":5,"m_is_expanded":1},"6":{"m_id":6,"m_name":"\u5f00\u53d1\u652f\u6301","m_icon_css":"icon_develop","m_url":"","m_type":1,"m_display":1,"m_order":6,"m_is_expanded":1},"8":{"m_id":7,"m_name":"\u7ba1\u7406\u8bbe\u7f6e","m_icon_css":"icon_admin","m_url":"","m_type":1,"m_display":1,"m_order":8,"m_is_expanded":0},"7":{"m_id":8,"m_name":"\u7f51\u901f\u76d1\u63a7","m_url":"","m_icon_css":"icon_netspeed","m_type":1,"m_display":1,"m_order":7,"m_is_expanded":1},"9":{"m_id":9,"m_name":"\u79fb\u52a8\u8054\u76df","m_url":"","m_icon_css":"icon_netspeed","m_type":1,"m_display":0,"m_order":9,"m_is_expanded":1}};
+                var sub_menu = {"100":{"m_id":100,"p_id":1,"m_name":"\u5b9e\u65f6\u6570\u636e","m_tips":"\u5b9e\u65f6\u6570\u636e","m_url":"\/overview\/ctr_single_app","m_default_range":1,"m_has_realtime":1,"m_has_range":1,"m_need_compare":1,"m_type":2,"m_display":1},"101":{"m_id":101,"p_id":1,"m_name":"\u5173\u952e\u6570\u636e","m_tips":"\u5173\u952e\u6570\u636e\u7684tips,\u5f85\u786e\u5b9a...","m_url":"\/base\/ctr_session","m_default_range":7,"m_has_realtime":1,"m_has_range":1,"m_need_compare":1,"m_type":2,"m_has_multidims":1,"m_display":1},"102":{"m_id":102,"p_id":1,"m_name":"\u7248\u672c\u5206\u5e03","m_tips":"\u7248\u672c\u5206\u5e03tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":14,"m_url":"\/base\/ctr_version","m_has_realtime":1,"m_has_range":1,"m_need_compare":0,"m_type":2,"m_display":1},"103":{"m_id":103,"p_id":1,"m_name":"\u6d3b\u8dc3\u5ea6","m_tips":"\u6d3b\u8dc3\u5ea6tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":14,"m_url":"\/base\/ctr_activity","m_has_realtime":0,"m_has_range":0,"m_need_compare":1,"m_type":2,"m_display":1},"104":{"m_id":104,"p_id":1,"m_name":"\u6536\u5165\u5206\u6790","m_tips":"","m_default_range":14,"m_url":"\/open\/income","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":0},"105":{"m_id":105,"p_id":1,"m_name":"\u5e94\u7528\u5b9d\u4e0b\u8f7d\u6570\u636e","m_tips":"","m_default_range":1,"m_url":"\/open\/column","m_has_realtime":0,"m_has_range":1,"m_need_compare":0,"m_type":2,"m_display":0},"201":{"m_id":201,"p_id":2,"m_name":"\u57fa\u7840\u8d8b\u52bf","m_tips":"\u57fa\u7840\u8d8b\u52bftips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":14,"m_url":"\/channel\/ctr_channel_analy","m_has_realtime":1,"m_has_range":1,"m_need_compare":1,"m_type":2,"m_display":0},"203":{"m_id":203,"p_id":2,"m_name":"\u6e20\u9053\u6982\u51b5","m_tips":"\u6e20\u9053\u6982\u51b5tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":14,"m_url":"\/channel\/ctr_channel_summary","m_has_realtime":1,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_is_new":0,"m_display":1},"204":{"m_id":204,"p_id":2,"m_name":"\u6e20\u9053\u6548\u679c","m_tips":"\u6e20\u9053\u6982\u51b5tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":30,"m_url":"\/channel\/ctr_channel_effect","m_has_realtime":0,"m_has_range":1,"m_need_compare":0,"m_type":2,"m_is_new":0,"m_display":1},"301":{"m_id":301,"p_id":3,"m_name":"\u8bbf\u95ee\u9875\u9762","m_tips":"\u8bbf\u95ee\u9875\u9762tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":14,"m_url":"\/base\/ctr_page","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1},"302":{"m_id":302,"p_id":3,"m_name":"\u8def\u5f84\u5206\u6790","m_tips":"\u8def\u5f84\u5206\u6790tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":7,"m_url":"\/operators\/ctr_path_analy","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_is_new":0,"m_display":1},"30101":{"m_id":30101,"p_id":301,"m_name":"\u9875\u9762\u540d\u79f0\u7ba1\u7406","m_tips":"\u9875\u9762\u540d\u79f0\u7ba1\u7406tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_url":"\/operators\/ctr_page_name","m_type":2,"m_display":0,"m_is_child":1},"303":{"m_id":303,"p_id":3,"m_name":"\u9875\u9762\u6765\u6e90","m_tips":"\u4f7f\u7528\u65f6\u957ftips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":7,"m_url":"\/operators\/ctr_page_source","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_is_new":1,"m_display":1},"304":{"m_id":304,"p_id":3,"m_name":"\u4f7f\u7528\u65f6\u957f","m_tips":"\u4f7f\u7528\u65f6\u957ftips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":14,"m_url":"\/operators\/ctr_timespan","m_has_realtime":0,"m_has_range":0,"m_need_compare":1,"m_type":2,"m_display":1},"305":{"m_id":305,"p_id":3,"m_name":"\u4f7f\u7528\u9891\u7387","m_tips":"\u4f7f\u7528\u65f6\u957ftips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":14,"m_url":"\/operators\/ctr_use_frequency","m_has_realtime":0,"m_has_range":0,"m_need_compare":1,"m_type":2,"m_display":1},"401":{"m_id":401,"p_id":4,"m_name":"\u7528\u6237\u7559\u5b58","m_tips":"\u7528\u6237\u7559\u5b58tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":30,"m_url":"\/user\/ctr_retention","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1},"402":{"m_id":402,"p_id":4,"m_name":"\u7528\u6237\u753b\u50cf","m_tips":"\u7528\u6237\u753b\u50cftips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":30,"m_url":"\/operators\/ctr_portrait","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1},"403":{"m_id":403,"p_id":4,"m_name":"\u7ec8\u7aef\u8bbe\u5907","m_tips":"\u7ec8\u7aef\u8bbe\u5907tips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":1,"m_url":"\/base\/ctr_terminal","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1},"404":{"m_id":404,"p_id":4,"m_name":"\u7528\u6237\u53cd\u9988","m_tips":"","m_url":"\/user\/ctr_feedback","m_default_range":30,"m_has_realtime":1,"m_need_compare":0,"m_has_range":0,"m_type":2,"m_display":1,"m_is_new":1},"405":{"m_id":405,"p_id":4,"m_name":"\u53cd\u9988\u8be6\u60c5","m_tips":"","m_url":"\/user\/ctr_feedback_detail","m_has_realtime":1,"m_type":2,"m_display":0,"m_is_new":1},"501":{"m_id":501,"p_id":5,"m_name":"\u81ea\u5b9a\u4e49\u4e8b\u4ef6","m_tips":"\u81ea\u5b9a\u4e49\u4e8b\u4ef6","m_default_range":30,"m_url":"\/custom\/ctr_event_conf","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1},"50101":{"m_id":50101,"p_id":501,"m_name":"\u4e8b\u4ef6\u8d8b\u52bf","m_tips":"\u4e8b\u4ef6\u8d8b\u52bf","m_default_range":7,"m_url":"\/custom\/ctr_event_occur","m_has_realtime":1,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_child":1},"50102":{"m_id":50102,"p_id":501,"m_name":"\u81ea\u5b9a\u4e49\u4e8b\u4ef6","m_tips":"\u81ea\u5b9a\u4e49\u4e8b\u4ef6-\u53c2\u6570\u6570\u636e","m_default_range":7,"m_url":"\/custom\/ctr_event_occur_detail","m_has_realtime":1,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_child":1},"50103":{"m_id":50103,"p_id":501,"m_name":"\u53c2\u6570\u6570\u636e","m_tips":"\u53c2\u6570\u6570\u636e","m_default_range":7,"m_url":"\/custom\/ctr_value_conf","m_has_realtime":1,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_child":1},"50104":{"m_id":50104,"p_id":501,"m_name":"\u53c2\u6570\u8bbe\u7f6e","m_tips":"\u53c2\u6570\u8bbe\u7f6e","m_default_range":7,"m_url":"\/custom\/ctr_key_conf","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_child":1},"50105":{"m_id":50106,"p_id":501,"m_name":"\u53c2\u6570\u7ec4\u5408\u62a5\u8868","m_tips":"\u53c2\u6570\u7ec4\u5408\u62a5\u8868","m_default_range":7,"m_url":"\/custom\/ctr_logic_detail","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_child":1},"502":{"m_id":502,"p_id":5,"m_name":"\u6f0f\u6597\u6a21\u578b","m_tips":"\u6f0f\u6597\u6a21\u578btips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":90,"m_url":"\/custom\/ctr_funnel\/list_all","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1},"50201":{"m_id":50201,"p_id":502,"m_name":"\u6f0f\u6597\u6a21\u578b","m_tips":"\u6f0f\u6597\u6a21\u578btips,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":90,"m_url":"\/custom\/ctr_funnel","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_new":0,"m_is_child":1},"503":{"m_id":503,"p_id":5,"m_name":"\u81ea\u5b9a\u4e49\u4e8b\u4ef6\u5bf9\u6bd4","m_tips":"\u81ea\u5b9a\u4e49\u4e8b\u4ef6,\u5f85\u4ea7\u54c1\u786e\u5b9a...","m_default_range":7,"m_url":"\/custom\/ctr_event_diff","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":0},"50301":{"m_id":50301,"p_id":503,"m_name":"\u4e8b\u4ef6\u5bf9\u6bd4","m_tips":"\u4e8b\u4ef6\u5bf9\u6bd4","m_default_range":7,"m_url":"\/custom\/ctr_event_diff","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_child":1},"50302":{"m_id":50302,"p_id":503,"m_name":"\u6307\u6807\u5bf9\u6bd4","m_tips":"\u6307\u6807\u5bf9\u6bd4","m_default_range":7,"m_url":"\/custom\/ctr_key_diff","m_has_realtime":0,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_child":1},"601":{"m_id":601,"p_id":6,"m_name":"\u63a5\u53e3\u5206\u6790","m_tips":"\u63a5\u53e3\u5206\u6790","m_default_range":7,"m_url":"\/operators\/ctr_interface","m_has_realtime":0,"m_has_range":0,"m_need_compare":1,"m_type":2,"m_display":1,"m_is_new":0,"m_is_child":0},"602":{"m_id":602,"p_id":6,"m_name":"\u9519\u8bef\u7ba1\u7406","m_tips":"\u9519\u8bef\u7ba1\u7406","m_default_range":7,"m_url":"\/base\/ctr_error","m_has_realtime":1,"m_has_range":1,"m_need_compare":1,"m_type":2,"m_display":0},"60201":{"m_id":60201,"p_id":602,"m_name":"\u9519\u8bef\u8be6\u60c5","m_tips":"\u9519\u8bef\u8be6\u60c5","m_default_range":14,"m_url":"\/base\/ctr_error_detail","m_has_realtime":1,"m_has_range":1,"m_need_compare":1,"m_type":2,"m_display":0,"m_is_child":1},"603":{"m_id":603,"p_id":6,"m_name":"\u9519\u8bef\u7ba1\u7406","m_tips":"\u9519\u8bef\u7ba1\u7406","m_default_range":7,"m_url":"\/base\/ctr_err","m_has_realtime":1,"m_has_range":1,"m_need_compare":1,"m_type":2,"m_is_new":1,"m_display":1},"60301":{"m_id":60301,"p_id":603,"m_name":"\u9519\u8bef\u7ba1\u7406","m_tips":"\u9519\u8bef\u7ba1\u7406","m_default_range":14,"m_url":"\/base\/ctr_err_detail","m_has_realtime":0,"m_has_range":1,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_new":1,"m_is_child":1},"60302":{"m_id":60302,"p_id":603,"m_name":"\u9519\u8bef\u7ba1\u7406","m_tips":"\u9519\u8bef\u7ba1\u7406","m_default_range":14,"m_url":"\/base\/ctr_error_remind","m_has_realtime":0,"m_has_range":1,"m_need_compare":1,"m_type":2,"m_display":1,"m_is_new":1,"m_is_child":1},"701":{"m_id":701,"p_id":7,"m_name":"\u6307\u6807\u6ce2\u52a8\u63d0\u9192","m_tips":"\u6307\u6807\u6ce2\u52a8\u63d0\u9192","m_url":"\/setting\/ctr_monitor_remind","m_type":2,"m_display":1,"m_is_new":0},"702":{"m_id":702,"p_id":7,"m_name":"\u6570\u636e\u4e0a\u62a5\u7b56\u7565","m_tips":"\u6570\u636e\u4e0a\u62a5\u7b56\u7565","m_url":"\/setting\/ctr_transmission_strategy","m_type":2,"m_display":1},"703":{"m_id":703,"p_id":7,"m_name":"\u81ea\u5b9a\u4e49\u53c2\u6570","m_tips":"\u81ea\u5b9a\u4e49\u53c2\u6570","m_url":"\/setting\/ctr_custom_key","m_type":2,"m_display":1},"704":{"m_id":704,"p_id":7,"m_name":"\u7528\u6237\u7fa4\u8bbe\u7f6e","m_tips":"\u7528\u6237\u7fa4\u8bbe\u7f6e","m_url":"\/custom\/ctr_group\/list_all","m_default_range":7,"m_has_realtime":0,"m_has_range":0,"m_need_compare":1,"m_type":2,"m_display":1,"m_is_new":0,"m_is_child":0},"70401":{"m_id":70401,"p_id":704,"m_name":"\u7528\u6237\u7fa4","m_tips":"\u7528\u6237\u7fa4","m_url":"\/custom\/ctr_group\/add","m_default_range":7,"m_has_realtime":0,"m_has_range":0,"m_need_compare":1,"m_type":2,"m_display":1,"m_is_new":0,"m_is_child":1},"70402":{"m_id":70402,"p_id":704,"m_name":"\u7528\u6237\u7fa4","m_tips":"\u7528\u6237\u7fa4","m_url":"\/custom\/ctr_group\/edit","m_default_range":7,"m_has_realtime":0,"m_has_range":0,"m_need_compare":1,"m_type":2,"m_display":1,"m_is_new":0,"m_is_child":1},"801":{"m_id":801,"p_id":8,"m_name":"\u6d4b\u901f\u5730\u56fe","m_tips":"\u5173\u952e\u6570\u636e\u7684tips,\u5f85\u786e\u5b9a...","m_url":"\/speed\/ctr_area","m_default_range":14,"m_has_realtime":1,"m_has_range":0,"m_need_compare":0,"m_type":2,"m_display":1,"m_is_new":0},"802":{"m_id":802,"p_id":8,"m_name":"\u65f6\u6bb5\u66f2\u7ebf","m_tips":"\u5173\u952e\u6570\u636e\u7684tips,\u5f85\u786e\u5b9a...","m_url":"\/speed\/ctr_time_interval","m_default_range":7,"m_has_realtime":1,"m_has_range":1,"m_need_compare":1,"m_type":2,"m_display":1,"m_is_new":0},"803":{"m_id":803,"p_id":8,"m_name":"\u6d4b\u901f\u5730\u5740\u7ba1\u7406","m_tips":"\u5173\u952e\u6570\u636e\u7684tips,\u5f85\u786e\u5b9a...","m_url":"\/speed\/ctr_address_manage","m_type":2,"m_display":1,"m_is_new":0},"901":{"m_id":901,"p_id":9,"m_name":"\u79fb\u52a8\u8054\u76df","m_tips":"","m_url":"\/gdt\/summary","m_type":2,"m_display":1,"m_is_new":1}};
+                var current_action = '/base/ctr_terminal';
+                MTA.Page.Staff = {'EngName': '', 'ChnName': '', 'Photo':''};
+                //当前Menu对象的初始化
+                MTA.Page.menu = new MTA.Menu({main: main_menu, sub: sub_menu}, 'sub_nav');
+                MTA.Page.menu.recoverMenuStatus();
+                MTA.Page.tipsInfo = MTA.Page.menu.getMenuInfo(current_action);
+                MTA.Page.tipsInfo && function(){
+                    var cla = 'current';
+                    //$('#p_tips').html(MTA.Page.tipsInfo.m_tips);//统计报表的tips信息
+                    $('#h_title').html(MTA.Page.tipsInfo.m_name);//统计报表页面的标题
+                    $('#menu_'+ (MTA.Page.tipsInfo.m_is_child ? MTA.Page.tipsInfo.p_id : MTA.Page.tipsInfo.m_id)).parent().addClass(cla);  //点击菜单的选中状态
+                    document.title = MTA.Page.tipsInfo.m_name + '-' + MTA.Page.tipsInfo.p_name; //更新页面title
+                    //菜单加载后上报点击
+                    GRI.Util.hotClick((MTA.Page.app ? MTA.Page.app.appId+'_1_'+MTA.Page.Staff.EngName+'_function' :'0_1_'+MTA.Page.Staff.EngName+'_setting')+'.'+MTA.Page.tipsInfo.p_name+'.'+MTA.Page.tipsInfo.m_name+'.0');
+                }();
+            </script>
+            <!-- Menu 对象初始化: end -->
+            <!-- 菜单&tps&页面tile : end -->
+
+            <!-- 每个业务报表要在页面自定义的 发送指标请求的js脚本段 ：end -->
+
+            <div class="content">
+                <div class="group">
+                    <!-- 独立的日期选择器 -->
+                    <!--==时间范围start==-->
+                    <div class="tool_date cf">
+                        <div class="setup">
+                            <button class="button  button_primary" id="btn_compare" style="display: none;">按时间对比</button>
+                        </div>
+                        <div class="date" id="div_date">
+                            <span class="date_title" id="date">2016-01-03</span>
+                            <a class="opt_sel" id="input_trigger" href="#">
+                                <i class="i_orderd"></i>
+                            </a>
+                        </div><label class="contrast" for="needCompare_1451891960761" style="display: none;"><input type="checkbox" class="pc" name="needCompare_1451891960761" id="needCompare_1451891960761" value="1" disabled="" style="display: none;">对比</label><div class="ta_date" id="div_compare_date" style="display: none;">	<span name="dateCompare" id="dateCompare" class="date_title" style="display: none;"></span>	<a class="opt_sel" id="compare_trigger" href="#">		<i class="i_orderd"></i>	</a></div>
+                        <div class="date-section cf" id="short_opt">
+                            <ul id="toolbar" class="select cf">
+
+
+                            </ul>
+                        </div>
+                        <div id="datePicker"><input type="hidden" id="startDate" name="startDate" value="2016-01-03"><input type="hidden" id="endDate" name="endDate" value="2016-01-03"><input type="checkbox" id="needCompare" name="needCompare" value="0" style="display:none;"></div>
+                    </div>
+                    <!--==时间范围end==-->
+                </div>
+                <div class="group_switch">
+                    <!--待选择区域-->
+                    <div id="list_condition">
+                        <div class="group group_show" style="display:none;">
+                            <strong class="lable">渠道：</strong>
+                            <span id="div_channel">
+                            </span>
+                        </div>
+                        <div class="group group_show" style="">
+                            <strong class="lable">版本：</strong>
+                            <span id="div_version"><div class="ui_buttons"><button class="button" value="-1" title="全部" name="version" id="version_0"><div class="ffbug_wrapper">全部</div></button><button class="button current" value="3.0.1" title="3.0.1" name="version" id="version_1"><div class="ffbug_wrapper">3.0.1</div></button><button class="button" value="V2.5.1_0" title="V2.5.1_0" name="version" id="version_2"><div class="ffbug_wrapper">V2.5.1_0</div></button><button class="button" value="2.6.9.2" title="2.6.9.2" name="version" id="version_3"><div class="ffbug_wrapper">2.6.9.2</div></button><button class="button" value="2.6.9.1" title="2.6.9.1" name="version" id="version_4"><div class="ffbug_wrapper">2.6.9.1</div></button><button class="button" value="1.7.1_0" title="1.7.1_0" name="version" id="version_5"><div class="ffbug_wrapper">1.7.1_0</div></button><div class="condition-append"><div class="btn-group" id="wrap_version_more"><button class="button" id="trig_version_more" value="others" href="javascript:void(0);">其它 <i class="icon_menu"></i></button></div></div></div></span>
+                        </div>
+                        <div class="group group_show" style="display:none;">
+                            <strong class="lable">用户群：</strong>
+                            <button class="button" id="btn_user_group"><span>全部</span><i class="icon_menu"></i></button>
+                        </div>
+                    </div>
+                    <!--已选-->
+                    <!-- <div class="group group_hide">
+                        <div class="selected-condition" id="selected_condition">
+                            <dl class="cf condition">
+                                <dt>已选</dt>
+                                <dd id="dd_selected">
+                                </dd>
+                            </dl>
+                        </div>
+                    </div> -->
+                    <!-- <a href="javascript:;" class="toggle" id="btn_ctrlPanel">显示/收起</a> -->
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                // 头部筛选模块固定效果
+                var modHeaderSticky = {
+                    set: function () {
+                        if (this.isSticky) {
+                            return true;
+                        }
+                        var $modHeader = $('.mod_header');
+
+                        $('.mod_header_substitute').css('height', $modHeader.outerHeight());
+
+                        $modHeader
+                                .css('width', $modHeader.width())
+                                .addClass('mod_header_sticky');
+                        this.isSticky = true;
+                    },
+                    remove: function () {
+
+                        var $modHeader = $('.mod_header');
+
+                        $modHeader
+                                .css('width', 'auto')
+                                .removeClass('mod_header_sticky');
+
+                        $('.mod_header_substitute').css('height', 0);
+
+                        this.isSticky = false;
+                    },
+                    resize: function () {
+                        if(!this.isSticky) return;
+                        this.remove();
+                        this.set();
+                    },
+                    init: function () {
+                        var that = this;
+                        var $target = $('.mod_header .group_switch');
+                        var origOffsetY = $target.offset().top;
+
+                        $('.mod_header').after('<div class="mod_header_substitute"></div>');
+
+                        $(window).scroll(function (event) {
+                            $(window).scrollTop() >= origOffsetY ? that.set() : that.remove();
+                            // console.log($(window).scrollTop() >= origOffsetY)
+                        });
+
+
+                        if (!document.all) {// 避免IE8的BUG
+                            $(window).resize(function () {
+                                that.resize();
+                            });
+                        }
+                    }
+                };
+
+                setTimeout(function () {
+                    modHeaderSticky.init();
+                }, 150);
+            </script>
+
+        </div><div class="mod_header_substitute" style="height: 0px;"></div><!--end of mod_header-->
+
+        <div class="mod_basic">
+            <div class="title">
+                <h3>关键指标详解</h3>
+                <!-- <span class="help">
+                    <a href="javascript:;">?</a>
+                    <div class="help_content">
+                        待补充..
+                    </div>
+                </span> -->
+                <div class="tabs" id="evt_tabs">
+                    <a id="evt_1" href="javascript:;" class="first current">操作系统版本</a>
+                    <a id="evt_2" href="javascript:;">分辨率</a>
+                    <a id="evt_3" href="javascript:;">网络环境</a>
+                    <a id="evt_4" href="javascript:;">运营商</a>
+                    <a id="evt_5" href="javascript:;" class="last">设备型号</a>
+                </div>
+                <div class="sub_menu">
+                    <div class="ui_filter">
+                        <div class="ui_filter_bar">
+                            <div class="ui_buttons" id="div_index">
+                                <button class="button current" id="btnNewUv">新增用户（含重复安装）</button>
+                                <button class="button" id="btnUv">活跃用户</button>
+                                <button class="button" id="btnSessionNum">启动次数</button>
+                                <button class="button" id="btnTotalOnlineTime">在线时长</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <h4 class="sub_title" id="hChartTitle">TOP10 新增用户（含重复安装）操作系统版本分布</h4>
+                <div class="sub_content">
+                    <!--图控件的模版，这里目前内容较少，后面方便扩展，直接在这里修改-->
+                    <div class="time-chart" id="chartContainer" data-highcharts-chart="1" style="height: 300px;"><div class="highcharts-container" id="highcharts-2" style="position: relative; overflow: hidden; width: 718px; height: 300px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" style="font-family:Tahoma, &quot;microsoft yahei&quot;, 微软雅黑, 宋体;;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="718" height="300"><desc>Created with Highcharts 4.0.3</desc><defs><clipPath id="highcharts-3"><rect x="0" y="0" width="253" height="625"></rect></clipPath></defs><rect x="0" y="0" width="718" height="300" strokeWidth="0" fill="#FFFFFF" class=" highcharts-background"></rect><g class="highcharts-grid" zIndex="1"></g><g class="highcharts-grid" zIndex="1"><path fill="none" d="M 130.5 10 L 130.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 178.5 10 L 178.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 226.5 10 L 226.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 274.5 10 L 274.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 322.5 10 L 322.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 370.5 10 L 370.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 419.5 10 L 419.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 467.5 10 L 467.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 515.5 10 L 515.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 563.5 10 L 563.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 611.5 10 L 611.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 659.5 10 L 659.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 708.5 10 L 708.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 82.5 10 L 82.5 263" stroke="#eae9e9" stroke-width="1" zIndex="1" opacity="1"></path></g><g class="highcharts-axis" zIndex="2"><path fill="none" d="M 83 26.5 L 73 26.5" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 83 57.5 L 73 57.5" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 83 89.5 L 73 89.5" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 83 121.5 L 73 121.5" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 83 152.5 L 73 152.5" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 83 184.5 L 73 184.5" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 83 216.5 L 73 216.5" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 83 247.5 L 73 247.5" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 82.5 10 L 82.5 263" stroke="#6a7791" stroke-width="1" zIndex="7" visibility="visible"></path></g><g class="highcharts-axis" zIndex="2"></g><path fill="none" d="M 83 57.5 L 1148 57.5" stroke="#7ac943" stroke-width="1" zIndex="2" stroke-dasharray="1,1" visibility="hidden"></path><g class="highcharts-series-group" zIndex="3"><g class="highcharts-series highcharts-tracker" visibility="visible" zIndex="0.1" transform="translate(708,263) rotate(90) scale(-1,1) scale(1 1)" style="" width="625" height="253" clip-path="url(#highcharts-3)"><rect x="229.5" y="64.5" width="16" height="561" fill="#5D9CEC" rx="0" ry="0" stroke="#FFFFFF" stroke-width="1"></rect><rect x="197.5" y="158.5" width="16" height="467" fill="#5D9CEC" rx="0" ry="0" stroke="#FFFFFF" stroke-width="1"></rect><rect x="165.5" y="440.5" width="16" height="185" fill="#5D9CEC" rx="0" ry="0" stroke="#FFFFFF" stroke-width="1"></rect><rect x="134.5" y="459.5" width="16" height="166" fill="#5D9CEC" rx="0" ry="0" stroke="#FFFFFF" stroke-width="1"></rect><rect x="102.5" y="499.5" width="16" height="126" fill="#5D9CEC" rx="0" ry="0" stroke="#FFFFFF" stroke-width="1"></rect><rect x="70.5" y="577.5" width="16" height="48" fill="#5D9CEC" rx="0" ry="0" stroke="#FFFFFF" stroke-width="1"></rect><rect x="39.5" y="592.5" width="16" height="33" fill="#5D9CEC" rx="0" ry="0" stroke="#FFFFFF" stroke-width="1"></rect><rect x="7.5" y="614.5" width="16" height="11" fill="#5D9CEC" rx="0" ry="0" stroke="#FFFFFF" stroke-width="1"></rect></g><g class="highcharts-markers" visibility="visible" zIndex="0.1" transform="translate(708,263) rotate(90) scale(-1,1) scale(1 1)" width="625" height="253" clip-path="none"></g></g><g class="highcharts-data-labels highcharts-tracker" visibility="visible" zIndex="6" transform="translate(83,10) scale(1 1)" opacity="1" style=""><g zIndex="1" style="cursor:default;" transform="translate(561,6)"><text x="3" zIndex="1" style="font-size:11px;color:#606060;fill:#606060;" y="16">35.09%</text></g><g zIndex="1" style="cursor:default;" transform="translate(467,38)"><text x="3" zIndex="1" style="font-size:11px;color:#606060;fill:#606060;" y="16">29.25%</text></g><g zIndex="1" style="cursor:default;" transform="translate(185,70)"><text x="3" zIndex="1" style="font-size:11px;color:#606060;fill:#606060;" y="16">11.59%</text></g><g zIndex="1" style="cursor:default;" transform="translate(166,101)"><text x="3" zIndex="1" style="font-size:11px;color:#606060;fill:#606060;" y="16">10.38%</text></g><g zIndex="1" style="cursor:default;" transform="translate(126,133)"><text x="3" zIndex="1" style="font-size:11px;color:#606060;fill:#606060;" y="16">7.91%</text></g><g zIndex="1" style="cursor:default;" transform="translate(48,165)"><text x="3" zIndex="1" style="font-size:11px;color:#606060;fill:#606060;" y="16">3.01%</text></g><g zIndex="1" style="cursor:default;" transform="translate(33,196)"><text x="3" zIndex="1" style="font-size:11px;color:#606060;fill:#606060;" y="16">2.08%</text></g><g zIndex="1" style="cursor:default;" transform="translate(11,228)"><text x="3" zIndex="1" style="font-size:11px;color:#606060;fill:#606060;" y="16">0.69%</text></g></g><g class="highcharts-axis-labels highcharts-xaxis-labels" zIndex="7"><text x="68" text-anchor="end" style="width:217px;color:#606060;cursor:default;font-size:11px;fill:#606060;" y="31.8125" opacity="1">4.4</text><text x="68" text-anchor="end" style="width:217px;color:#606060;cursor:default;font-size:11px;fill:#606060;" y="63.4375" opacity="1">5.1</text><text x="68" text-anchor="end" style="width:217px;color:#606060;cursor:default;font-size:11px;fill:#606060;" y="95.0625" opacity="1">4.3</text><text x="68" text-anchor="end" style="width:217px;color:#606060;cursor:default;font-size:11px;fill:#606060;" y="126.6875" opacity="1">5.0</text><text x="68" text-anchor="end" style="width:217px;color:#606060;cursor:default;font-size:11px;fill:#606060;" y="158.3125" opacity="1"><tspan>4.2 - 4.2.2</tspan></text><text x="68" text-anchor="end" style="width:217px;color:#606060;cursor:default;font-size:11px;fill:#606060;" y="189.9375" opacity="1">4.1.x</text><text x="68" text-anchor="end" style="width:217px;color:#606060;cursor:default;font-size:11px;fill:#606060;" y="221.5625" opacity="1"><tspan>4.0.3 - 4.0.4</tspan></text><text x="68" text-anchor="end" style="width:217px;color:#606060;cursor:default;font-size:11px;fill:#606060;" y="253.1875" opacity="1">6.0</text></g><g class="highcharts-axis-labels highcharts-yaxis-labels" zIndex="7"><text x="0" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="-9999">0</text><text x="131.0769230769231" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">100</text><text x="179.15384615384616" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">200</text><text x="227.23076923076923" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">300</text><text x="275.3076923076923" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">400</text><text x="323.38461538461536" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">500</text><text x="371.46153846153845" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">600</text><text x="419.53846153846155" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">700</text><text x="467.61538461538464" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">800</text><text x="515.6923076923076" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">900</text><text x="563.7692307692307" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">1000</text><text x="611.8461538461538" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">1100</text><text x="659.9230769230769" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">1200</text><text x="706" text-anchor="middle" style="color:#606060;cursor:default;font-size:11px;fill:#606060;" y="284" opacity="1">1300</text></g><g class="highcharts-tooltip" zIndex="8" style="cursor:default;padding:0;white-space:nowrap;" transform="translate(885,26)" opacity="0"><path fill="none" d="M 2.5 0.5 L 189.5 0.5 C 191.5 0.5 191.5 0.5 191.5 2.5 L 191.5 60.5 C 191.5 62.5 191.5 62.5 189.5 62.5 L 2.5 62.5 C 0.5 62.5 0.5 62.5 0.5 60.5 L 0.5 37 -5.5 31 0.5 25 0.5 2.5 C 0.5 0.5 0.5 0.5 2.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)" width="191" height="62"></path><path fill="none" d="M 2.5 0.5 L 189.5 0.5 C 191.5 0.5 191.5 0.5 191.5 2.5 L 191.5 60.5 C 191.5 62.5 191.5 62.5 189.5 62.5 L 2.5 62.5 C 0.5 62.5 0.5 62.5 0.5 60.5 L 0.5 37 -5.5 31 0.5 25 0.5 2.5 C 0.5 0.5 0.5 0.5 2.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)" width="191" height="62"></path><path fill="none" d="M 2.5 0.5 L 189.5 0.5 C 191.5 0.5 191.5 0.5 191.5 2.5 L 191.5 60.5 C 191.5 62.5 191.5 62.5 189.5 62.5 L 2.5 62.5 C 0.5 62.5 0.5 62.5 0.5 60.5 L 0.5 37 -5.5 31 0.5 25 0.5 2.5 C 0.5 0.5 0.5 0.5 2.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)" width="191" height="62"></path><path fill="rgba(255, 255, 255, 0.7)" d="M 2.5 0.5 L 189.5 0.5 C 191.5 0.5 191.5 0.5 191.5 2.5 L 191.5 60.5 C 191.5 62.5 191.5 62.5 189.5 62.5 L 2.5 62.5 C 0.5 62.5 0.5 62.5 0.5 60.5 L 0.5 37 -5.5 31 0.5 25 0.5 2.5 C 0.5 0.5 0.5 0.5 2.5 0.5" stroke="#666" stroke-width="1"></path></g></svg><div class="highcharts-tooltip" style="position: absolute; left: 885px; top: 26px; visibility: hidden;"><span style="position: absolute; white-space: nowrap; font-family: Tahoma, 'microsoft yahei', 微软雅黑, 宋体; font-size: 12px; color: rgb(51, 51, 51); margin-left: 0px; margin-top: 0px; left: 8px; top: 8px;" zindex="1"><div style="padding:5px;"><b>5.1</b></div><table style="width: 150px"><tbody><tr><td style="padding: 2px 5px">新增用户（含重复安装） </td><td style="text-align: right;padding-left:15px">972 </td></tr></tbody></table></span></div></div></div>
+                </div>
+                <hr class="split">
+                <h4 class="sub_title">详细数据
+                                <span class="more_menu">
+									<a href="javascript:;" onclick="export_excel()"><i class="icon_export"></i>导出CSV</a>
+								</span></h4>
+                <div class="sub_content">
+                    <div class="column cf">
+                        <div class="column-title cf">
+                            <!--         <span class="link-thin"><i class="icon-download-x"></i><a href="#" onclick="export_excel()">导出CSV</a></span> -->
+                            <div class="btn-append" id="set_table"></div>
+                        </div>
+                        <div id="table_list" style="overflow:visible;" class="gri_wrapper"><table class="gri_stable" id="table_list_table"><colgroup span="5"><col class="gri_Environment"><col class="gri_NewUser"><col class="gri_ActiveUser"><col class="gri_SessionNum"><col class="gri_OnlineTime"></colgroup><thead><tr><th name="Environment" class="hover enable">操作系统版本<i class="icon-order-hover"></i></th><th name="NewUser" class="hover enable row_hover">新增用户（含重复安装）/占比<i class="icon-order-hover"></i></th><th name="ActiveUser" class="hover enable">活跃用户/占比<i class="icon-order-hover"></i></th><th name="SessionNum" class="hover enable">启动次数/占比<i class="icon-order-hover"></i></th><th name="OnlineTime" class="hover enable">在线时长/占比<i class="icon-order-hover"></i></th></tr></thead><tbody><tr><td>4.4</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">1,166  <span class="percent">35.09%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">4,147  <span class="percent">34.86%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">9,838  <span class="percent">39.17%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr><tr><td>5.1</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">972  <span class="percent">29.25%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">2,044  <span class="percent">17.18%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">3,717  <span class="percent">14.80%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr><tr><td>4.3</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">385  <span class="percent">11.59%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">1,725  <span class="percent">14.50%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">3,884  <span class="percent">15.47%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr><tr><td>5.0</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">345  <span class="percent">10.38%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">1,334  <span class="percent">11.21%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">2,996  <span class="percent">11.93%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr><tr><td>其它</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">1,200  <span class="percent">10.09%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">1,278  <span class="percent">5.09%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr><tr><td>4.2 - 4.2.2</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">263  <span class="percent">7.91%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">877  <span class="percent">7.37%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">2,188  <span class="percent">8.71%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr><tr><td>4.1.x</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">100  <span class="percent">3.01%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">402  <span class="percent">3.38%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">881  <span class="percent">3.51%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr><tr><td>4.0.3 - 4.0.4</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">69  <span class="percent">2.08%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">128  <span class="percent">1.08%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">268  <span class="percent">1.07%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr><tr><td>6.0</td><td class="row_hover"><div style="width: 100%; height: 100%;text-align:right;">23  <span class="percent">0.69%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">38  <span class="percent">0.32%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">63  <span class="percent">0.25%</span></div></td><td><div style="width: 100%; height: 100%;text-align:right;">0  <span class="percent">0.00%</span></div></td></tr></tbody></table><div class="gri_pg" style="display: none;"><div class="pg"><a class="first" href="javascript:void(0);"><i class="i_pg_f"></i></a><strong class="current" href="javascript:void(0);">1</strong><a href="javascript:void(0);"><i class="i_pg_e"></i></a></div><div class="show">共<em>9</em>条记录，每页显示<span class="gri_datatable_pg_rowcount"><select class="gri_datatable_rownum ipt_show "><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="30">30</option><option value="50">50</option><option value="80">80</option><option value="100">100</option><option value="200">200</option></select> 条</span></div></div></div>
+                    </div>	                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var indexName = 'NewUv';
+            function LightTable(index)
+            {
+                var colNum = 1;
+                if(index == 'NewUv'){
+                    colNum = 1;
+                }else if(index == 'Uv'){
+                    colNum = 2;
+                }else{
+                    colNum = 3;
+                }
+                $('#table_list_table thead tr th').eq(colNum).addClass('row_hover');
+                $('#table_list_table tbody tr').each(function(){
+                    $(this).children('td').eq(colNum).addClass('row_hover');
+                });
+            }
+            function export_excel()
+            {
+                var tableUrl = '/base/ctr_terminal/export_table_data/';
+
+                MTA.Data.exportTable(tableUrl);
+            }
+
+            function buildData()
+            {
+                /**
+                 * 图的cgi地址
+                 */
+                var chartUrl = '/base/ctr_terminal/get_chart_data/';
+                /**
+                 * 表的cgi地址
+                 */
+                var tableUrl = '/base/ctr_terminal/get_table_data/';
+
+                /**
+                 * 该功能特性的highcharts配置
+                 */
+                var chartOpts = {
+                    chartOptions : {
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true,
+                                    formatter: function() {
+                                        return this.point.label + '%';
+                                        //return 'aaaaaa';
+                                    }
+                                }
+                            }
+                        },
+                        xAxis: {
+                            labels: {
+                                formatter: function() {
+                                    if(this.value.indexOf('：')!=-1){
+                                        return this.value.substr(this.value.indexOf('：')+1);
+                                    }
+                                    return this.value;
+                                }
+                            }
+                        }
+                    },
+                    labelFormat : 2,
+                    autoStep :false,
+                    chartType : 'bar',
+                    enableLegend : false
+                }
+
+                /**
+                 * 加载表的数据
+                 */
+                MTA.Data.loadChart(chartUrl, chartOpts, 'chartContainer');
+
+                /**
+                 * 加载表的数据
+                 */
+                MTA.Data.loadPageTable(tableUrl, 'table_list',function(){LightTable(indexName)});
+
+            }
+
+
+            //应用的初始化参数
+            var initParams = {"start_date":"2016-01-03","end_date":"2016-01-03","channel":{"seg0":[{"name":"\u5168\u90e8","value":"-1","isDefault":1}],"seg1":[{"name":"OpenPlatform","value":"OpenPlatform"},{"name":"yingyongbao","value":"yingyongbao"},{"name":"\u672a\u77e5","value":"-"},{"name":"oppo","value":"oppo"},{"name":"guanwang","value":"guanwang"},{"name":"xiaomi","value":"xiaomi"},{"name":"baidushoujizhushou","value":"baidushoujizhushou"},{"name":"huaweineizhi","value":"huaweineizhi"},{"name":"play","value":"play"},{"name":"zhihuiyun","value":"zhihuiyun"},{"name":"weixinxiazaiqi","value":"weixinxiazaiqi"},{"name":"weibodiaoqi","value":"weibodiaoqi"},{"name":"appupdate","value":"appupdate"},{"name":"wandoujia","value":"wandoujia"},{"name":"meizu","value":"meizu"},{"name":"yingyonghui","value":"yingyonghui"},{"name":"anzhishichang","value":"anzhishichang"},{"name":"kupaishangdian","value":"kupaishangdian"},{"name":"anzhuoshichang","value":"anzhuoshichang"},{"name":"oppoyuzhuang","value":"oppoyuzhuang"},{"name":"91shoujizhushou","value":"91shoujizhushou"},{"name":"sougoushoujizhushou","value":"sougoushoujizhushou"},{"name":"sharetoweibo","value":"sharetoweibo"},{"name":"zhuoyishichang","value":"zhuoyishichang"},{"name":"jinliyingyongzhongxin","value":"jinliyingyongzhongxin"},{"name":"sumsang","value":"sumsang"},{"name":"leshangdian","value":"leshangdian"},{"name":"zhangxinliyi01","value":"zhangxinliyi01"},{"name":"tengxunshipin","value":"tengxunshipin"},{"name":"nduo","value":"nduo"},{"name":"yingyongbaomww","value":"yingyongbaomww"},{"name":"weixin","value":"weixin"},{"name":"weibochajian","value":"weibochajian"},{"name":"vivo","value":"vivo"},{"name":"htc","value":"htc"},{"name":"tengxushoujiguanjia","value":"tengxushoujiguanjia"},{"name":"zhitongbada","value":"zhitongbada"},{"name":"yunnanyidongzhongduan","value":"yunnanyidongzhongduan"},{"name":"guomei01","value":"guomei01"},{"name":"mopinzhushou","value":"mopinzhushou"},{"name":"suning","value":"suning"},{"name":"degen01","value":"degen01"},{"name":"muzhishichang","value":"muzhishichang"},{"name":"yingyongbaofbb","value":"yingyongbaofbb"},{"name":"samsung","value":"samsung"},{"name":"tengxunshoujiguanjia","value":"tengxunshoujiguanjia"},{"name":"googleplay","value":"googleplay"},{"name":"jinshan","value":"jinshan"},{"name":"souhuxinwen","value":"souhuxinwen"},{"name":"xinwenappdiaoqi","value":"xinwenappdiaoqi"},{"name":"uc","value":"uc"},{"name":"baidushoujizhushoufbb","value":"baidushoujizhushoufbb"},{"name":"kaixunshipin","value":"kaixunshipin"},{"name":"Qzonediaoqi","value":"Qzonediaoqi"},{"name":"xinwenchajian","value":"xinwenchajian"},{"name":"weiboread","value":"weiboread"},{"name":"tianyida","value":"tianyida"},{"name":"jifengshichang","value":"jifengshichang"},{"name":"guangzhoujunbo01","value":"guangzhoujunbo01"},{"name":"fangcun","value":"fangcun"},{"name":"guanwang_timeline","value":"guanwang_timeline"},{"name":"baidushoujizhushou_tl_all","value":"baidushoujizhushou_tl_all"},{"name":"momanxiangji","value":"momanxiangji"},{"name":"wandoujiajinjia","value":"wandoujiajinjia"},{"name":"mumayi","value":"mumayi"},{"name":"zhangxinliyi04","value":"zhangxinliyi04"},{"name":"moxiuzhuomian","value":"moxiuzhuomian"},{"name":"huidu2.2.1.1","value":"huidu2.2.1.1"},{"name":"21cn02","value":"21cn02"},{"name":"shenzhenyituo01","value":"shenzhenyituo01"},{"name":"anzhuoshichng","value":"anzhuoshichng"},{"name":"zixuangu","value":"zixuangu"},{"name":"zhangxinliyi03","value":"zhangxinliyi03"},{"name":"dianxin","value":"dianxin"},{"name":"qqnews","value":"qqnews"},{"name":"365rili","value":"365rili"},{"name":"yybhuodong","value":"yybhuodong"},{"name":"quanmeihui","value":"quanmeihui"},{"name":"liantongxianshang","value":"liantongxianshang"},{"name":"qqshoujiguanjia","value":"qqshoujiguanjia"},{"name":"mojitianqi","value":"mojitianqi"},{"name":"zhejiangxinji","value":"zhejiangxinji"},{"name":"tengxunditu","value":"tengxunditu"},{"name":"QQyingyin","value":"QQyingyin"},{"name":"xinwen","value":"xinwen"},{"name":"sougouzhushou","value":"sougouzhushou"},{"name":"dengzhi01","value":"dengzhi01"},{"name":"jinshanzhushou","value":"jinshanzhushou"},{"name":"huiduceshi2.1","value":"huiduceshi2.1"},{"name":"kupai","value":"kupai"},{"name":"huidu2.8.0.2","value":"huidu2.8.0.2"},{"name":"sailfish","value":"sailfish"},{"name":"yingyongbaoliuyan","value":"yingyongbaoliuyan"},{"name":"yingyongbaoliyuchun","value":"yingyongbaoliyuchun"},{"name":"huidu2.2.2.2","value":"huidu2.2.2.2"},{"name":"tenc","value":"tenc"},{"name":"jinlishangdian","value":"jinlishangdian"},{"name":"wifiwannengyaoshi","value":"wifiwannengyaoshi"},{"name":"sichuanfeiyang01","value":"sichuanfeiyang01"},{"name":"tianyou05","value":"tianyou05"},{"name":"haitun","value":"haitun"},{"name":"shuidihudong","value":"shuidihudong"},{"name":"yizhantong01","value":"yizhantong01"},{"name":"huaweimaimang2","value":"huaweimaimang2"},{"name":"huidu2.9.0.1","value":"huidu2.9.0.1"},{"name":"huiduceshi2.1-2","value":"huiduceshi2.1-2"},{"name":"huaweirongyao","value":"huaweirongyao"},{"name":"fengbangshou","value":"fengbangshou"},{"name":"rexiangji","value":"rexiangji"},{"name":"sixin","value":"sixin"},{"name":"huidu2.2.2.1","value":"huidu2.2.2.1"},{"name":"aizhishichang","value":"aizhishichang"},{"name":"maopaotang","value":"maopaotang"},{"name":"tianyou06","value":"tianyou06"},{"name":"sharetoqzone","value":"sharetoqzone"},{"name":"yybxiaoguoguanggao","value":"yybxiaoguoguanggao"},{"name":"CF","value":"CF"},{"name":"woshangdian","value":"woshangdian"},{"name":"shuajizhushou","value":"shuajizhushou"},{"name":"shark2.2.0-1","value":"shark2.2.0-1"},{"name":"yingyonghui_hot","value":"yingyonghui_hot"},{"name":"dengzhi02","value":"dengzhi02"},{"name":"tengxunshoujiguajia","value":"tengxunshoujiguajia"},{"name":"guomei02","value":"guomei02"},{"name":"2015xinniancaidan","value":"2015xinniancaidan"},{"name":"aibizhi","value":"aibizhi"},{"name":"zhonghuawannianli","value":"zhonghuawannianli"},{"name":"huidu2.2.1.2","value":"huidu2.2.1.2"},{"name":"chongqin03","value":"chongqin03"},{"name":"91zhushoufbb","value":"91zhushoufbb"},{"name":"liantongxianxia","value":"liantongxianxia"},{"name":"tianyou02","value":"tianyou02"},{"name":"lvdoushuajizhushou","value":"lvdoushuajizhushou"},{"name":"yidongMM","value":"yidongMM"},{"name":"baidushoujizhushou_tl_orgi","value":"baidushoujizhushou_tl_orgi"},{"name":"sanjiuyangsheng","value":"sanjiuyangsheng"}]},"version":{"seg0":[{"name":"\u5168\u90e8","value":"-1","isDefault":1}],"seg1":[{"name":"3.0.1","value":"3.0.1"},{"name":"V2.5.1_0","value":"V2.5.1_0"},{"name":"2.6.9.2","value":"2.6.9.2"},{"name":"2.6.9.1","value":"2.6.9.1"},{"name":"1.7.1_0","value":"1.7.1_0"},{"name":"2.6.2.0","value":"2.6.2.0"},{"name":"2.4.0","value":"2.4.0"},{"name":"V2.5.1_1","value":"V2.5.1_1"},{"name":"1.7.1.0","value":"1.7.1.0"},{"name":"2.6.8.0","value":"2.6.8.0"},{"name":"2.6.0","value":"2.6.0"},{"name":"1.0.0.0","value":"1.0.0.0"},{"name":"2.6.7.0","value":"2.6.7.0"},{"name":"2.3.0","value":"2.3.0"},{"name":"2.2.2","value":"2.2.2"},{"name":"2.6.6.0","value":"2.6.6.0"},{"name":"3.0.2.0","value":"3.0.2.0"},{"name":"2.6.5.0","value":"2.6.5.0"},{"name":"2.4.7.0","value":"2.4.7.0"},{"name":"1.6.9.0","value":"1.6.9.0"},{"name":"2.1.0.2","value":"2.1.0.2"},{"name":"2.4.4.0","value":"2.4.4.0"},{"name":"2.6.4.0","value":"2.6.4.0"},{"name":"2.2.1","value":"2.2.1"},{"name":"2.2.0","value":"2.2.0"},{"name":"2.6.3.0","value":"2.6.3.0"},{"name":"2.5.5.0","value":"2.5.5.0"},{"name":"3.0.1.0","value":"3.0.1.0"},{"name":"2.3.0.0","value":"2.3.0.0"},{"name":"2.4.5.0","value":"2.4.5.0"},{"name":"2.5.3.0","value":"2.5.3.0"},{"name":"2.4.9.0","value":"2.4.9.0"},{"name":"2.6.0.0","value":"2.6.0.0"},{"name":"2.1.0","value":"2.1.0"},{"name":"2.5.4.0","value":"2.5.4.0"},{"name":"2.5.6.0","value":"2.5.6.0"},{"name":"2.4.2.0","value":"2.4.2.0"},{"name":"2.4.3.0","value":"2.4.3.0"},{"name":"2.5.1.0","value":"2.5.1.0"},{"name":"2.3.0_1","value":"2.3.0_1"},{"name":"2.4.1.0","value":"2.4.1.0"},{"name":"2.5.7.0","value":"2.5.7.0"},{"name":"2.9.1","value":"2.9.1"},{"name":"2.8.0","value":"2.8.0"},{"name":"2.4.8.0","value":"2.4.8.0"},{"name":"2.6.4","value":"2.6.4"},{"name":"2.7.0","value":"2.7.0"},{"name":"2.5.2.0","value":"2.5.2.0"},{"name":"2.9.0","value":"2.9.0"},{"name":"3.0.0","value":"3.0.0"},{"name":"2.2.1.0","value":"2.2.1.0"},{"name":"2.5.0.0","value":"2.5.0.0"},{"name":"1.7.2.0","value":"1.7.2.0"},{"name":"2.4.0.0","value":"2.4.0.0"},{"name":"2.5.0","value":"2.5.0"},{"name":"2.2.0.0","value":"2.2.0.0"},{"name":"1.6.8.0","value":"1.6.8.0"},{"name":"2.0.0.3","value":"2.0.0.3"},{"name":"2.0.0","value":"2.0.0"},{"name":"1.7.0.0","value":"1.7.0.0"},{"name":"3.0.0.2","value":"3.0.0.2"},{"name":"2.0.1","value":"2.0.1"},{"name":"2.6.1.0","value":"2.6.1.0"},{"name":"2.4.6.0","value":"2.4.6.0"},{"name":"2.6.9.0","value":"2.6.9.0"},{"name":"2.3.0_0","value":"2.3.0_0"},{"name":"1.0.2","value":"1.0.2"},{"name":"501.0","value":"501.0"},{"name":"9.9.9.9","value":"9.9.9.9"},{"name":"1.2.1","value":"1.2.1"},{"name":"1.2.2","value":"1.2.2"},{"name":"2.9.8","value":"2.9.8"},{"name":"1.2.0","value":"1.2.0"},{"name":"1.1.1","value":"1.1.1"},{"name":"1.1.3","value":"1.1.3"},{"name":"1.0.3","value":"1.0.3"},{"name":"\u672a\u77e5","value":"-"}]},"user_group":{"seg1":[{"name":"\u5168\u90e8","value":"0"}]},"table_options":[{"key":"table_channel_group_split","value":"\u6e20\u9053\u7ec6\u5206","group":"channel"},{"key":"table_channel_group_other","value":"\u5408\u5e76\u5176\u5b83\u9879","group":"channel"},{"key":"table_version_group_split","value":"\u7248\u672c\u7ec6\u5206","group":"version"},{"key":"table_version_group_other","value":"\u5408\u5e76\u5176\u5b83\u9879","group":"version"}],"chart_options":[{"key":"chart_channel_group_split","value":"\u6e20\u9053\u7ec6\u5206","group":"channel"},{"key":"chart_channel_group_other","value":"\u5408\u5e76\u5176\u5b83\u9879","group":"channel"},{"key":"chart_version_group_split","value":"\u7248\u672c\u7ec6\u5206","group":"version"},{"key":"chart_version_group_other","value":"\u5408\u5e76\u5176\u5b83\u9879","group":"version"},{"key":"chart_calc_sum","value":"\u663e\u793a\u5c0f\u8ba1"}],"need_compare":0,"real_time":0};
+            MTA.Page.init_params = initParams;
+            $(document).ready(function(){
+                var dateObj = {
+                    inputId:'date',
+                    target:'datePicker',
+                    startDate: initParams.start_date || '',
+                    endDate: initParams.end_date || '',
+                    //startCompareDate: initParams.start_compare_date || '',
+                    //endCompareDate: initParams.end_compare_date || '',
+                    needCompare: initParams.need_compare || '0',
+                    defaultText : ''|| ' 至 ',
+                    singleCompare : true,
+                    shortOpr : true,
+                    autoSubmit : true,
+                    isTodayValid: false,
+                    validStartTime: '1304611200'
+                };
+
+                //初始化条件选择区域
+                MTA.Page.Condition.version = new MTA.Selector('#div_version', 'version', initParams.version, 'buildData');
+                //将定义的方法绑定在站点切换的事件中
+                MTA.Page.app.bindChange('buildData');
+                //将初始化擦偶哦系统内，分辨率，服务商等的tabs面板
+                MTA.Page.Evt.init();
+
+                MTA.Report.initialize(dateObj, 'buildData');
+                //页面tips
+                var items = {"\u64cd\u4f5c\u7cfb\u7edf\u7248\u672c":"\u8fd0\u884c\u5e94\u7528\u7684\u64cd\u4f5c\u7cfb\u7edf\u7248\u672c\u53f7","\u5206\u8fa8\u7387":"\u8fd0\u884c\u5e94\u7528\u7684\u8bbe\u5907\u5c4f\u5e55\u5206\u8fa8\u7387","\u7f51\u7edc\u73af\u5883":"\u5e94\u7528\u8fd0\u884c\u65f6\u7f51\u7edcWIFI\/3G\/GPRS","\u8fd0\u8425\u5546":"\u5e94\u7528\u8fd0\u884c\u65f6\u7f51\u7edc\u8fd0\u8425\u5546\u540d\u79f0","\u8bbe\u5907\u578b\u53f7":"\u8fd0\u884c\u5e94\u7528\u7684\u8bbe\u5907\u578b\u53f7"};
+                MTA.Util.items_info.init(items);
+
+            });
+
+            MTA.Page.Evt = {
+                conf :{
+                    tab_container : 'evt_tabs',
+                    default_id : '1',
+                    index_container : 'div_index',
+                    default_index : 'NewUv'
+                },
+                init : function(){
+                    var self = this;
+                    MTA.Util.setParams('evt_id', self.conf.default_id);
+                    MTA.Util.setParams('index', self.conf.default_index);
+                    $('#'+this.conf.tab_container).find('a').each(
+                            function(){
+                                //id = $(this).attr('id').match(/evt_(\d{1})/i)[1];
+                                //页面初始化时候，默认选中的id
+                                //self.conf.default_id == id && function(){
+                                //MTA.Util.setParams('evt_id', id);
+                                //$('#evt_' + id).parent().addClass('current');
+                                //}();
+                                //为每一个tab标签绑定点击事件
+                                $(this).bind('click', function(){
+                                    var id = $(this).attr('id').match(/evt_(\d{1})/i)[1];
+                                    var index = $('#div_index').find('button.current').attr('id').substr(3);
+                                    var evtTitle = $(this).html();
+                                    var indexTitle = $('#div_index').find('button.current').html();
+                                    var chartTitle = 'TOP10';
+//                                        if(id != 3 && id != 4){
+//                                            chartTitle += 'TOP10';
+//                                        }
+                                    chartTitle += indexTitle + evtTitle + '分布';
+                                    $('#hChartTitle').html(chartTitle);
+                                    $(this).addClass('current'). siblings().removeClass('current');
+                                    MTA.Util.setParams('evt_id', id);
+                                    MTA.Util.setParams('index', index);
+                                    buildData();
+                                });
+                            }
+                    );
+                    $('#div_index').find('button').each(
+                            function(){
+                                $(this).bind('click', function(){
+                                    var id = $('#evt_tabs').find('a.current').attr('id').match(/evt_(\d{1})/i)[1];
+                                    var index = $(this).attr('id').substr(3);
+                                    var evtTitle = $('#evt_tabs').find('a.current').html();
+                                    var indexTitle = $(this).html();
+                                    var chartTitle = '';
+                                    if(id != 3 && id != 4){
+                                        chartTitle += 'TOP10';
+                                    }
+                                    chartTitle += indexTitle + evtTitle + '分布';
+                                    $('#hChartTitle').html(chartTitle);
+                                    $(this).addClass('current'). siblings().removeClass('current');
+                                    MTA.Util.setParams('evt_id', id);
+                                    MTA.Util.setParams('index', index);
+                                    indexName = index;
+                                    buildData();
+                                });
+                            }
+                    );
+                }
+            };
+
+        </script>
+
+
+    </div>
+</div>
