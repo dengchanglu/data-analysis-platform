@@ -24,7 +24,16 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
         .state("index.versionDis", {
             url:"/versionDis",
             templateUrl: "views/analysisViews/channelSourceSegmentation.html"
-        });
+        })
+        .state("index.terminalDev", {
+            url:"/terminalDev",
+            templateUrl: "views/analysisViews/terminalDevice.html"
+        })
+
+    ;
+
+
+
 
     require.config({
         packages: [

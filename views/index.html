@@ -43,7 +43,16 @@
                 <div class="navbar-left" style="width: 100%">
                     <ul id="left-content" class="nav"  style="text-align: center;font-size: large">
                         <li><a>基本指标</a></li>
-                        <li><a href="#">用户分析</a></li>
+                        <li><a ng-click="userMenu()">用户分析</a>
+                            <div id="userMenu" class="navbar"
+                                 style="display: none;font-size: 70%">
+                                <ul class="nav" >
+                                    <li ui-sref=".terminalDev"><a href="">终端设备</a></li>
+                                    <li><a href="#">用户留存</a></li>
+                                    <li><a href="#">用户画像</a></li>
+                                </ul>
+                            </div>
+                        </li>
                         <li><a href="#">使用分析</a></li>
                         <li><a ng-click="channelVersionMenu()">渠道版本</a>
 
@@ -52,7 +61,7 @@
                                 <ul class="nav" >
                                     <li ui-sref=".channelDis"><a href="">渠道分析</a></li>
                                     <li><a href="#">版本分布</a></li>
-                                    <li><a href="/apps/">渠道来源细分</a></li>
+                                    <li><a href="#">渠道来源细分</a></li>
                                 </ul>
                             </div>
                         </li>
