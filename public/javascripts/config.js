@@ -27,7 +27,9 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state("index.terminalDev", {
             url:"/terminalDev",
-            templateUrl: "views/analysisViews/terminalDevice.html"
+            templateUrl: "views/analysisViews/terminalDevice.html",
+            controller:"terminalDevCtr"
+
         })
 
     ;
