@@ -31,6 +31,20 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
             controller:"terminalDevCtr"
 
         })
+        .state("index.userPortrait", {
+            url:"/userPortrait",
+            templateUrl: "views/analysisViews/userPortrait.html",
+            controller:"userPortraitCtr"
+
+        })
+        .state("index.usersRetained", {
+            url:"/usersRetained",
+            templateUrl: "views/analysisViews/usersRetained.html",
+            /*controller:"usersRetainedCtr"*/
+
+        })
+
+
 
     ;
 

@@ -62,3 +62,10 @@
 }
 .imgtest img{width:100%;
     min-height:100%; text-align:center;}
+#prof_chart_container {
+    overflow: auto;
+}
+.visitor_cont {
+    text-align: center;
+    padding: 10px 0;
+}
