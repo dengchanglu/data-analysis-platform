@@ -5,8 +5,8 @@
     'use strict';
     angular
         .module('dataAP')
-        .controller('usersRetainedCtr', usersRetainedCtr);
-    function usersRetainedCtr($scope, $location, ipCookie, $rootScope) {
+        .controller('userRetainedCtr', userRetainedCtr);
+    function userRetainedCtr($scope, $location, ipCookie, $rootScope) {
         require(
             [
                 'echarts',
