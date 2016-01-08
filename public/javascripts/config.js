@@ -43,7 +43,16 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
             /*controller:"usersRetainedCtr"*/
 
         })
-
+        .state("index.accessPage", {
+            url:"/accessPage",
+            templateUrl: "views/analysisViews/accessPage.html",
+            controller:"accessPageCtr"
+        })
+        .state("index.usingTimeLength", {
+            url:"/usingTimeLength",
+            templateUrl: "views/analysisViews/usingTimeLength.html",
+            controller:"usingTimeLengthCtr"
+        })
 
 
     ;

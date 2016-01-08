@@ -28,6 +28,14 @@
             }
 
         };
+        $scope.behaviorMenu = function () {
+            if (document.getElementById("behaviorMenu").style.display == "none") {
+                document.getElementById("behaviorMenu").style.display = "block";
+            } else {
+                document.getElementById("behaviorMenu").style.display = "none";
+            }
+
+        };
         $scope.changeUrl = function (url) {
             $location.path(url)
         };
