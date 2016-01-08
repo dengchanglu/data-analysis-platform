@@ -45,7 +45,7 @@
                         <li><a>基本指标</a></li>
                         <li><a ng-click="userMenu()">用户分析</a>
                             <div id="userMenu" class="navbar"
-                                 style="display: none;font-size: 70%">
+                                 style="display: block;font-size: 70%">
                                 <ul class="nav" >
                                     <li ui-sref=".terminalDev"><a href="">终端设备</a></li>
                                     <li ui-sref=".userRetained"><a href="#">用户留存</a></li>
@@ -53,11 +53,23 @@
                                 </ul>
                             </div>
                         </li>
+                        <li><a ng-click="behaviorMenu()">行为分析</a>
+                            <div id="behaviorMenu" class="navbar"
+                                 style="display: block;font-size: 70%">
+                                <ul class="nav" >
+                                    <li ui-sref=".accessPage"><a href="">访问页面</a></li>
+                                    <li ui-sref="."><a href="#">路径分析</a></li>
+                                    <li ui-sref="."><a href="#">页面来源</a></li>
+                                    <li ui-sref=".usingTimeLength"><a href="#">使用时长</a></li>
+                                    <li ui-sref="."><a href="#">使用频率</a></li>
+                                </ul>
+                            </div>
+                        </li>
                         <li><a href="#">使用分析</a></li>
                         <li><a ng-click="channelVersionMenu()">渠道版本</a>
 
                             <div id="channelVersionMenu" class="navbar"
-                                 style="display: none;font-size: 70%">
+                                 style="display: block;font-size: 70%">
                                 <ul class="nav" >
                                     <li ui-sref=".channelDis"><a href="">渠道分析</a></li>
                                     <li><a href="#">版本分布</a></li>

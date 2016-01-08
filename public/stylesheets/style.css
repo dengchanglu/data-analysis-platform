@@ -1,71 +1,535 @@
 
 .form-box {
     padding-top: 13%;
-  margin-top: 35px;
+    margin-top: 35px;
     color: white;
 }
+
 .form-top {
     overflow: hidden;
     padding: 0 25px 15px 25px;
-    background-color: rgba(255,255,255,.2)
-    -moz-border-radius: 4px 4px 0 0;
+    background-color: rgba(255, 255, 255, .2) -moz-border-radius : 4 px 4 px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
     border-radius: 4px 4px 0 0;
     text-align: left;
 }
+
 .form-top-left {
     float: left;
     width: 75%;
     padding-top: 25px;
 }
+
 .form-top-right {
     float: left;
     width: 25%;
     padding-top: 5px;
     font-size: 66px;
-    background-color: rgba(255,255,255,.2)
-    line-height: 100px;
+    background-color: rgba(255, 255, 255, .2) line-height : 100 px;
     text-align: right;
 }
+
 .form-bottom {
     padding: 25px 25px 30px 25px;
-    background-color: rgba(255,255,255,.2)
-    -moz-border-radius: 0 0 4px 4px;
+    background-color: rgba(255, 255, 255, .2) -moz-border-radius : 0 0 4 px 4 px;
     -webkit-border-radius: 0 0 4px 4px;
     border-radius: 0 0 4px 4px;
     text-align: left;
 }
+
 .form-bottom {
     padding: 25px 25px 30px 25px;
-    background-color: rgba(255,255,255,.2)
-    -moz-border-radius: 0 0 4px 4px;
+    background-color: rgba(255, 255, 255, .2) -moz-border-radius : 0 0 4 px 4 px;
     -webkit-border-radius: 0 0 4px 4px;
     border-radius: 0 0 4px 4px;
     text-align: left;
 }
-.imgtest{margin:10px 5px;
-    overflow:hidden;}
-.list_ul figcaption p{
-    font-size:12px;
-    color:#aaa;
+
+.imgtest {
+    margin: 10px 5px;
+    overflow: hidden;
 }
-.imgtest figure div{
-    display:inline-block;
-    margin:5px auto;
-    width:100px;
-    height:100px;
-    border-radius:100px;
-    border:2px solid #fff;
-    overflow:hidden;
-    -webkit-box-shadow:0 0 3px #ccc;
-    box-shadow:0 0 3px #ccc;
+
+.list_ul figcaption p {
+    font-size: 12px;
+    color: #aaa;
 }
-.imgtest img{width:100%;
-    min-height:100%; text-align:center;}
+
+.imgtest figure div {
+    display: inline-block;
+    margin: 5px auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    border: 2px solid #fff;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+}
+
+.imgtest img {
+    width: 100%;
+    min-height: 100%;
+    text-align: center;
+}
+
 #prof_chart_container {
     overflow: auto;
 }
+
 .visitor_cont {
     text-align: center;
     padding: 10px 0;
+}
+
+/**
+ * =================================================
+ * 列表的默认样式文件。
+ * @author xiangchen(xiangchen@tencent.com)
+ * @version 2013-03-24
+ *
+ * =================================================
+ */
+/*========== reset ==========*/
+@charset "utf-8";
+
+/*========== reset ==========*/
+.gri_wrapper {
+    overflow: auto;
+}
+
+.gri_wrapper table {
+    width: 100%;
+    font-size: 12px;
+    border-collapse: collapse;
+    border: 1px solid #e1e1e1;
+}
+
+.gri_wrapper table tbody th {
+    padding: 10px 15px
+}
+
+.gri_wrapper table tbody td {
+    line-height: 19px;
+    padding: 10px 15px;
+    color: #666;
+    text-align: right;
+    white-space: nowrap;
+    border: 1px solid #e8e8e8;
+    border-width: 1px 0 1px 0;
+}
+
+.gri_wrapper table thead th {
+    line-height: 19px;
+    padding: 10px 15px;
+    text-align: right;
+    color: #444;
+    border: 1px solid #e8e8e8;
+    border-width: 1px 0 1px 0;
+    text-align: left;
+    -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 1.0);
+    -moz-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 1.0);
+    box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 1.0);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#fafafa), to(#f3f3f3));
+    background: -moz-linear-gradient(top, #fafafa, #f3f3f3);
+    background: -ms-linear-gradient(top, #fafafa, #f3f3f3);
+    background-color: #f5f5f5 \0;
+    *background: #f5f5f5;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.gri_wrapper table tfoot td {
+    line-height: 19px;
+    padding: 7px 8px;
+    background: #fafafa;
+    border: 1px solid #e1e1e1;
+    color: #777777;
+    font-weight: 700;
+}
+
+.gri_wrapper table .num {
+    /*数字*/
+    text-align: center;
+}
+
+.gri_wrapper table thead .thead_col th {
+    background: #fff;
+}
+
+.gri_wrapper table table tbody td {
+    text-align: left;
+}
+
+.gri_wrapper table tbody tr.hover td {
+    border-bottom: 1px solid #d5e5f4;
+    border-top: 1px solid #d5e5f4;
+    background-color: #eaf2fa;
+    cursor: pointer;
+
+}
+
+.icon-orderu {
+    background-position: 0 0;
+}
+
+.icon-orderd {
+    background-position: 0 -7px;
+}
+
+.icon-order-hover {
+    /*==三角形==icon-order-hover 占位符==*/
+    background-image: none;
+}
+
+.gri_wrapper table thead th.hover {
+    cursor: pointer;
+}
+
+.gri_wrapper_tr_show {
+    visibility: hidden;
+}
+
+tr:hover .gri_wrapper_tr_show {
+    visibility: visible;
+}
+
+.gri_wrapper_td_show {
+    visibility: hidden;
+}
+
+td:hover .gri_wrapper_td_show {
+    visibility: visible;
+}
+
+/*=============其它==================================================*/
+#autotipsdiv {
+    word-wrap: break-word;
+    word-break: break-all;
+    background-color: #FFFFCC;
+    border: 1px solid #FF9900;
+}
+
+.gri_wrapper {
+    position: relative;
+}
+
+.gri_wrapper table {
+    border: 0 none;
+}
+
+.gri_wrapper th,
+.gri_wrapper td {
+    border-left: 0 none;
+    border-right: 0 none;
+    color: #333;
+}
+
+.gri_wrapper table tbody tr:nth-child(even) td {
+    background: #F7F7F7;
+}
+
+.gri_wrapper th {
+    background: #F5F5F5;
+    font-weight: bold;
+    color: #000;
+    box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 1.0);
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.gri_wrapper th:first-child {
+    border-left: 1px solid #e1e1e1;
+}
+
+.gri_wrapper th:last-child {
+    border-right: 1px solid #e1e1e1;
+}
+
+.gri_wrapper tbody tr:hover td {
+    background: #E6EFF9;
+}
+
+.gri_wrapper .row_hover {
+    border-color: #D4E1EB;
+    background: #E1EFFA;
+}
+
+.gri_wrapper tr:nth-child(even) .row_hover {
+    background: #E6EFF9;
+}
+
+.gri_wrapper tbody tr:nth-child(even):hover td {
+    background: #E6EFF9;
+}
+
+.gri_wrapper tr:hover th {
+    box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 1.0);
+}
+
+.gri_wrapper table thead th {
+    text-align: right;
+}
+
+.gri_wrapper table thead th:first-child {
+    text-align: left;
+}
+
+.gri_wrapper table td:first-child {
+    text-align: left;
+}
+
+.gri_wrapper table thead th.center {
+    text-align: center
+}
+
+.gri_wrapper .gri_strong td, .gri_wrapper .gri_strong {
+    font-weight: bold;
+    color: #444444;
+}
+
+.gri_table_static .gri_wrapper table tbody tr:nth-child(even) td {
+    background: #fff;
+}
+
+.gri_table_static .gri_wrapper table tbody th {
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    text-align: center;
+}
+
+.gri_table_static .gri_wrapper table thead th {
+    text-align: center;
+}
+
+.gri_table_static .gri_wrapper table tbody td {
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    text-align: center
+}
+
+.gri_table_static .gri_wrapper table thead th:first-child {
+    text-align: center
+}
+
+.gri_wrapper .percent {
+    display: inline-block;
+    padding-left: 5px;
+    width: 60px;
+    text-align: left;
+    color: #999;
+}
+
+/*==隐藏、展开详情的表格样式==*/
+.gri_wrapper .detail_table {
+    *table-layout: fixed;
+}
+
+/*处理表格中ie7长字母换行*/
+.gri_wrapper .detail_table tbody tr:nth-child(even) td {
+    background: transparent;
+}
+
+.gri_wrapper .detail_table tr.detail_ctn {
+    display: none;
+}
+
+.gri_wrapper .detail_table tr.detail_ctn.row_open td {
+    border-bottom-width: 1px;
+    border-top-width: 0;
+}
+
+.gri_wrapper .detail_table tr.detail_ctn .ctn {
+    max-height: 210px;
+    overflow: auto;
+    white-space: normal;
+}
+
+.gri_wrapper .detail_table tr.detail_ctn pre {
+    margin-left: 20px;
+    margin-top: 5px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.gri_wrapper .detail_table tr.row_open {
+    display: table-row;
+    *display: block;
+}
+
+.gri_wrapper .detail_table tr.row_open td {
+    border-bottom-width: 0;
+}
+
+.gri_wrapper .detail_table tbody tr.row_open td {
+    background: #F7F7F7;
+}
+
+.gri_wrapper .detail_table tbody tr:nth-child(even).row_open td {
+    background: #F7F7F7;
+}
+
+.gri_wrapper .detail_table tbody tr:hover td,
+.gri_wrapper .detail_table tbody tr:hover td.row_hover {
+    background: #E6EFF9;
+}
+
+.gri_wrapper .detail_table tbody tr:nth-child(even):hover td {
+    background: #E6EFF9;
+}
+
+.gri_wrapper .detail_table thead tr th.row_hover {
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#fafafa), to(#f3f3f3));
+    background: -moz-linear-gradient(top, #fafafa, #f3f3f3);
+    background: -ms-linear-gradient(top, #fafafa, #f3f3f3);
+    background-color: #f5f5f5 \0;
+    *background: #f5f5f5;
+}
+
+.gri_wrapper .detail_table tbody tr .row_hover {
+    background: transparent;
+}
+
+.gri_wrapper .detail_table tbody tr:nth-child(even) .row_hover {
+    background: transparent;
+}
+
+.gri_wrapper .detail_table .error_type,
+.gri_wrapper .detail_table .note {
+    width: 200px;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: left;
+}
+
+.gri_wrapper .detail_table span.warn {
+    color: #d61c29;
+}
+
+.gri_wrapper .detail_table .detail_trigger {
+    padding: 0 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.gri_wrapper .detail_table .detail_trigger:hover {
+    text-decoration: none;
+}
+
+/*边框表格内套无边框表格样式*/
+.gri_wrapper table .table-noborder tr th {
+    padding: 5px 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    font-weight: normal;
+    color: #666;
+}
+
+.gri_wrapper table .table-noborder tr td {
+    padding: 5px 10px 5px 0;
+    border: none;
+    background: none;
+}
+
+.gri_wrapper .error_detail {
+    *position: relative;
+    max-height: 700px;
+    overflow: auto;
+}
+
+.gri_wrapper .error_detail > dt {
+    margin-bottom: 5px;
+    font-weight: bold;
+    *zoom: 1;
+}
+
+.gri_wrapper .error_detail > dt:after {
+    display: block;
+    content: '.';
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.gri_wrapper .error_detail > dt .links {
+    float: right;
+    font-size: 0;
+    white-space: nowrap;
+}
+
+.gri_wrapper .error_detail > dt .links a {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.gri_wrapper .error_detail > dd {
+    margin: 0 0 15px 10px;
+}
+
+.gri_wrapper .error_detail .break-word {
+    white-space: normal;
+}
+
+.gri_wrapper .error_detail .table-noborder th,
+.gri_wrapper .error_detail .table-noborder td {
+    vertical-align: top;
+}
+
+.gri_wrapper .error_detail .log_ctn {
+    position: relative;
+    *zoom: 1;
+    padding: 7px 100px 0 0;
+    border-top: 1px solid #c9c9c9;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.gri_wrapper .error_detail .log_ctn > .more {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+/*==表格公用样式==*/
+.gri_wrapper table thead th.tr,
+.gri_wrapper table tbody td.tr {
+    text-align: right;
+}
+
+.gri_wrapper table thead th.tl,
+.gri_wrapper table tbody td.tl {
+    text-align: left;
+}
+
+.gri_wrapper table thead th.tc,
+.gri_wrapper table tbody td.tc {
+    text-align: center;
+}
+
+/* 首列不做变色的处理 */
+.gri_wrapper table tbody td.nbg {
+    background: none;
+    border-color: #e8e8e8;
+}
+
+.gri_wrapper table tbody tr:nth-child(even) td.nbg {
+    background: none;
+    border-color: #e8e8e8;
+}
+
+.ui_progress {
+    vertical-align: middle;
+    width: 100%;
+    font-size: 0;
+    line-height: 0;
+}
+
+.ui_progress_bar {
+    height: 10px;
+    background: #5D9CEC;
 }
