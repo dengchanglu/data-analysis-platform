@@ -53,6 +53,11 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "views/analysisViews/usingTimeLength.html",
             controller:"usingTimeLengthCtr"
         })
+        .state("index.pathAnalysis", {
+            url:"/pathAnalysis",
+            templateUrl: "views/analysisViews/pathAnalysis.html",
+            controller:"pathAnalysisCtr"
+        })
 
 
     ;
