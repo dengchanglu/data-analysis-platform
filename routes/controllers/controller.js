@@ -31,6 +31,7 @@ app.get('/api/sexAnalysis', function (req, res) {
         res.send(data);
     });
 });
+
 /**
  * 年龄分布分析
  * 请求url示例 ： http://ip:端口/api/ageAnalysis?time=2016-01-11,2016-01-08
@@ -39,6 +40,18 @@ app.get('/api/sexAnalysis', function (req, res) {
 app.get('/api/ageAnalysis', function (req, res) {
     var queryData = requestParsedUtil.getParamJson(req.url);
     upAnalysis.upAnalysis.ageSearch(es.client, queryData, function (data) {
+        res.send(data);
+    });
+});
+
+/**
+ * 地域分布分析
+ * 请求url示例 ： http://ip:端口/api/regionAnalysis?time=2016-01-11,2016-01-08
+ * 返回值示例： [{"key":"重庆","sex_count":8656},{"key":"银川","sex_count":9484}]
+ */
+app.get('/api/regionAnalysis', function (req, res) {
+    var queryData = requestParsedUtil.getParamJson(req.url);
+    upAnalysis.upAnalysis.regionSearch(es.client, queryData, function (data) {
         res.send(data);
     });
 });
