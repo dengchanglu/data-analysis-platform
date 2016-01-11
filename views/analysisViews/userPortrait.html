@@ -29,7 +29,82 @@
                 </div>
 
                 <div class="col-md-7">
+                    <div class="visitor_user">
+                        <h4 style=" font-size: 18px;
+    font-weight: 900; ">新用户比例</h4>
+
+                        <div class="visitor_cont" id="user_chart_container">
+                            <ul>
+                                <li><i class="i_unew"></i></li>
+                                <li><i class="i_ucurrent"><span class="current">11%</span></i></li>
+                                <li><i class="i_uold"></i></li>
+                                <li><i class="i_uold"></i></li>
+                                <li><i class="i_uold"></i></li>
+                                <li><i class="i_uold"></i></li>
+                                <li><i class="i_uold"></i></li>
+                                <li><i class="i_uold"></i></li>
+                                <li><i class="i_uold"></i></li>
+                                <li><i class="i_uold"></i></li>
+                            </ul>
+                        </div>
+                        <div class="legend">
+                            <p><i class="i_new"></i>新用户</p>
+
+                            <p><i class="i_old"></i>老用户</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="margin-top: 50px">
+                <div class="col-md-7">
                     <div id="AgeDistributionChart" style="height: 300px;width: 600px;margin-top: 10px"></div>
+                </div>
+                <div class="col-md-5">
+                    <div class="visitor_education cf">
+                        <h4 style=" font-size: 18px;
+    font-weight: 900;position: relative;left: -50px">学历分布</h4>
+
+                        <div class="visitor_streak cf" id="grade_chart_container">
+                            <ul>
+                                <li><a href="javascript:void(0);"><em>9.06%</em><br><i style="width:26px"
+                                                                                       class="i_education0"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);"><em>2.85%</em><br><i style="width:8px"
+                                                                                       class="i_education1"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);"><em>18.75%</em><br><i style="width:53px"
+                                                                                        class="i_education2"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);"><em>44.11%</em><br><i style="width:126px"
+                                                                                        class="i_education3"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);"><em>23.89%</em><br><i style="width:68px"
+                                                                                        class="i_education4"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);"><em>0.68%</em><br><i style="width:2px"
+                                                                                       class="i_education5"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);"><em>0.64%</em><br><i style="width:2px"
+                                                                                       class="i_education6"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="legend" id="visitor_grade_legend">
+                            <p><i class="i_education0"></i>未知</p>
+
+                            <p><i class="i_education1"></i>初中</p>
+
+                            <p><i class="i_education2"></i>高中</p>
+
+                            <p><i class="i_education3"></i>本科</p>
+
+                            <p><i class="i_education4"></i>硕士</p>
+
+                            <p><i class="i_education5"></i>博士</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <hr>
@@ -43,10 +118,11 @@
             </div>
             <hr>
             <h4 style="font-size: 18px; font-weight: 700; ">Top10 职业分布</h4>
+
             <div class="visitor_cont" id="prof_chart_container" style="height: auto;">
                 <svg version="1.1"
                      style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;"
-                     xmlns="http://www.w3.org/2000/svg" width="1000" height="300" >
+                     xmlns="http://www.w3.org/2000/svg" width="1000" height="300">
                     <desc>Created with Highcharts 4.0.3</desc>
                     <defs></defs>
                     <g>
