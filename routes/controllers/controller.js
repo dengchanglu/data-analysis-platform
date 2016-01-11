@@ -5,6 +5,7 @@ var express = require('express');
 var tdAnalysis = require('../service/tdAnalysis');
 var requestParsedUtil = require('../util/requestParsedUtil');
 var es = require('../elasticsearch/esClient');
+var upAnalysis = require('../service/userPortraitAnalysis');
 var app = express();
 
 /**
@@ -15,6 +16,13 @@ var app = express();
 app.get('/api/tdAnalysis', function (req, res) {
     var queryData = requestParsedUtil.getParamJson(req.url);
     tdAnalysis.tdAnalysis.search(es.client, queryData, function (data) {
+        res.send(data);
+    });
+});
+
+app.get('/api/sexAnalysis', function (req, res) {
+    var queryData = requestParsedUtil.getParamJson(req.url);
+    upAnalysis.upAnalysis.sexSearch(es.client, queryData, function (data) {
         res.send(data);
     });
 });
