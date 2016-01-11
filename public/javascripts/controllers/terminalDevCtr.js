@@ -6,7 +6,13 @@
     angular
         .module('dataAP')
         .controller('terminalDevCtr', terminalDevCtr);
-    function terminalDevCtr($scope, $location, ipCookie, $rootScope) {
+    function terminalDevCtr($scope, $location, ipCookie, $rootScope, $http) {
+
+        $scope.data = [];
+        $scope.NewUserSum = 0;
+        $scope.ActiveUser = 0;
+        $scope.StartCount = 0;
+
         require(
             [
                 'echarts',
@@ -215,7 +221,25 @@
 
                 // 为echarts对象加载数据
                 myChart.setOption(option);
+
+
             }
         );
+        $http.get("http://localhost:3000/api/tdAnalysis?av=all&time=2016-01-11&key=version")
+            .success(function (response) {
+                for (var i = 0; i < 7; i++) {
+                    $scope.NewUserSum += response[i].register_user;
+                    $scope.ActiveUser += response[i].active_user;
+                    $scope.StartCount+=response[i].start_count;
+                    $scope.data.push(response[i])
+                }
+                console.log($scope.data)
+                console.log($scope.NewUserSum)
+                console.log($scope.ActiveUser)
+                console.log($scope.StartCount)
+
+            });
+
+
     }
 })();

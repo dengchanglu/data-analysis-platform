@@ -782,3 +782,210 @@ blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4,
     background: url(http://mta.qq.com/mta/resource/imgcache/images/path.png) 0 -74px no-repeat #5688c8;
     z-index: 2;
 }
+.visitor_user {
+
+    width: 55%;
+}
+.visitor h4 {
+    font-size: 18px;
+    font-weight: 400;
+}
+.visitor_user .visitor_cont {
+    cursor: pointer;
+    margin: 0px auto;
+    padding-top: 70px;
+    width: 260px;
+}
+.visitor_cont {
+    padding: 50px 0;
+    text-align: center;
+}
+ol, ul {
+    list-style: none;
+}
+
+.visitor_user ul li {
+    float: left;
+    margin-right: 4px;
+}
+.i_unew {
+    background-position: 0 0;
+    background: url("http://mta.qq.com/mta/resource/imgcache/images/visitor.png") no-repeat;
+    display: inline-block;
+    height: 61px;
+    vertical-align: middle;
+    width: 22px;
+}
+.i_ucurrent {
+    background-position: -26px 0;
+    background: url("http://mta.qq.com/mta/resource/imgcache/images/visitor.png") no-repeat;
+    display: inline-block;
+    height: 61px;
+    vertical-align: middle;
+    width: 22px;
+}
+.visitor_user .current {
+    background: #8cc151;
+    color: #fff;
+    display: inline-block;
+    font-style: normal;
+    height: 20px;
+    left: 0px;
+    line-height: 20px;
+    position: absolute;
+    text-align: center;
+    top: -20px;
+    width: 38px;
+}
+.i_uold {
+    background-position: -52px 0;
+    background: url("http://mta.qq.com/mta/resource/imgcache/images/visitor.png") no-repeat;
+    display: inline-block;
+    height: 61px;
+    vertical-align: middle;
+    width: 22px;
+}
+.visitor_user .legend {
+    color: #6c6c6c;
+    float: right;
+    width: 80px;
+    position: relative;
+    right: -100px;
+    top:-50px;
+}
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+.visitor_user .legend i {
+    display: inline-block;
+    font-size: 0;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
+}
+.visitor_user .i_new {
+    background: #8cc151;
+}
+.visitor_user .i_old {
+    background: #3ad2dc;
+}
+.visitor_user .i_ucurrent {
+    position: relative;
+}
+.i_ucurrent {
+    background-position: -26px 0;
+    background: url("http://mta.qq.com/mta/resource/imgcache/images/visitor.png") no-repeat;
+    display: inline-block;
+    height: 61px;
+    vertical-align: middle;
+    width: 22px;
+}
+.visitor_education {
+
+    width: 40%;
+}
+.visitor h4 {
+
+    font-size: 18px;
+    font-weight: 900;
+}
+.visitor_streak {
+    margin: 30px auto 0;
+    width: 300px;
+}
+
+.visitor_streak li {
+    float: left;
+    height: 120px;
+    vertical-align: bottom;
+}
+.visitor_education li {
+    float: left;
+    height: 40px;
+}
+a {
+    text-decoration: none;
+}
+
+.visitor_streak em {
+    color: #3ad2dc;
+    display: none;
+    position: absolute;
+}
+.visitor_education .legend {
+    color: #6c6c6c;
+    font-size: 12px;
+    margin: 15px auto 0;
+    width: 300px;
+}
+
+.visitor_education .legend p {
+    float: left;
+    margin-right: 10px;
+}
+.visitor_education .legend i {
+    display: inline-block;
+    font-size: 0;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
+}
+
+.i_education1 {
+    background: #96e9ee;
+}
+.i_education0 {
+    background: #0ea4ae;
+}
+.i_education2 {
+    background: #65dde5;
+}
+.i_education3 {
+    background: #8cc151;
+}
+.i_education4 {
+    background: #3ad2dc;
+}
+.i_education5 {
+    background: #1cbec9;
+}
+.cf:after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+.visitor_streak i {
+    display: inline-block;
+    height: 60px;
+    margin-top: 40px;
+}
+.i_education0 {
+    background: #0ea4ae;
+}
+.i_education1 {
+    background: #96e9ee;
+}
+.i_education2 {
+    background: #65dde5;
+}
+.i_education3 {
+    background: #8cc151;
+}
+.i_education4 {
+    background: #3ad2dc;
+}
+.i_education5 {
+    background: #1cbec9;
+}
+.visitor_education .legend {
+    color: #6c6c6c;
+    font-size: 12px;
+    margin: 100px auto 0;
+    width: 300px;
+}
