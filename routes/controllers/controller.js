@@ -34,7 +34,7 @@ app.get('/api/sexAnalysis', function (req, res) {
 /**
  * 年龄分布分析
  * 请求url示例 ： http://ip:端口/api/ageAnalysis?time=2016-01-11,2016-01-08
- * 返回值示例： * 返回值示例：[{"key":"女","sex_count":56459},{"key":"未知","sex_count":56616},{"key":"男","sex_count":60468}]
+ * 返回值示例： [{"key":"30-14","sex_count":25634},{"key":"0-17","sex_count":24941}]
  */
 app.get('/api/ageAnalysis', function (req, res) {
     var queryData = requestParsedUtil.getParamJson(req.url);
