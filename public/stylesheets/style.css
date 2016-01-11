@@ -533,3 +533,252 @@ td:hover .gri_wrapper_td_show {
     height: 10px;
     background: #5D9CEC;
 }
+.page_path_container {
+    overflow: auto;
+    padding: 10px;
+    border-radius: 0;
+    border: 1px solid #e1e1e1;
+    background: #FFF;
+    font-size: 12px;
+    min-height: 200px;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+.page_path_container .path_summary {
+    width: 201px;
+    font-size: 12px;
+    line-height: 1.2em;
+    position: relative;
+}
+.page_path_container .start {
+    width: 179px;
+    height: 126px;
+    display: inline-block;
+    z-index: 3;
+}
+.page_path_container .start h5 {
+    line-height: 26px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    border: 1px solid #547eb3;
+    text-align: center;
+    text-shadow: 0 -1px 1px #456da1;
+    background: url(http://mta.qq.com/mta/resource/imgcache/images/path.png) no-repeat;
+}
+.page_path_container .start .content {
+    border: 1px solid #bdc7d4;
+    background-color: #ecf4ff;
+    color: #0f233d;
+}
+.page_path_container .start table {
+    width: 100%;
+}tbody {
+     display: table-row-group;
+     vertical-align: middle;
+     border-color: inherit;
+ }
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.page_path_container .start th {
+    font-weight: 700;
+}
+.page_path_container .start td, .page_path_container .start th {
+    height: 26px;
+    padding: 0 5px;
+}
+.page_path_container .next {
+    width: 192px;
+}
+.page_path_container .next li {
+    width: 192px;
+    height: 55px;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.page_path_container li:first-child .bg_left {
+    border-top-width: 1px;
+    height: 54px;
+}
+.page_path_container .bg_left {
+    width: 2px;
+    height: 55px;
+    float: left;
+    background: #5688c8;
+    border-width: 0 1px;
+    border-style: solid;
+    border-color: #2a64ae;
+}
+.page_path_container .next_1 .current .box {
+    border-color: #2a64ae;
+    background-color: #5688c8;
+}
+.page_path_container .current .box {
+    color: #0f233d;
+}
+.page_path_container .box {
+    float: left;
+    width: 161px;
+    height: 51px;
+    border: 1px solid #a6c1e4;
+    background: #c4deff;
+    position: relative;
+    left: 2px;
+    color: #526884;
+}
+.page_path_container .fav {
+    width: 27px;
+    height: 27px;
+    line-height: 18px;
+    position: absolute;
+    background: url(http://mta.qq.com/mta/resource/imgcache/images/path.png) 0 -27px no-repeat;
+    top: -1px;
+    left: -1px;
+    color: #fff;
+    display: none;
+}
+a {
+    text-decoration: none;
+}
+.page_path_container .fav i {
+    margin: -1px 0 0 -1px;
+}
+[class^="icon_"], [class*=" icon_"] {
+    font-family: 'mta';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.page_path_container h6 {
+    font-weight: 700;
+}
+.page_path_container h6, .page_path_container p {
+    margin-left: 15px;
+}
+address, caption, cite, code, dfn, em, i, strong, th, var {
+    font-style: normal;
+    font-weight: 400;
+}
+user agent stylesheeti, cite, em, var, address, dfn {
+    font-style: italic;
+}
+.page_path_container p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.page_path_container h6, .page_path_container p {
+    margin-left: 15px;
+}
+.page_path_container .next .current .bg_right {
+    display: block;
+}
+.page_path_container .next_1 .bg_right, .page_path_container .next_2 .bg_left, .page_path_container .next_2 .current .box {
+    border-color: #598ac9;
+    background-color: #6ea2e4;
+}
+.page_path_container .next li {
+    width: 192px;
+    height: 55px;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+.page_path_container .next li {
+    width: 192px;
+    height: 55px;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+.page_path_container .path_summary .bg_right {
+    top: 40%;
+    right: -1px;
+}
+.page_path_container li:first-child .bg_left {
+    border-top-width: 1px;
+    height: 54px;
+}
+.page_path_container .next_2 .bg_right, .page_path_container .next_3 .bg_left, .page_path_container .next_3 .current .box {
+    border-color: #6c97cd;
+    background-color: #87b8f7;
+}
+.page_path_container .bg_left {
+    width: 2px;
+    height: 55px;
+    float: left;
+    background: #5688c8;
+    border-width: 0 1px;
+    border-style: solid;
+    border-color: #2a64ae;
+}
+.page_path_container .last .box {
+    height: 32px;
+    border-color: #d7c1b4;
+    background-color: #faece3;
+    color: #9b7f6f;
+}
+.page_path_container .last .box h6, .page_path_container .last .box p {
+    line-height: 32px;
+}
+.page_path_container .last .box h6 {
+    float: left;
+}
+.page_path_container .last .box p {
+    float: right;
+    padding-right: 5px;
+}
+.page_path_container .next_1 .bg_right, .page_path_container .next_2 .bg_left, .page_path_container .next_2 .current .box {
+    border-color: #598ac9;
+    background-color: #6ea2e4;
+}
+.page_path_container .next .bg_right {
+    top: 13px;
+    right: -1px;
+    display: none;
+    z-index: 2;
+}
+.bg_right {
+    width: 20px;
+    height: 20px;
+    border-width: 1px 0 1px 1px;
+    border-style: solid;
+    border-color: #5989c7;
+    position: absolute;
+    background: url(http://mta.qq.com/mta/resource/imgcache/images/path.png) 0 -74px no-repeat #5688c8;
+    z-index: 2;
+}

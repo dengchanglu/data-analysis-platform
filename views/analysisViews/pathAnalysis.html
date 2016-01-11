@@ -1,0 +1,596 @@
+<div class="panel panel-default" style="border: 0px solid white;height: 100%">
+    <div class="panel-heading">
+        <label style="font-size: 18px; font-weight: 700; ">路径分析</label>
+        <span class="glyphicon glyphicon-question-sign" ng-click=""></span>
+        <br>
+
+        <div class="btn-group" style="margin-top: 5px">
+            <button type="button" class="btn btn-default active">2015-12-24至2016-01-06</button>
+            <button type="button" class="btn btn-default dropdown-toggle active" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+
+            </button>
+<span style="margin-left: 20px;position: relative;bottom:-10px ">
+                 <a href="#">7天</a>
+            <a href="#" class="active">14天</a>
+            <a href="#">30天</a>
+            </span>
+        </div>
+        <br>
+
+        <div style="margin-top: 10px">
+            版本:
+            <div class="btn-group" role="group" aria-label="..." style="margin-left: 15px">
+                <button type="button" class="btn btn-default active">全部</button>
+                <button type="button" class="btn btn-default">3.0.1</button>
+                <button type="button" class="btn btn-default">2.6.9.2</button>
+                <button type="button" class="btn btn-default">v2.5.1_0</button>
+                <button type="button" class="btn btn-default">2.6.9.1</button>
+                <button type="button" class="btn btn-default">2.6.2.0</button>
+                <button type="button" class="btn btn-default">其他</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body" style="background-color: #EDEEF0;height: 100%">
+        <div class="alert" style="background-color: white;margin: 10px;border: 1px solid darkgray">
+            <a href="#" class="close" data-dismiss="alert">
+                &times;
+            </a>
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <span style="color: #666666;font-weight: 500">路径分析可查看用户从一个页面去向其他各个页面的分流情况，可以帮您了解用户在页面之间的跳转行为；
+                </span>
+
+            <p style="margin-left: 20px;color: #666666;font-weight: 500">默认展开用户访问最多的一条路径；</p>
+
+            <p style="margin-left: 20px;color: #666666;font-weight: 500;margin-top: 20px">提供页面名称备注功能，点击<a
+                    href="http://mta.qq.com/mta/operators/ctr_page_name?app_id=1">管理页面名称</a>。</p>
+        </div>
+        <div class="panel panel-default" style="margin-top: 20px;margin-left: 10px;margin-right: 10px">
+            <div class="panel-heading" style="background-color: #FCFCFC">
+                <label style="font-size: 18px; font-weight: 700; ">页面访问者流</label>
+                <span style="color: darkgray;margin-left: 10px">全部 2016-01-04 至 2016-01-10</span>
+            </div>
+            <label style="margin: 20px">走向图</label>
+
+            <div class="panel panel-default" style="margin-left: 20px;margin-right: 20px;">
+                <div class="panel-heading">
+                    起始页面：
+                    <button type="button" class="btn btn-default">10</button>
+                    <label class="pull-right" style="">
+                        <input type="checkbox" checked> 显示页面备注名称
+                    </label>
+                </div>
+                <div class="panel panel-body">
+                    <div id="page_path_container" class="page_path_container" >
+                        <table>
+                            <tbody>
+                            <tr class="path_title">
+                                <th scope="col">&nbsp;</th>
+                                <th scope="col" id="th_page_title1" name="th_page_title"></th>
+                                <th scope="col" id="th_page_title2" name="th_page_title"></th>
+                                <th scope="col" id="th_page_title3" name="th_page_title"></th>
+                                <th scope="col" id="th_page_title4" name="th_page_title"></th>
+                            </tr>
+                            <tr class="path_content" id="tr_chart">
+                                <th scope="row">
+                                    <div class="path_summary" id="div_page_0">
+                                        <div class="start"><h5 id="h5_start_page" title="com.tencent.mta.10"> 10 </h5>
+
+                                            <div class="content">
+                                                <table>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th>访问次数</th>
+                                                        <td>1,925</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>访问人数</th>
+                                                        <td>389</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div style="width: 20px;top: 40%; right: -1px; height: 20px; border-width: 1px 0 1px 1px;
+                                        border-style: solid; border-color: #5989c7;position: absolute;
+                                        background: url(http://mta.qq.com/mta/resource/imgcache/images/path.png) 0 -74px no-repeat #5688c8;
+                                        z-index: 2;">
+
+                                        </div>
+                                    </div>
+                                </th>
+                                <td class="next next_1" id="td_chart_1">
+                                    <ul>
+                                        <li id="li_page_1_0" class="current">
+                                            <div class="bg_left" style="width: 2px;
+                                            height: 55px;
+                                            float: left;
+                                            background: #5688c8;
+                                            border-width: 0 1px;
+                                            border-style: solid;
+                                            border-color: #2a64ae;">
+
+                                            </div>
+                                            <div class="box" index="1-0" name="div_select_page" pv_rate="0.51"
+                                                 start_page="com.tencent.mta.175" page_level_num="3"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="2"
+                                                                                                        start_page="com.tencent.mta.175">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.51<i>%</i></h6>
+
+                                                <p> 175 </p></div>
+                                            <div class="bg_right"></div>
+                                        </li>
+                                        <li id="li_page_1_1">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="1-1" name="div_select_page" pv_rate="0.51"
+                                                 start_page="com.tencent.mta.46" page_level_num="3"><a class="fav"
+                                                                                                       href="javascript:void(0);"
+                                                                                                       title="设置终止页"
+                                                                                                       name="a_set_start_page"
+                                                                                                       pv="2"
+                                                                                                       start_page="com.tencent.mta.46">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.51<i>%</i></h6>
+
+                                                <p> 46 </p></div>
+                                        </li>
+                                        <li id="li_page_1_2">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="1-2" name="div_select_page" pv_rate="0.51"
+                                                 start_page="com.tencent.mta.211" page_level_num="3"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="2"
+                                                                                                        start_page="com.tencent.mta.211">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.51<i>%</i></h6>
+
+                                                <p> 211 </p></div>
+                                        </li>
+                                        <li id="li_page_1_3">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="1-3" name="div_select_page" pv_rate="0.25"
+                                                 start_page="com.tencent.mta.239" page_level_num="3"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1"
+                                                                                                        start_page="com.tencent.mta.239">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.25<i>%</i></h6>
+
+                                                <p> 239 </p></div>
+                                        </li>
+                                        <li id="li_page_1_4">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="1-4" name="div_select_page" pv_rate="0.25"
+                                                 start_page="com.tencent.mta.87" page_level_num="3"><a class="fav"
+                                                                                                       href="javascript:void(0);"
+                                                                                                       title="设置终止页"
+                                                                                                       name="a_set_start_page"
+                                                                                                       pv="1"
+                                                                                                       start_page="com.tencent.mta.87">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.25<i>%</i></h6>
+
+                                                <p> 87 </p></div>
+                                        </li>
+                                        <li id="li_page_1_5">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="1-5" name="div_select_page" pv_rate="0.25"
+                                                 start_page="com.tencent.mta.234" page_level_num="3"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1"
+                                                                                                        start_page="com.tencent.mta.234">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.25<i>%</i></h6>
+
+                                                <p> 234 </p></div>
+                                        </li>
+                                        <li id="li_page_1_6">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6></h6>
+
+                                                <p></p></div>
+                                        </li>
+                                        <li id="li_page_1_7">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6></h6>
+
+                                                <p></p></div>
+                                        </li>
+                                        <li id="li_page_1_8">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6></h6>
+
+                                                <p></p></div>
+                                        </li>
+                                        <li class="last">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6>97.72<i>%</i></h6>
+
+                                                <p>离开应用</p></div>
+                                            <div class="bg_right"></div>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td class="next next_2" id="td_chart_2">
+                                    <ul>
+                                        <li id="li_page_2_0" class="current">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="2-0" name="div_select_page" pv_rate="0.04"
+                                                 start_page="com.tencent.mta.87" page_level_num="2"><a class="fav"
+                                                                                                       href="javascript:void(0);"
+                                                                                                       title="设置终止页"
+                                                                                                       name="a_set_start_page"
+                                                                                                       pv="1,872"
+                                                                                                       start_page="com.tencent.mta.87">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.04<i>%</i></h6>
+
+                                                <p> 87 </p></div>
+                                            <div class="bg_right"></div>
+                                        </li>
+                                        <li id="li_page_2_1">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="2-1" name="div_select_page" pv_rate="0.04"
+                                                 start_page="com.tencent.mta.211" page_level_num="2"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1,838"
+                                                                                                        start_page="com.tencent.mta.211">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.04<i>%</i></h6>
+
+                                                <p> 211 </p></div>
+                                        </li>
+                                        <li id="li_page_2_2">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="2-2" name="div_select_page" pv_rate="0.02"
+                                                 start_page="com.tencent.mta.204" page_level_num="2"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1,020"
+                                                                                                        start_page="com.tencent.mta.204">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.02<i>%</i></h6>
+
+                                                <p> 204 </p></div>
+                                        </li>
+                                        <li id="li_page_2_3">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="2-3" name="div_select_page" pv_rate="0.02"
+                                                 start_page="com.tencent.mta.228" page_level_num="2"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="940"
+                                                                                                        start_page="com.tencent.mta.228">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.02<i>%</i></h6>
+
+                                                <p> 228 </p></div>
+                                        </li>
+                                        <li id="li_page_2_4">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="2-4" name="div_select_page" pv_rate="0.02"
+                                                 start_page="com.tencent.mta.227" page_level_num="2"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="937"
+                                                                                                        start_page="com.tencent.mta.227">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.02<i>%</i></h6>
+
+                                                <p> 227 </p></div>
+                                        </li>
+                                        <li id="li_page_2_5">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="2-5" name="div_select_page" pv_rate="0.02"
+                                                 start_page="com.tencent.mta.208" page_level_num="2"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="924"
+                                                                                                        start_page="com.tencent.mta.208">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.02<i>%</i></h6>
+
+                                                <p> 208 </p></div>
+                                        </li>
+                                        <li id="li_page_2_6">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="2-6" name="div_select_page" pv_rate="0.02"
+                                                 start_page="com.tencent.mta.46" page_level_num="2"><a class="fav"
+                                                                                                       href="javascript:void(0);"
+                                                                                                       title="设置终止页"
+                                                                                                       name="a_set_start_page"
+                                                                                                       pv="891"
+                                                                                                       start_page="com.tencent.mta.46">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.02<i>%</i></h6>
+
+                                                <p> 46 </p></div>
+                                        </li>
+                                        <li id="li_page_2_7">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="2-7" name="div_select_page" pv_rate="0.02"
+                                                 start_page="com.tencent.mta.94" page_level_num="2"><a class="fav"
+                                                                                                       href="javascript:void(0);"
+                                                                                                       title="设置终止页"
+                                                                                                       name="a_set_start_page"
+                                                                                                       pv="885"
+                                                                                                       start_page="com.tencent.mta.94">
+                                                <i class="icon_location"></i> </a>                                  <h6>
+                                                0.02<i>%</i></h6>
+
+                                                <p> 94 </p></div>
+                                        </li>
+                                        <li id="li_page_2_8">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6>0.03<i>%</i></h6>
+
+                                                <p> 其他 </p></div>
+                                        </li>
+                                        <li class="last">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6>0.26<i>%</i></h6>
+
+                                                <p>离开应用</p></div>
+                                            <div class="bg_right"></div>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td class="next next_3" id="td_chart_3">
+                                    <ul>
+                                        <li id="li_page_3_0" class="current">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="3-0" name="div_select_page" pv_rate="0.00"
+                                                 start_page="com.tencent.mta.211" page_level_num="1"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="3,376"
+                                                                                                        start_page="com.tencent.mta.211">
+                                                <i class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 211 </p></div>
+                                            <div class="bg_right"></div>
+                                        </li>
+                                        <li id="li_page_3_1">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="3-1" name="div_select_page" pv_rate="0.00"
+                                                 start_page="com.tencent.mta.175" page_level_num="1"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1,884"
+                                                                                                        start_page="com.tencent.mta.175">
+                                                <i class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 175 </p></div>
+                                        </li>
+                                        <li id="li_page_3_2">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="3-2" name="div_select_page" pv_rate="0.00"
+                                                 start_page="com.tencent.mta.204" page_level_num="1"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1,777"
+                                                                                                        start_page="com.tencent.mta.204">
+                                                <i class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 204 </p></div>
+                                        </li>
+                                        <li id="li_page_3_3">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="3-3" name="div_select_page" pv_rate="0.00"
+                                                 start_page="com.tencent.mta.94" page_level_num="1"><a class="fav"
+                                                                                                       href="javascript:void(0);"
+                                                                                                       title="设置终止页"
+                                                                                                       name="a_set_start_page"
+                                                                                                       pv="1,769"
+                                                                                                       start_page="com.tencent.mta.94">
+                                                <i class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 94 </p></div>
+                                        </li>
+                                        <li id="li_page_3_4">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="3-4" name="div_select_page" pv_rate="0.00"
+                                                 start_page="com.tencent.mta.227" page_level_num="1"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1,761"
+                                                                                                        start_page="com.tencent.mta.227">
+                                                <i class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 227 </p></div>
+                                        </li>
+                                        <li id="li_page_3_5">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="3-5" name="div_select_page" pv_rate="0.00"
+                                                 start_page="com.tencent.mta.228" page_level_num="1"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1,738"
+                                                                                                        start_page="com.tencent.mta.228">
+                                                <i class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 228 </p></div>
+                                        </li>
+                                        <li id="li_page_3_6">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="3-6" name="div_select_page" pv_rate="0.00"
+                                                 start_page="com.tencent.mta.208" page_level_num="1"><a class="fav"
+                                                                                                        href="javascript:void(0);"
+                                                                                                        title="设置终止页"
+                                                                                                        name="a_set_start_page"
+                                                                                                        pv="1,722"
+                                                                                                        start_page="com.tencent.mta.208">
+                                                <i class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 208 </p></div>
+                                        </li>
+                                        <li id="li_page_3_7">
+                                            <div class="bg_left"></div>
+                                            <div class="box" index="3-7" name="div_select_page" pv_rate="0.00"
+                                                 start_page="com.tencent.mta.46" page_level_num="1"><a class="fav"
+                                                                                                       href="javascript:void(0);"
+                                                                                                       title="设置终止页"
+                                                                                                       name="a_set_start_page"
+                                                                                                       pv="1,629"
+                                                                                                       start_page="com.tencent.mta.46">
+                                                <i class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 46 </p></div>
+                                        </li>
+                                        <li id="li_page_3_8">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6>0.00<i>%</i></h6>
+
+                                                <p> 其他 </p></div>
+                                        </li>
+                                        <li class="last">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6>0.02<i>%</i></h6>
+
+                                                <p>离开应用</p></div>
+                                            <div class="bg_right"></div>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td class="next next_4" id="td_chart_4">
+                                    <ul>
+                                        <li id="li_page_4_0">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><a class="fav" href="javascript:void(0);" title="设置终止页"
+                                                                name="a_set_start_page" pv="3,539"
+                                                                start_page="com.tencent.mta.87"> <i
+                                                    class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 87 </p></div>
+                                        </li>
+                                        <li id="li_page_4_1">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><a class="fav" href="javascript:void(0);" title="设置终止页"
+                                                                name="a_set_start_page" pv="1,959"
+                                                                start_page="com.tencent.mta.227"> <i
+                                                    class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 227 </p></div>
+                                        </li>
+                                        <li id="li_page_4_2">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><a class="fav" href="javascript:void(0);" title="设置终止页"
+                                                                name="a_set_start_page" pv="1,924"
+                                                                start_page="com.tencent.mta.228"> <i
+                                                    class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 228 </p></div>
+                                        </li>
+                                        <li id="li_page_4_3">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><a class="fav" href="javascript:void(0);" title="设置终止页"
+                                                                name="a_set_start_page" pv="1,816"
+                                                                start_page="com.tencent.mta.175"> <i
+                                                    class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 175 </p></div>
+                                        </li>
+                                        <li id="li_page_4_4">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><a class="fav" href="javascript:void(0);" title="设置终止页"
+                                                                name="a_set_start_page" pv="1,798"
+                                                                start_page="com.tencent.mta.46"> <i
+                                                    class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 46 </p></div>
+                                        </li>
+                                        <li id="li_page_4_5">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><a class="fav" href="javascript:void(0);" title="设置终止页"
+                                                                name="a_set_start_page" pv="1,788"
+                                                                start_page="com.tencent.mta.204"> <i
+                                                    class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 204 </p></div>
+                                        </li>
+                                        <li id="li_page_4_6">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><a class="fav" href="javascript:void(0);" title="设置终止页"
+                                                                name="a_set_start_page" pv="1,782"
+                                                                start_page="com.tencent.mta.208"> <i
+                                                    class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 208 </p></div>
+                                        </li>
+                                        <li id="li_page_4_7">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><a class="fav" href="javascript:void(0);" title="设置终止页"
+                                                                name="a_set_start_page" pv="1,761"
+                                                                start_page="com.tencent.mta.94"> <i
+                                                    class="icon_location"></i> </a>
+                                                <h6>0.00<i>%</i></h6>
+
+                                                <p> 94 </p></div>
+                                        </li>
+                                        <li id="li_page_4_8">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6>0.00<i>%</i></h6>
+
+                                                <p> 其他 </p></div>
+                                        </li>
+                                        <li class="last">
+                                            <div class="bg_left"></div>
+                                            <div class="box"><h6>0.00<i>%</i></h6>
+
+                                                <p>离开应用</p></div>
+                                            <div class="bg_right"></div>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
