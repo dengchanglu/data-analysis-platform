@@ -56,4 +56,16 @@ app.get('/api/regionAnalysis', function (req, res) {
     });
 });
 
+/**
+ * 职业分布分析
+ * 请求url示例 ： http://ip:端口/api/professionAnalysis?time=2016-01-11,2016-01-08
+ * 返回值示例： [{"key":"服务业","sex_count":16990},{"key":"销售客服","sex_count":16691}]
+ */
+app.get('/api/professionAnalysis', function (req, res) {
+    var queryData = requestParsedUtil.getParamJson(req.url);
+    upAnalysis.upAnalysis.professionSearch(es.client, queryData, function (data) {
+        res.send(data);
+    });
+});
+
 module.exports = app;
