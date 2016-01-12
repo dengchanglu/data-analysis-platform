@@ -51,10 +51,10 @@
         </nav>
         <div class="container-fluid">
             <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default active">新增用户（含重复安装）</button>
-                <button type="button" class="btn btn-default">活跃用户</button>
-                <button type="button" class="btn btn-default">启动次数</button>
-                <button type="button" class="btn btn-default">在线时长</button>
+                <button type="button" class="btn btn-default active" ng-click="getNewUserChartData()">新增用户</button>
+                <button type="button" class="btn btn-default" ng-click="getActiveUserChartData()">活跃用户</button>
+                <button type="button" class="btn btn-default" ng-click="getStartCountChartData()">启动次数</button>
+
 
             </div>
         </div>
@@ -67,20 +67,20 @@
                 <thead>
                 <tr>
                     <th>操作系统版本</th>
-                    <th>新增用户（含重复安装）/占比</th>
+                    <th>新增用户/占比</th>
                     <th>活跃用户/占比</th>
                     <th>启动次数/占比</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="x in data">
-                    <td>{{x.key}}</td>
-                    <td>{{x.register_user}} <span style="margin-left: 10px">{{((x.register_user/NewUserSum)*100).toFixed(2)}}%</span>
+                <tr ng-repeat="data in dataArray">
+                    <td>{{data.key}}</td>
+                    <td>{{data.register_user}} <span style="margin-left: 10px">{{((data.register_user/NewUserSum)*100).toFixed(2)}}%</span>
                     </td>
-                    <td>{{x.active_user}}<span style="margin-left: 10px">{{((x.active_user/ActiveUser)*100).toFixed(2)}}%</span>
+                    <td>{{data.active_user}}<span style="margin-left: 10px">{{((data.active_user/ActiveUser)*100).toFixed(2)}}%</span>
                     </td>
-                    <td>{{x.start_count}} <span style="margin-left: 10px">{{((x.start_count/StartCount)*100).toFixed(2)}}%</span>
+                    <td>{{data.start_count}} <span style="margin-left: 10px">{{((data.start_count/StartCount)*100).toFixed(2)}}%</span>
                     </td>
                 </tr>
 
