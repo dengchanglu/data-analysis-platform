@@ -76,9 +76,12 @@
                 <tbody>
                 <tr ng-repeat="x in data">
                     <td>{{x.key}}</td>
-                    <td>{{x.register_user}} <span style="margin-left: 10px">{{((x.register_user/NewUserSum)*100).toFixed(2)}}%</span></td>
-                    <td>{{x.active_user}}<span style="margin-left: 10px">{{((x.active_user/ActiveUser)*100).toFixed(2)}}%</span></td>
-                    <td>{{x.start_count}} <span style="margin-left: 10px">{{((x.start_count/StartCount)*100).toFixed(2)}}%</span></td>
+                    <td>{{x.register_user}} <span style="margin-left: 10px">{{((x.register_user/NewUserSum)*100).toFixed(2)}}%</span>
+                    </td>
+                    <td>{{x.active_user}}<span style="margin-left: 10px">{{((x.active_user/ActiveUser)*100).toFixed(2)}}%</span>
+                    </td>
+                    <td>{{x.start_count}} <span style="margin-left: 10px">{{((x.start_count/StartCount)*100).toFixed(2)}}%</span>
+                    </td>
                 </tr>
 
                 </tbody>
@@ -90,7 +93,7 @@
 </div>
 <div class="row">
     <div class="col-md-3">
-        <span  style="margin-left: 20px">共15条记录,每页显示<div class="btn-group">
+        <span style="margin-left: 20px">共15条记录,每页显示<div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle"
                     data-toggle="dropdown">
                 10 <span class="caret"></span>

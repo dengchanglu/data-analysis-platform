@@ -54,161 +54,17 @@
                         {
                             "name": "新增用户（含重复安装）",
                             "type": "bar",
-                            "data": [
-                                {
-                                    value: 1,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '0.02%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 23,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '0.56%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 81,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '1.97%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 109,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '2.65%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 145,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '3.53%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 357,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '8.69%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 439,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '10.69%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 529,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '12.88%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 980,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '23.86%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },
-                                {
-                                    value: 1444,
-                                    itemStyle: {
-                                        normal: {
-                                            label: {
-                                                show: true,
-                                                formatter: '35.15%',
-                                                textStyle: {
-                                                    color: 'black'
-                                                }
-                                            }
-                                        },
-                                        emphasis: {}
-                                    }
-                                },],
-
+                            "data": [1, 23, 81, 109, 145, 357, 439, 529, 980, 1444],
                             barCategoryGap: '15',
                             itemStyle: {
                                 normal: {
+                                    label: {
+                                        show: true,
+                                        formatter: '35.15%',
+                                        textStyle: {
+                                            color: 'black'
+                                        }
+                                    },
                                     color: '#76B5FF',//颜色
                                 },
                                 emphasis: {}
@@ -221,8 +77,6 @@
 
                 // 为echarts对象加载数据
                 myChart.setOption(option);
-
-
             }
         );
         $http.get("http://localhost:3000/api/tdAnalysis?av=all&time=2016-01-11&key=version")
@@ -230,7 +84,7 @@
                 for (var i = 0; i < 7; i++) {
                     $scope.NewUserSum += response[i].register_user;
                     $scope.ActiveUser += response[i].active_user;
-                    $scope.StartCount+=response[i].start_count;
+                    $scope.StartCount += response[i].start_count;
                     $scope.data.push(response[i])
                 }
                 console.log($scope.data)
