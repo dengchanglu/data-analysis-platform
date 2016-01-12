@@ -7,6 +7,14 @@
         .module('dataAP')
         .controller('userPortraitCtr', userPortraitCtr);
     function userPortraitCtr($scope, $location, ipCookie, $rootScope) {
+
+
+        $scope.showEm=function(){
+
+            document.getElementById("em1").style.display="block"
+            document.getElementById("i_education0").style.height="60px"
+
+        }
         require(
             [
                 'echarts',
@@ -421,5 +429,7 @@
                 AgeDistributionChart.setOption(option3)
             }
         );
+
+
     }
 })();
