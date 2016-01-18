@@ -1,4 +1,138 @@
+<div class="panel panel-default" style="border: 0px solid white">
+    <div class="panel-heading">
+        <label style="font-size: 18px; font-weight: 700; ">访问页面</label>
+        <br>
 
-<div>
-    版本分布
+        <div class="btn-group">
+            <div class="form-group">
+                <div class="input-group col-md-6">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <input date-range-picker id="daterange3" name="daterange3" class="form-control date-picker"
+                           type="text"
+                           ng-model="date" options="opts" required/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-chevron-down"></span></span>
+
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div style="margin-top: 10px">
+            渠道:
+            <div class="btn-group" role="group" aria-label="..." style="margin-left: 15px">
+                <button type="button" class="btn btn-default active">全部</button>
+                <button type="button" class="btn btn-default">OpenPlatform</button>
+                <button type="button" class="btn btn-default">yingyongbao</button>
+                <button type="button" class="btn btn-default">未知</button>
+                <button type="button" class="btn btn-default">oppo</button>
+                <button type="button" class="btn btn-default">guanwang</button>
+                <button type="button" class="btn btn-default">其他</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="mod_basic">
+        <div class="content">
+            <hr class="split">
+            <div class="sub_content">
+                <div class="column cf">
+                    <div class="column-title cf">
+                        <div class="btn-append" id="set_table"></div>
+                    </div>
+                    <div id="table_list" style="overflow:visible;" class="gri_wrapper">
+                        <table class="gri_stable" id="table_list_table">
+                            <colgroup span="8">
+                                <col class="gri_AppVersion">
+                                <col class="gri_NewUser">
+                                <col class="gri_UpgradeUv">
+                                <col class="gri_ActiveUser">
+                                <col class="gri_SessionNum">
+                                <col class="gri_time_per_session">
+                                <col class="gri_TotalUser">
+                                <col class="gri_TotalUserRate">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th name="AppVersion" class="hover enable">版本名称<i class="icon-order-hover"></i></th>
+                                <th name="NewUser" class="hover enable">新增注册用户<i class="icon-order-hover"></i></th>
+                                <th name="UpgradeUv" class="hover enable">升级用户<i class="icon-order-hover"></i></th>
+                                <th name="ActiveUser" class="hover enable">活跃用户<i class="icon-order-hover"></i></th>
+                                <th name="SessionNum" class="hover enable">启动次数<i class="icon-order-hover"></i></th>
+                                <!--<th name="time_per_session" class="hover enable">次均使用时长<i class="icon-order-hover"></i>-->
+                                </th>
+                                <th name="TotalUser" class="hover enable">累计用户<i class="icon-order-hover"></i></th>
+                                <th name="TotalUserRate" class="hover enable">占比<i class="icon-order-hover"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div style="width: 100%; height: 100%;text-align:center;">3.0.1</div>
+                                </td>
+                                <td>
+                                    <div style="width: 100%; height: 100%;text-align:right;">3,135</div>
+                                </td>
+                                <td>
+                                    <div style="width: 100%; height: 100%;text-align:right;">339</div>
+                                </td>
+                                <td>
+                                    <div style="width: 100%; height: 100%;text-align:right;">11,559</div>
+                                </td>
+                                <td>
+                                    <div style="width: 100%; height: 100%;text-align:right;">23,832</div>
+                                </td>
+                                <!--<td>-->
+                                <!--<div style="width: 100%; height: 100%;text-align:right;">0:00:00</div>-->
+                                <!--</td>-->
+                                <td>
+                                    <div style="width: 100%; height: 100%;text-align:right;">965,893</div>
+                                </td>
+                                <td>
+                                    <div style="width: 100%; height: 100%;text-align:right;">43.03%</div>
+                                </td>
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px">
+                <div class="col-md-3">
+        <span style="margin-left: 20px">共15条记录,每页显示<div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                    data-toggle="dropdown">
+                10 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">5</a></li>
+                <li><a href="#">10</a></li>
+                <li><a href="#">15</a></li>
+                <li><a href="#">20</a></li>
+                <li><a href="#">30</a></li>
+                <li><a href="#">50</a></li>
+                <li><a href="#">100</a></li>
+                <li><a href="#">200</a></li>
+            </ul>
+        </div>条
+                </span>
+
+                </div>
+                <div class="col-md-3 col-md-offset-6">
+
+<span> <ul class="pagination " style="margin-right: 10px;position: relative;top: -20px">
+    <li><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">&raquo;</a></li>
+</ul></span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 </div>

@@ -2,7 +2,7 @@
  * Created by perfection on 15-12-3.
  */
 
-var dataAP = angular.module('dataAP', ['ui.router','ipCookie']);
+var dataAP = angular.module('dataAP', ['ui.router','ipCookie','ui.bootstrap','daterangepicker']);
 dataAP.config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.when("", "index");
@@ -23,7 +23,8 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state("index.versionDis", {
             url:"/versionDis",
-            templateUrl: "views/analysisViews/channelSourceSegmentation.html"
+            templateUrl: "views/analysisViews/versionDistribution.html",
+            controller:"versionDisCtr"
         })
         .state("index.terminalDev", {
             url:"/terminalDev",
