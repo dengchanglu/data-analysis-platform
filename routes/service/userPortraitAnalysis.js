@@ -238,33 +238,39 @@ var upAnalysis = {
         });
     },
     versionSearch: function (es, queryData, callback) {
-        var queryBody = {
-            "bool": {
-                "must": [{
-                    "term": {
-                        "cm": queryData.cm
-                    }
-                }],
-                "filter": {
-                    "or": []
+        var queryBody;
+        if (queryData.cm == "all") {
+            queryBody = {
+                "bool": {
+                    "should": []
                 }
-            }
-        };
+            };
+        } else {
+            queryBody = {
+                "bool": {
+                    "must": [{
+                        "term": {
+                            "cm": queryData.cm
+                        }
+                    }],
+                    "should": []
+
+                }
+            };
+        }
         var avs = queryData.av.split(",");
         for (var j = 0; j < avs.length; j++) {
-            queryBody.bool.filter.or.push({
+            queryBody.bool.should.push({
                 "term": {
                     "av": avs[j]
                 }
             });
         }
-
         var index = [];
         var time = queryData.time.split(",");
         for (var i = 0; i < time.length; i++) {
             index.push("app-" + time[i]);
         }
-        console.log(queryBody)
         var requestJson = {
             "index": index,
             "type": "appLog",
@@ -306,6 +312,7 @@ var upAnalysis = {
             var data = [];
             if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
                 var res = response.aggregations.data.buckets;
+                console.log(res)
                 for (var i = 0; i < res.length; i++) {
                     data.push(
                         {
