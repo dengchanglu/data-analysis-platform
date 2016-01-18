@@ -92,8 +92,7 @@
                                             var str1 = '新注册用户'
                                             var str2 = '活跃用户'
                                             var str3 = '启动次数'
-                                            console.log(params.seriesName);
-                                            console.log(ticket)
+
                                             label = ((params.value / $scope.NewUserSum) * 100).toFixed(2)
                                             switch (params.seriesName) {
                                                 case str1:
