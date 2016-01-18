@@ -94,4 +94,19 @@ app.get('/api/eduAnalysis', function (req, res) {
     });
 });
 
+/**
+ * 版本分布分析
+ * 请求参数：url?time=2016-01-18&cm=guanwang&av=2.2.0,2.1.0
+ * time时间参数，值的格式：2016-01-01,时间1,时间2,时间3,时间4,...
+ * cm-渠道标记;av:av-app版本
+ * 请求url示例 ： http://ip:端口/api/versionAnalysis?time=2016-01-18&cm=guanwang&av=2.2.0,2.1.0
+ * 返回值示例： [{"key":"2.2.0","active_user":1019,"start_count":519,"register_user":103},{"key":"2.1.0","active_user":1025,"start_count":535,"register_user":102}]
+ */
+app.get('/api/versionAnalysis', function (req, res) {
+    var queryData = requestParsedUtil.getParamJson(req.url);
+    upAnalysis.upAnalysis.versionSearch(es.client, queryData, function (data) {
+        res.send(data);
+    });
+});
+
 module.exports = app;
