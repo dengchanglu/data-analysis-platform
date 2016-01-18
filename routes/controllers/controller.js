@@ -10,6 +10,10 @@ var app = express();
 
 /**
  * 终端设备分析
+ * 请求的参数：url?time=2016-01-11&key=version&av=all;
+ * 请求参数值：time的的值必须是这种格式2016-01-11;key指关键指标：
+ * version-操作系统版本,sr-屏幕分辨率,ne-网络运行环境,co-运营商,phoneType-设备型号;
+ * av指app版本现在仅有版本{"4.1", "4.2", "4.3", "4.4", "5.0", "5.1", "6.0"};
  * 请求url示例 ： http://ip:端口/api/tdAnalysis?av=all&time=2016-01-11&key=version
  * 返回值示例：[{"key":"android 4.1","active_user":10430,"start_count":5176,"register_user":1107}]
  */
@@ -22,6 +26,8 @@ app.get('/api/tdAnalysis', function (req, res) {
 
 /**
  * 性别分析
+ * 请求参数：url?time=2016-01-11,2016-01-08
+ * time时间参数，值的格式：2016-01-01,时间1,时间2,时间3,时间4,...
  * 请求url示例 ： http://ip:端口/api/sexAnalysis?time=2016-01-11,2016-01-08
  * 返回值示例：[{"key":"女","sex_count":56459},{"key":"未知","sex_count":56616},{"key":"男","sex_count":60468}]
  */
@@ -34,6 +40,8 @@ app.get('/api/sexAnalysis', function (req, res) {
 
 /**
  * 年龄分布分析
+ * 请求参数：url?time=2016-01-11,2016-01-08
+ * time时间参数，值的格式：2016-01-01,时间1,时间2,时间3,时间4,...
  * 请求url示例 ： http://ip:端口/api/ageAnalysis?time=2016-01-11,2016-01-08
  * 返回值示例： [{"key":"30-14","sex_count":25634},{"key":"0-17","sex_count":24941}]
  */
@@ -46,6 +54,8 @@ app.get('/api/ageAnalysis', function (req, res) {
 
 /**
  * 地域分布分析
+ * 请求参数：url?time=2016-01-11,2016-01-08
+ * time时间参数，值的格式：2016-01-01,时间1,时间2,时间3,时间4,...
  * 请求url示例 ： http://ip:端口/api/regionAnalysis?time=2016-01-11,2016-01-08
  * 返回值示例： [{"key":"重庆","sex_count":8656},{"key":"银川","sex_count":9484}]
  */
@@ -58,6 +68,8 @@ app.get('/api/regionAnalysis', function (req, res) {
 
 /**
  * 职业分布分析
+ * 请求参数：url?time=2016-01-11,2016-01-08
+ * time时间参数，值的格式：2016-01-01,时间1,时间2,时间3,时间4,...
  * 请求url示例 ： http://ip:端口/api/professionAnalysis?time=2016-01-11,2016-01-08
  * 返回值示例： [{"key":"服务业","sex_count":16990},{"key":"销售客服","sex_count":16691}]
  */
@@ -70,6 +82,8 @@ app.get('/api/professionAnalysis', function (req, res) {
 
 /**
  * 学历分布分析
+ * 请求参数：url?time=2016-01-11,2016-01-08
+ * time时间参数，值的格式：2016-01-01,时间1,时间2,时间3,时间4,...
  * 请求url示例 ： http://ip:端口/api/eduAnalysis?time=2016-01-11,2016-01-08
  * 返回值示例： [{"key":"高中","edu_count":28006},{"key":"未知","edu_count":29272}]
  */
