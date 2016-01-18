@@ -10,6 +10,8 @@
                 startDate: moment().subtract(1, "days"),
                 endDate: moment()
             };
+
+
             $scope.opts = {
                 locale: {
                     applyClass: 'btn-green',

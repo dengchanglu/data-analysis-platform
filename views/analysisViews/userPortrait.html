@@ -65,48 +65,56 @@
 
                         <div class="visitor_streak cf" id="grade_chart_container">
                             <ul>
-                                <li ><a href="javascript:void(0);"><em id="em1">9.02%</em><br><i id="i_education0" ng-click="showEm(em1)"style="width:26px"
-                                                                                       class="i_education0"></i></a>
+                                <li>
+                                    <a href="javascript:void(0);" ><em id="em0">{{((EducationDataArray[3].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
+                                    <i id="i_education0" style="width:26px;line-height: 80px" ng-Mouseenter="show('em0')" ng-Mouseleave="hide('em0')"
+                                       class="i_education0"></i>
+                                    </a>
                                 </li>
-                                <li><a href="javascript:void(0);"><em>2.85%</em><br><i style="width:8px"
-                                                                                       class="i_education1"></i></a>
+                                <li>
+                                    <a href="javascript:void(0);"><em id="em1">{{((EducationDataArray[4].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
+                                    <i style="width:8px" class="i_education1" ng-Mouseenter="show('em1')" ng-Mouseleave="hide('em1')"></i>
+                                </a>
                                 </li>
-                                <li><a href="javascript:void(0);"><em>18.91%</em><br><i style="width:54px"
-                                                                                        class="i_education2"></i></a>
+                                <li>
+                                    <a href="javascript:void(0);"><em id="em2">{{((EducationDataArray[2].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
+                                        <i style="width:54px" class="i_education2" ng-Mouseenter="show('em2')" ng-Mouseleave="hide('em2')"></i></a>
                                 </li>
-                                <li><a href="javascript:void(0);"><em>44.06%</em><br><i style="width:126px"
-                                                                                        class="i_education3"></i></a>
+                                <li>
+                                    <a href="javascript:void(0);"><em id="em3">{{((EducationDataArray[0].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
+                                        <i style="width:126px" class="i_education3" ng-Mouseenter="show('em3')" ng-Mouseleave="hide('em3')"></i>
+                                    </a>
                                 </li>
-                                <li><a href="javascript:void(0);"><em>23.84%</em><br><i style="width:68px"
-                                                                                        class="i_education4"></i></a>
+                                <li>
+                                    <a href="javascript:void(0);"><em id="em4">{{((EducationDataArray[1].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
+                                        <i style="width:68px" class="i_education4" ng-Mouseenter="show('em4')" ng-Mouseleave="hide('em4')"></i>
+                                    </a>
                                 </li>
-                                <li><a href="javascript:void(0);"><em>0.68%</em><br><i style="width:2px"
-                                                                                       class="i_education5"></i></a>
+                                <li><a href="javascript:void(0);"><em id="em5">{{((EducationDataArray[5].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
+                                    <i style="width:2px" class="i_education5" ng-Mouseenter="show('em5')" ng-Mouseleave="hide('em5')"></i></a>
                                 </li>
-                                <li><a href="javascript:void(0);"><em>0.64%</em><br><i style="width:2px"
-                                                                                       class="i_education6"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                         <div class="legend" id="visitor_grade_legend">
-                            <p><i class="i_education0"></i>未知</p>
+                            <p><i class="i_education0"></i>{{EducationDataArray[3].key}}</p>
 
-                            <p><i class="i_education1"></i>初中</p>
+                            <p><i class="i_education1"></i>{{EducationDataArray[4].key}}</p>
 
-                            <p><i class="i_education2"></i>高中</p>
+                            <p><i class="i_education2"></i>{{EducationDataArray[2].key}}</p>
 
-                            <p><i class="i_education3"></i>本科</p>
+                            <p><i class="i_education3"></i>{{EducationDataArray[0].key}}</p>
 
-                            <p><i class="i_education4"></i>硕士</p>
+                            <p><i class="i_education4"></i>{{EducationDataArray[1].key}}</p>
 
-                            <p><i class="i_education5"></i>博士</p>
+                            <p><i class="i_education5"></i>{{EducationDataArray[5].key}}</p>
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="row" style="margin-top: 50px">
                     <div class="col-md-6">
-                        <div id="mapChart" style="height: 500px;width: 600px;margin-top: 10px"></div>
+                        <div id="mapChart" style="height: 500px;width: 700px;margin-top: 10px"></div>
                     </div>
                     <div class="col-md-6">
                         <div id="RegionalDistributionChart" style="height: 500px;width: 700px;margin-top: 10px"></div>
@@ -125,110 +133,110 @@
                             <circle cx="100" cy="114" r="100" fill="#5D9CEC"></circle>
                             <text x="74" y="114"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                电子网络
+                                {{ProfessionDataArray[0].key}}
                             </text>
-                            <text x="82" y="132"
+                            <text x="75" y="132"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                10.75%
+                                {{(((ProfessionDataArray[0].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="294" cy="200" r="80" fill="#62C87F"></circle>
                             <text x="268" y="200"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                销售客服
+                                {{ProfessionDataArray[1].key}}
                             </text>
                             <text x="276" y="218"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                2.29%
+                                {{(((ProfessionDataArray[1].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="780" cy="80" r="70" fill="#F15755"></circle>
                             <text x="754" y="80"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                服务业
+                                {{ProfessionDataArray[2].key}}
                             </text>
                             <text x="762" y="98"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                0.81%
+                                {{(((ProfessionDataArray[2].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="862" cy="223" r="65" fill="#FC863F"></circle>
                             <text x="836" y="223"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                媒体艺术
+                                {{ProfessionDataArray[3].key}}
                             </text>
                             <text x="844" y="241"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                0.77%
+                                {{(((ProfessionDataArray[3].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="524" cy="226" r="60" fill="#7053B6"></circle>
                             <text x="498" y="226"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                物流采购
+                                {{ProfessionDataArray[4].key}}
                             </text>
                             <text x="506" y="244"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                0.44%
+                                {{(((ProfessionDataArray[4].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="673" cy="234" r="45" fill="#FFCE55"></circle>
                             <text x="647" y="234"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                教育科研
+                                {{ProfessionDataArray[5].key}}
                             </text>
                             <text x="655" y="252"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                0.43%
+                                {{(((ProfessionDataArray[5].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="477" cy="73" r="40" fill="#6ED5E6"></circle>
                             <text x="451" y="73"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                行政高管
+                                {{ProfessionDataArray[6].key}}
                             </text>
                             <text x="459" y="91"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                0.22%
+                                {{(((ProfessionDataArray[6].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="286" cy="43" r="35" fill="#F57BC1"></circle>
                             <text x="260" y="43"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                医疗生化
+                                {{ProfessionDataArray[7].key}}
                             </text>
                             <text x="268" y="61"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                0.21%
+                                {{(((ProfessionDataArray[7].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="608" cy="111" r="35" fill="#DCB186"></circle>
                             <text x="582" y="111"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                金融保险
+                                {{ProfessionDataArray[8].key}}
                             </text>
                             <text x="590" y="129"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                0.21%
+                                {{(((ProfessionDataArray[8].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g>
                             <circle cx="925" cy="63" r="35" fill="#647C9D"></circle>
                             <text x="899" y="63"
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
-                                官员翻译
+                                {{ProfessionDataArray[9].key}}
                             </text>
                             <text x="907" y="81"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
-                                0.12%
+                                {{(((ProfessionDataArray[9].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
                         </g>
                         <g></g>
