@@ -70,7 +70,7 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
         packages: [
             {
                 name: 'echarts',
-                location: '/public/javascripts/bower_components/echarts/src',
+                location: '/public/javascripts/bower_components/echarts/build/dist',
                 main: 'echarts'
             },
             {
