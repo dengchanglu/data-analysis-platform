@@ -236,6 +236,89 @@ var upAnalysis = {
             }
             callback(data);
         });
+    },
+    versionSearch: function (es, queryData, callback) {
+        var queryBody = {
+            "bool": {
+                "must": [{
+                    "term": {
+                        "cm": queryData.cm
+                    }
+                }],
+                "filter": {
+                    "or": []
+                }
+            }
+        };
+        var avs = queryData.av.split(",");
+        for (var j = 0; j < avs.length; j++) {
+            queryBody.bool.filter.or.push({
+                "term": {
+                    "av": avs[j]
+                }
+            });
+        }
+
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        console.log(queryBody)
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": queryBody,
+                "aggs": {
+                    "data": {
+                        "terms": {
+                            "field": "av"
+                        },
+                        "aggs": {
+                            "register_user": {
+                                "filter": {
+                                    "term": {
+                                        "btn": "注册"
+                                    }
+                                }
+                            },
+                            "start_count": {
+                                "filter": {
+                                    "term": {
+                                        "is": 1
+                                    }
+                                }
+                            },
+                            "active_user": {
+                                "cardinality": {
+                                    "field": "ip"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        es.search(requestJson).then(function (response) {
+            var data = [];
+            if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
+                var res = response.aggregations.data.buckets;
+                for (var i = 0; i < res.length; i++) {
+                    data.push(
+                        {
+                            "key": res[i].key,
+                            "active_user": res[i].active_user.value,
+                            "start_count": res[i].start_count.doc_count,
+                            "register_user": res[i].register_user.doc_count
+                        }
+                    );
+                }
+            }
+            callback(data);
+        });
     }
 };
 exports.upAnalysis = upAnalysis;
