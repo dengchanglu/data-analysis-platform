@@ -14,7 +14,7 @@ var tdAnalysis = {
                     "must": [
                         {
                             "term": {
-                                "av": queryData.av
+                                "av": "android " + queryData.av
                             }
                         }
                     ]
