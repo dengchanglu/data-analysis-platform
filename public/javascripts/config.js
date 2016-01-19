@@ -10,54 +10,64 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
         .state("index", {
             url: "/index",
             templateUrl: "views/index.html",
-            controller: 'indexCtr'
+            controller: 'indexCtr',
+            cache:'true',
         })
         .state("index.channelDis", {
             url:"/channelDis",
             templateUrl: "views/analysisViews/channelDistribution.html",
-            controller:"channelDisCtr"
+            controller:"channelDisCtr",
+            cache:'true',
         })
         .state("index.channelSS", {
             url:"/channelSS",
-            templateUrl: "views/analysisViews/channelSourceSegmentation.html"
+            templateUrl: "views/analysisViews/channelSourceSegmentation.html",
+            cache:'true',
         })
         .state("index.versionDis", {
             url:"/versionDis",
             templateUrl: "views/analysisViews/versionDistribution.html",
-            controller:"versionDisCtr"
+            controller:"versionDisCtr",
+            cache:'true',
         })
         .state("index.terminalDev", {
             url:"/terminalDev",
             templateUrl: "views/analysisViews/terminalDevice.html",
-            controller:"terminalDevCtr"
+            controller:"terminalDevCtr",
+            cache:'true',
 
         })
         .state("index.userPortrait", {
             url:"/userPortrait",
             templateUrl: "views/analysisViews/userPortrait.html",
-            controller:"userPortraitCtr"
+            controller:"userPortraitCtr",
+            cache:'true',
 
         })
         .state("index.userRetained", {
             url:"/userRetained",
             templateUrl: "views/analysisViews/userRetained.html",
             /*controller:"usersRetainedCtr"*/
+            cache:'true',
 
         })
         .state("index.accessPage", {
             url:"/accessPage",
             templateUrl: "views/analysisViews/accessPage.html",
-            controller:"accessPageCtr"
+            controller:"accessPageCtr",
+            cache:'true',
         })
         .state("index.usingTimeLength", {
             url:"/usingTimeLength",
             templateUrl: "views/analysisViews/usingTimeLength.html",
-            controller:"usingTimeLengthCtr"
+            controller:"usingTimeLengthCtr",
+            cache:'true',
         })
         .state("index.pathAnalysis", {
             url:"/pathAnalysis",
             templateUrl: "views/analysisViews/pathAnalysis.html",
-            controller:"pathAnalysisCtr"
+            controller:"pathAnalysisCtr",
+            cache:'true',
         })
 
 

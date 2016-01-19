@@ -1,3 +1,61 @@
+<div class="panel panel-default" style="border: 0px solid white">
 
-<div id="channelDistribution" style="height: 500px;width: 100%;">
+    <div class="panel-heading" style="background-color: white">
+        <label style="font-size: 20px; font-weight: 700; ">渠道分布</label>
+        <br>
+
+        <div class="btn-group">
+            <div class="form-group">
+                <div class="input-group col-md-6">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <input date-range-picker id="daterange3" name="daterange3" class="form-control date-picker"
+                           type="text"
+                           ng-model="date" ng-Change="changeTime()" options="opts" required/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-chevron-down"></span></span>
+
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div style="margin-top: 10px">
+            版本:
+            <div class="btn-group" role="group" aria-label="..." style="margin-left: 15px">
+                <button type="button" class="btn btn-default active" ng-click="">全部</button>
+                <button type="button" class="btn btn-default" ng-click="">3.0.1</button>
+                <button type="button" class="btn btn-default" ng-click="">v2.5.1_0</button>
+                <button type="button" class="btn btn-default" ng-click="">2.6.9.2</button>
+                <button type="button" class="btn btn-default" ng-click="">2.6.9.1</button>
+                <button type="button" class="btn btn-default" ng-click="">2.6.2.0</button>
+                <button type="button" class="btn btn-default" ng-click="">其他</button>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="panel-body" style="padding: 0px;margin: 20px;border: solid 1px lightgray">
+
+        <nav class="navbar navbar-default" role="navigation" style="background-color: #F9F9F9">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><label style="color: black">渠道分布</label></a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active " ><a href="#" style="background-color: #3389D4;color: white">新增用户</a></li>
+                    <li><a href="#" style="color: black">活跃用户</a></li>
+                    <li><a href="#" style="color: black">启动次数</a></li>
+                    <li><a href="#" style="color: black">次均使用时长</a></li>
+
+                </ul>
+            </div>
+        </nav>
+
+
+            <label style="font-weight: 700;margin-left: 20px">趋势图</label><span style="color: darkgray">(默认显示top 10渠道)</span>
+
+            <div id="channelDistribution" style="height: 300px;width: 100%;">
+            </div>
+
+    </div>
+
 </div>
