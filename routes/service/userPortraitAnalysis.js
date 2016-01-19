@@ -191,6 +191,7 @@ var upAnalysis = {
         });
     },
     eduSearch: function (es, queryData, callback) {
+        console.log(queryData.time)
         var index = [];
         var time = queryData.time.split(",");
         for (var i = 0; i < time.length; i++) {

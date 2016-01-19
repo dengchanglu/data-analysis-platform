@@ -89,7 +89,9 @@ app.get('/api/professionAnalysis', function (req, res) {
  */
 app.get('/api/eduAnalysis', function (req, res) {
     var queryData = requestParsedUtil.getParamJson(req.url);
+    console.log(queryData.time)
     upAnalysis.upAnalysis.eduSearch(es.client, queryData, function (data) {
+
         res.send(data);
     });
 });

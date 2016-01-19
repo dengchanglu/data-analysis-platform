@@ -17,6 +17,20 @@
         $scope.legendArray = [];
         $scope.DataArray = [];
 
+        //时间控件方法
+        $scope.date = {
+            startDate: moment().subtract(1, "days"),
+            endDate: moment()
+        };
+        $scope.data = {
+            dateTime: [],
+            series: []
+        };
+        $scope.formatTime = function (time) {
+            var date = new Date(time);
+            return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+        };
+
 
         require(
             [
@@ -355,14 +369,47 @@
             }
         );
 
+        //时间控件设置
+        $scope.opts = {
+            locale: {
+                applyClass: 'btn-green',
+                applyLabel: "确定",
+                fromLabel: "Od",
+                toLabel: "Do",
+                cancelLabel: '取消',
+                customRangeLabel: '自定义时间',
+                daysOfWeek: ['六', '日', '一', '二', '三', '四', '五'],
+                firstDay: 1,
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月',
+                    '十月', '十一月', '十二月'
+                ]
+            },
+            ranges: {
+                '7天': [moment().subtract(6, 'days'), moment()],
+                '14天': [moment().subtract(13, 'days'), moment()],
+                '30天': [moment().subtract(29, 'days'), moment()]
+            }
+        };
+        //Watch for date changes
+        $scope.$watch('date', function (newDate) {
+            //console.log($scope.date);
+            //console.log('New date set: ', newDate);
+        }, false);
+        $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
+
+        $scope.data.dateTime = [$scope.formatTime($scope.date.startDate), $scope.formatTime($scope.date.endDate)];
+
         //性别分析数据
 
         $scope.getSexAnalysisChartData = function () {
 
             var options = sexRatioChart.getOption();
 
-            $http.get("http://localhost:3000/api/sexAnalysis?time=2016-01-11,2016-01-08")
+            $http.get("http://localhost:3000/api/sexAnalysis?time="+ $scope.time)
+
+
                 .success(function (response) {
+
                     for (var i = 0; i < 3; i++) {
                         $scope.PeopleSum += response[i].sex_count;
                         $scope.legendArray.push(response[i].key);
@@ -385,6 +432,10 @@
                     sexRatioChart.setOption(options);
 
 
+                })
+                .error(function(data,header,config,status){
+                    console.log(status)
+                    //处理响应失败
                 });
         }
 
@@ -397,7 +448,7 @@
 
         $scope.getAgeAnalysisData = function () {
             var options = AgeDistributionChart.getOption();
-            $http.get("http://localhost:3000/api/ageAnalysis?time=2016-01-11,2016-01-08")
+            $http.get("http://localhost:3000/api/ageAnalysis?time="+$scope.time)
                 .success(function (response) {
                     for (var i = 0; i < response.length; i++) {
                         $scope.AgePeopleSum += response[i].age_count;
@@ -422,7 +473,7 @@
         $scope.getRegionAnalysisData = function () {
             var options = RegionalDistributionChart.getOption();
 
-            $http.get("http://localhost:3000/api/regionAnalysis?time=2016-01-11,2016-01-08")
+            $http.get("http://localhost:3000/api/regionAnalysis?time="+$scope.time)
                 .success(function (response) {
 
                     for (var i = 0; i < response.length; i++) {
@@ -444,7 +495,7 @@
 
         $scope.getProfessionAnalysisData = function () {
 
-            $http.get("http://localhost:3000/api/professionAnalysis?time=2016-01-11,2016-01-08")
+            $http.get("http://localhost:3000/api/professionAnalysis?time="+$scope.time)
                 .success(function (response) {
                     var i = 0,
                         len = response.length,
@@ -493,7 +544,7 @@
         $scope.EducationPeopleSum=0;
         $scope.EducationDataArray=[];
         $scope.getEducationData=function(){
-            $http.get(" http://localhost:3000/api/eduAnalysis?time=2016-01-11,2016-01-08")
+            $http.get(" http://localhost:3000/api/eduAnalysis?time="+$scope.time)
                 .success(function (response) {
 
 

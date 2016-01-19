@@ -6,7 +6,7 @@
     angular
         .module('dataAP')
         .controller('channelDisCtr', channelDisCtr);
-    function channelDisCtr($scope, $location, ipCookie, $rootScope) {
+    function channelDisCtr($scope, $location, ipCookie, $rootScope,$http) {
         require(
             [
                 'echarts',
@@ -15,97 +15,107 @@
             ],
             function (ec) {
                 // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('channelDistribution'));
+                var ChannelAnalysisChart= ec.init(document.getElementById('channelDistribution'));
 
-                var option = {
-                    tooltip: {
-                        show: true,
-                        trigger: "axis"
+                var ChannelAnalysisOption = {
+                    title : {
+                        text: '新增用户',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
                     },
                     legend: {
-                        data:['销量','数量']
+                        y:'bottom',
+                        data:['OpenPlatform','baidushoujizhushou','guanwang','huaweineizhi','oppo','oppoyuzhuang',
+                            'weibodiaoqi','xiaomi','yingyongbao','zhihuiyun']
                     },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            mark: {show: true},//辅助线工具
-                            dataView: {show: true, readOnly: false},//数据视图,显示，可编辑
-                            magicType: {show: true, type: ['line', 'bar']},//动态类型切换，显示，切换类型为柱形图和线型图
-                            restore: {show: true},//还原，复位原始图表
-                            saveAsImage: {show: true}//把图表保存为图片
-                        }
-                    },
-                    calculable: true,
+                    calculable : true,
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                            boundaryGap : false,
+                            data : ['2016-01-06','2016-01-07','2016-01-08','2016-01-09','2016-01-10','2016-01-11','2016-01-12',
+                                '2016-01-13', '2016-01-14', '2016-01-15', '2016-01-16', '2016-01-17', '2016-01-18', '2016-01-19']
                         }
                     ],
                     yAxis : [
                         {
                             type : 'value'
+
                         }
                     ],
-                    series : [
+                    series:[
                         {
-                            "name":"销量",
-                            "type":"bar",
-                            smooth:true,
-                            "data":[5, 20, 40, 10, 10, 20],
-                            markPoint: {
-                                data: [
-                                    { type: 'max', name: '最大值'},
-                                    {type: 'min', name: '最小值'}
-                                ]
-                            },
-                            markLine: {
-                                data: [
-                                    {type: 'average', name: '平均值'}
-                                ]
-                            },
-                            itemStyle: {
-                                normal: {
-                                    color: '#2EC7C9',//颜色
-                                    barBorderRadius: 10//,柱形图圆角值为10
-
-                                },
-                                emphasis: {
-                                }
-                            }
-                        },
-                        {
-                            "name":"数量",
-                            "type":"bar",
-                            smooth:true,
-                            "data":[5, 2, 23, 11, 3, 21],
-                            markPoint: {
-                                data: [
-                                    { type: 'max', name: '最大值'},
-                                    {type: 'min', name: '最小值'}
-                                ]
-                            },
-                            markLine: {
-                                data: [
-                                    {type: 'average', name: '平均值'}
-                                ]
-                            },
-                            itemStyle: {
-                                normal: {
-                                    color: '#B6A2DE',//颜色
-                                    barBorderRadius: 10//,柱形图圆角值为10
-
-                                },
-                                emphasis: {
-                                }
-                            }
+                            type:'line',
+                            data:[503,442,413,426,508,512,463,440,433,469,527,587,538,144]
                         }
                     ]
+
                 };
 
                 // 为echarts对象加载数据
-                myChart.setOption(option);
+                ChannelAnalysisChart.setOption(ChannelAnalysisOption);
+                $scope.getChannelAnalysisChartData();
             }
         );
+        $scope.date = {
+            startDate: moment().subtract(1, "days"),
+            endDate: moment()
+        };
+        $scope.data = {
+            dateTime: [],
+            series: []
+        };
+
+        $scope.formatTime = function (time) {
+            var date = new Date(time);
+            return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+        };
+        $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
+        $scope.data.dateTime = [$scope.formatTime($scope.date.startDate), $scope.formatTime($scope.date.endDate)];
+        console.log( $scope.time);
+        console.log($scope.data.dateTime)
+
+        $scope.changeTime=function(){
+
+            console.log( $scope.time);
+            console.log($scope.data.dateTime)
+        }
+        $scope.opts = {
+            locale: {
+                applyClass: 'btn-green',
+                applyLabel: "确定",
+                fromLabel: "Od",
+                toLabel: "Do",
+                cancelLabel: '取消',
+                customRangeLabel: '自定义时间',
+                daysOfWeek: ['六', '日', '一', '二', '三', '四', '五'],
+                firstDay: 1,
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月',
+                    '十月', '十一月', '十二月'
+                ]
+            },
+            ranges: {
+                '7天': [moment().subtract(6, 'days'), moment()],
+                '14天': [moment().subtract(13, 'days'), moment()],
+                '30天': [moment().subtract(29, 'days'), moment()]
+            }
+        };
+
+        $scope.getChannelAnalysisChartData = function () {
+
+            $http.get("http://localhost:3000/api/versionAnalysis?time=2016-01-18&cm=guanwang&av=2.2.0,2.1.0")
+                .success(function (response) {
+                    console.log(response)
+
+
+
+                })
+                .error(function(data,header,config,status){
+                    console.log(status)
+                    //处理响应失败
+                });
+        }
     }
 })();
