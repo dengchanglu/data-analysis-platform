@@ -30,7 +30,8 @@ var tdAnalysis = {
                 "aggs": {
                     "data": {
                         "terms": {
-                            "field": queryData.key
+                            "field": queryData.key,
+                            "size": "0"
                         },
                         "aggs": {
                             "register_user": {

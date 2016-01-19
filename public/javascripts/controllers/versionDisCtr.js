@@ -15,7 +15,8 @@
             };
             $scope.data = {
                 dateTime: [],
-                series: []
+                series: [],
+                legend: []
             };
             $scope.formatTime = function (time) {
                 var date = new Date(time);
@@ -31,12 +32,14 @@
                 function (ec) {
                     // 基于准备好的dom，初始化echarts图表}
                     versionAnalysisChart = ec.init(document.getElementById('versionAnalysis'));
+
+
                     option = {
                         tooltip: {
                             trigger: 'axis'
                         },
                         legend: {
-                            data: []
+                            data: $scope.data.legend
                         },
                         grid: {
                             left: '3%',
@@ -63,34 +66,42 @@
                         ],
                         series: $scope.data.series
                     };
-
                     versionAnalysisChart.setOption(option);
+                    $scope.chooseCM("all", $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate), $scope.templateVersion.av);
+
                 });
 
-            $scope.chooseCM = function (cm) {
-                $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
-                $http.get("http://localhost:3000/api/versionAnalysis?time=" + $scope.time + "&cm=" + cm + "&av=" + $scope.templateVersion.av).success(function (data) {
-                    $scope.data.dateTime = [$scope.formatTime($scope.date.startDate), $scope.formatTime($scope.date.endDate)];
-                    //{
-                    //    name: '',
-                    //        type: 'line',
-                    //    stack: '总量',
-                    //    data: []
-                    //}
-                    for (var i = 0; i < data.length; i++) {
-                        $scope.data.series.push({
-                            name: data[i].key,
-                            type: 'line',
-                            stack: '总量'
-                        });
-                        $scope.data.series.push(
-                            {
-                                data: [data[i].register_user]
-                            }
-                        );
+            $scope.chooseCM = function (cm, time, av) {
+                $http.get("http://localhost:3000/api/versionAnalysis?time=" + time + "&cm=" + cm + "&av=" + av).success(function (data) {
+                    var dateTimeTem = [];
+                    for (var c = 0; c < data.length; c++) {
+                        $scope.data.dateTime.push(data[c].index);
                     }
-                    //versionAnalysisChart.setOption(option);
-                });
+                    var seriesTem = [];
+                    for (var j = 0; j < data[0].data.length; j++) {
+                        $scope.data.legend.push(data[0].data[j].key);
+                        var serTem = [];
+                        for (var i = 0; i < data.length; i++) {
+                            serTem.push(data[i].data[j].register_user);
+                        }
+                        seriesTem.push({
+                            name: data[0].data[j].key,
+                            type: 'line',
+                            stack: '总量',
+                            data: serTem
+                        });
+                    }
+                    $scope.data.series=seriesTem;
+                    option.legend.data = $scope.data.legend;
+                    option.series = $scope.data.series;
+                    option.xAxis[0].data = $scope.data.dateTime;
+                    versionAnalysisChart.setOption(option);
+                    $scope.data = {
+                        dateTime: [],
+                        series: [],
+                        legend: []
+                    };
+                })
             };
             $scope.opts = {
                 locale: {
@@ -114,8 +125,20 @@
             };
             //Watch for date changes
             $scope.$watch('date', function (newDate) {
-                //console.log($scope.date);
-                //console.log('New date set: ', newDate);
+                var date1 = new Date($scope.formatTime(newDate.startDate));  //开始时间
+                var date2 = new Date($scope.formatTime(newDate.endDate));    //结束时间
+                var date3 = date2.getTime() - date1.getTime(); //时间差的毫秒数
+                //计算出相差天数
+                var days = Math.floor(date3 / (24 * 3600 * 1000));
+                var time = "";
+                for (var i = 0; i < days; i++) {
+                    var dataTem = new Date(date1.getTime() + i * (24 * 3600 * 1000));
+                    time += $scope.formatTime(dataTem) + ",";
+                }
+                time += $scope.formatTime(newDate.endDate);
+                $scope.chooseCM("all", time, $scope.templateVersion.av);
             }, false);
-        });
+        }
+    )
+    ;
 })();
