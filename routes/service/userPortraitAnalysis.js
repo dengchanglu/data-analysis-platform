@@ -252,17 +252,33 @@ var upAnalysis = {
                 }
             };
         } else {
-            queryBody = {
-                "bool": {
-                    "must": [{
-                        "term": {
-                            "cm": queryData.cm
-                        }
-                    }],
-                    "should": []
+            if (queryData.cm == "unknown") {
+                queryBody = {
+                    "bool": {
+                        "must": [{
+                            "term": {
+                                "cm": "未知"
+                            }
+                        }],
+                        "should": [],
+                        "minimum_should_match": 1
 
-                }
-            };
+                    }
+                };
+            } else {
+                queryBody = {
+                    "bool": {
+                        "must": [{
+                            "term": {
+                                "cm": queryData.cm
+                            }
+                        }],
+                        "should": [],
+                        "minimum_should_match": 1
+
+                    }
+                };
+            }
         }
         var avs = queryData.av.split(",");
         for (var j = 0; j < avs.length; j++) {
@@ -286,8 +302,7 @@ var upAnalysis = {
                 "aggs": {
                     "index": {
                         "terms": {
-                            "field": "_index",
-                            "size": "0"
+                            "field": "_index"
                         },
                         "aggs": {
                             "data": {
