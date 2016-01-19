@@ -19,7 +19,8 @@ var upAnalysis = {
                 "aggs": {
                     "data": {
                         "terms": {
-                            "field": "sex"
+                            "field": "sex",
+                            "size": "0"
                         },
                         "aggs": {
                             "sex_count": {
@@ -66,7 +67,8 @@ var upAnalysis = {
                 "aggs": {
                     "data": {
                         "terms": {
-                            "field": "ar"
+                            "field": "ar",
+                            "size": "0"
                         },
                         "aggs": {
                             "age_count": {
@@ -113,7 +115,8 @@ var upAnalysis = {
                 "aggs": {
                     "data": {
                         "terms": {
-                            "field": "city"
+                            "field": "city",
+                            "size": "0"
                         },
                         "aggs": {
                             "region_count": {
@@ -160,7 +163,8 @@ var upAnalysis = {
                 "aggs": {
                     "data": {
                         "terms": {
-                            "field": "ind"
+                            "field": "ind",
+                            "size": "0"
                         },
                         "aggs": {
                             "pro_count": {
@@ -208,7 +212,8 @@ var upAnalysis = {
                 "aggs": {
                     "data": {
                         "terms": {
-                            "field": "edu"
+                            "field": "edu",
+                            "size": "0"
                         },
                         "aggs": {
                             "edu_count": {
@@ -279,28 +284,37 @@ var upAnalysis = {
                 "size": 0,
                 "query": queryBody,
                 "aggs": {
-                    "data": {
+                    "index": {
                         "terms": {
-                            "field": "av"
+                            "field": "_index",
+                            "size": "0"
                         },
                         "aggs": {
-                            "register_user": {
-                                "filter": {
-                                    "term": {
-                                        "btn": "注册"
+                            "data": {
+                                "terms": {
+                                    "field": "av",
+                                    "size": "0"
+                                },
+                                "aggs": {
+                                    "register_user": {
+                                        "filter": {
+                                            "term": {
+                                                "btn": "注册"
+                                            }
+                                        }
+                                    },
+                                    "start_count": {
+                                        "filter": {
+                                            "term": {
+                                                "is": 1
+                                            }
+                                        }
+                                    },
+                                    "active_user": {
+                                        "cardinality": {
+                                            "field": "ip"
+                                        }
                                     }
-                                }
-                            },
-                            "start_count": {
-                                "filter": {
-                                    "term": {
-                                        "is": 1
-                                    }
-                                }
-                            },
-                            "active_user": {
-                                "cardinality": {
-                                    "field": "ip"
                                 }
                             }
                         }
@@ -308,24 +322,46 @@ var upAnalysis = {
                 }
             }
         };
+        var getData = function (data) {
 
+            var dataTem = [];
+            for (var j = 0; j < data.length; j++) {
+                dataTem.push({
+                    "key": data[j].key,
+                    "active_user": data[j].active_user.value,
+                    "start_count": data[j].start_count.doc_count,
+                    "register_user": data[j].register_user.doc_count
+                });
+            }
+            return dataTem;
+        };
         es.search(requestJson).then(function (response) {
             var data = [];
-            if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
-                var res = response.aggregations.data.buckets;
-                console.log(res)
-                for (var i = 0; i < res.length; i++) {
+            var dataSort = [];
+            if (response != null && response.aggregations != null && response.aggregations.index.buckets != []) {
+                var res = response.aggregations.index.buckets;
+
+                var i = 0;
+                for (i = 0; i < res.length; i++) {
                     data.push(
                         {
-                            "key": res[i].key,
-                            "active_user": res[i].active_user.value,
-                            "start_count": res[i].start_count.doc_count,
-                            "register_user": res[i].register_user.doc_count
+                            "index": res[i].key.substring(4, res[i].key.length),
+                            "data": getData(res[i].data.buckets)
                         }
                     );
                 }
+                for (i = 0; i < time.length; i++) {
+                    for (var j = 0; j < data.length; j++) {
+                        if (time[i] == data[j].index) {
+                            dataSort.push({
+                                index: data[j].index,
+                                data: data[j].data
+                            });
+                        }
+                    }
+                }
             }
-            callback(data);
+            callback(dataSort);
         });
     }
 };
