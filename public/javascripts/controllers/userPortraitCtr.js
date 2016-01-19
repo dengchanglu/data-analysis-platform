@@ -31,6 +31,221 @@
             return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
         };
 
+        //性别分析数据
+
+        $scope.getSexAnalysisChartData = function () {
+
+            var options = sexRatioChart.getOption();
+
+            $http.get("http://localhost:3000/api/sexAnalysis?time="+ $scope.time)
+
+
+                .success(function (response) {
+
+                    for (var i = 0; i < 3; i++) {
+                        $scope.PeopleSum += response[i].sex_count;
+                        $scope.legendArray.push(response[i].key);
+                    }
+
+                    var Girl = ((response[0].sex_count / $scope.PeopleSum) * 100).toFixed(2);
+                    var unknown = ((response[1].sex_count / $scope.PeopleSum) * 100).toFixed(2);
+                    var male = ((response[2].sex_count / $scope.PeopleSum) * 100).toFixed(2);
+
+                    $scope.DataArray.push(Girl);
+                    $scope.DataArray.push(unknown);
+                    $scope.DataArray.push(male);
+
+
+                    options.legend.data = $scope.legendArray;
+                    options.series[0].data[0].value = Girl;
+                    options.series[0].data[1].value = unknown;
+                    options.series[0].data[2].value = male;
+
+                    sexRatioChart.setOption(options);
+
+
+                })
+                .error(function(data,header,config,status){
+                    console.log(status)
+                    //处理响应失败
+                });
+        }
+        //时间控件设置
+        $scope.opts = {
+            locale: {
+                applyClass: 'btn-green',
+                applyLabel: "确定",
+                fromLabel: "Od",
+                toLabel: "Do",
+                cancelLabel: '取消',
+                customRangeLabel: '自定义时间',
+                daysOfWeek: ['六', '日', '一', '二', '三', '四', '五'],
+                firstDay: 1,
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月',
+                    '十月', '十一月', '十二月'
+                ]
+            },
+            ranges: {
+                '7天': [moment().subtract(6, 'days'), moment()],
+                '14天': [moment().subtract(13, 'days'), moment()],
+                '30天': [moment().subtract(29, 'days'), moment()]
+            }
+        };
+        //Watch for date changes
+        $scope.$watch('date', function (newDate) {
+            //console.log($scope.date);
+            //console.log('New date set: ', newDate);
+        }, false);
+        $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
+
+        $scope.data.dateTime = [$scope.formatTime($scope.date.startDate), $scope.formatTime($scope.date.endDate)];
+
+
+
+
+        //年龄分布分析数据
+
+        $scope.AgeDistributionArray = [];
+        $scope.AgeDistributionData = [];
+        $scope.AgePeopleSum = 0;
+
+        $scope.getAgeAnalysisData = function () {
+            var options = AgeDistributionChart.getOption();
+            $http.get("http://localhost:3000/api/ageAnalysis?time="+$scope.time)
+                .success(function (response) {
+                    for (var i = 0; i < response.length; i++) {
+                        $scope.AgePeopleSum += response[i].age_count;
+                        $scope.AgeDistributionArray.push(response[i].key);
+                        $scope.AgeDistributionData.push(response[i].age_count);
+                    }
+
+                    options.xAxis[0].data = $scope.AgeDistributionArray;
+                    options.series[0].data = $scope.AgeDistributionData;
+
+                    AgeDistributionChart.setOption(options)
+                });
+
+        }
+
+        //TOP10地域分布分析数据
+
+        $scope.regionDataArray = [];
+        $scope.regionCityArray = [];
+        $scope.regionPeopleSum = 0;
+
+        $scope.getRegionAnalysisData = function () {
+            var options = RegionalDistributionChart.getOption();
+
+            $http.get("http://localhost:3000/api/regionAnalysis?time="+$scope.time)
+                .success(function (response) {
+
+                    for (var i = 0; i < 9; i++) {
+                        $scope.regionCityArray.push(response[i].key);
+                        $scope.regionDataArray.push(response[i].region_count);
+                        $scope.regionPeopleSum += response[i].region_count;
+                    }
+                    options.yAxis[0].data = $scope.regionCityArray;
+                    options.series[0].data = $scope.regionDataArray;
+                    RegionalDistributionChart.setOption(options);
+
+                });
+
+        }
+
+        //职业分布数据
+        $scope.ProfessionDataArray = [];
+        $scope.ProfessionPeopleSum = 0;
+
+        $scope.getProfessionAnalysisData = function () {
+
+            $http.get("http://localhost:3000/api/professionAnalysis?time="+$scope.time)
+                .success(function (response) {
+                    var i = 0,
+                        len = response.length,
+                        j, d;
+                    for (; i < len; i++) {
+
+                        for (j = 0; j < len; j++) {
+                            if (response[i].pro_count > response[j].pro_count) {
+                                d = response[j];
+                                response[j] = response[i];
+                                response[i] = d;
+                            }
+                        }
+
+                    }
+                    $scope.ProfessionDataArray = response
+
+                    for (var k = 0; k < $scope.ProfessionDataArray.length; k++) {
+
+                        $scope.ProfessionPeopleSum += $scope.ProfessionDataArray[k].pro_count;
+                    }
+
+
+
+                });
+
+        }
+
+        //数组排序的方法
+        $scope.ArraySorting = function (array) {
+            var i = 0,
+                len = array.length,
+                j, d;
+            for (; i < len; i++) {
+                for (j = 0; j < len; j++) {
+                    if (array[i] > array[j]) {
+                        d = array[j];
+                        array[j] = array[i];
+                        array[i] = d;
+                    }
+                }
+            }
+            return array;
+        }
+        //学历分布
+        $scope.EducationPeopleSum=0;
+        $scope.EducationDataArray=[];
+        $scope.getEducationData=function(){
+            $http.get(" http://localhost:3000/api/eduAnalysis?time="+$scope.time)
+                .success(function (response) {
+
+
+                    var i = 0,
+                        len = response.length,
+                        j, d;
+                    for (; i < len; i++) {
+
+                        for (j = 0; j < len; j++) {
+                            if (response[i].edu_count > response[j].edu_count) {
+                                d = response[j];
+                                response[j] = response[i];
+                                response[i] = d;
+                            }
+                        }
+
+                    }
+                    $scope.EducationDataArray=response;
+
+                    for(var k=0;k<$scope.EducationDataArray.length;k++){
+                        $scope.EducationPeopleSum+=response[k].edu_count;
+                    }
+
+
+
+                });
+
+        }
+        $scope.show=function(id){
+            document.getElementById(id).style.display='block'
+        }
+        $scope.hide=function(id){
+            document.getElementById(id).style.display='none'
+        }
+
+
+        //地图分布分析数据
+        $scope.datas = [];
 
         require(
             [
@@ -369,221 +584,7 @@
             }
         );
 
-        //时间控件设置
-        $scope.opts = {
-            locale: {
-                applyClass: 'btn-green',
-                applyLabel: "确定",
-                fromLabel: "Od",
-                toLabel: "Do",
-                cancelLabel: '取消',
-                customRangeLabel: '自定义时间',
-                daysOfWeek: ['六', '日', '一', '二', '三', '四', '五'],
-                firstDay: 1,
-                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月',
-                    '十月', '十一月', '十二月'
-                ]
-            },
-            ranges: {
-                '7天': [moment().subtract(6, 'days'), moment()],
-                '14天': [moment().subtract(13, 'days'), moment()],
-                '30天': [moment().subtract(29, 'days'), moment()]
-            }
-        };
-        //Watch for date changes
-        $scope.$watch('date', function (newDate) {
-            //console.log($scope.date);
-            //console.log('New date set: ', newDate);
-        }, false);
-        $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
 
-        $scope.data.dateTime = [$scope.formatTime($scope.date.startDate), $scope.formatTime($scope.date.endDate)];
-
-        //性别分析数据
-
-        $scope.getSexAnalysisChartData = function () {
-
-            var options = sexRatioChart.getOption();
-
-            $http.get("http://localhost:3000/api/sexAnalysis?time="+ $scope.time)
-
-
-                .success(function (response) {
-
-                    for (var i = 0; i < 3; i++) {
-                        $scope.PeopleSum += response[i].sex_count;
-                        $scope.legendArray.push(response[i].key);
-                    }
-
-                    var Girl = ((response[0].sex_count / $scope.PeopleSum) * 100).toFixed(2);
-                    var unknown = ((response[1].sex_count / $scope.PeopleSum) * 100).toFixed(2);
-                    var male = ((response[2].sex_count / $scope.PeopleSum) * 100).toFixed(2);
-
-                    $scope.DataArray.push(Girl);
-                    $scope.DataArray.push(unknown);
-                    $scope.DataArray.push(male);
-
-
-                    options.legend.data = $scope.legendArray;
-                    options.series[0].data[0].value = Girl;
-                    options.series[0].data[1].value = unknown;
-                    options.series[0].data[2].value = male;
-
-                    sexRatioChart.setOption(options);
-
-
-                })
-                .error(function(data,header,config,status){
-                    console.log(status)
-                    //处理响应失败
-                });
-        }
-
-
-        //年龄分布分析数据
-
-        $scope.AgeDistributionArray = [];
-        $scope.AgeDistributionData = [];
-        $scope.AgePeopleSum = 0;
-
-        $scope.getAgeAnalysisData = function () {
-            var options = AgeDistributionChart.getOption();
-            $http.get("http://localhost:3000/api/ageAnalysis?time="+$scope.time)
-                .success(function (response) {
-                    for (var i = 0; i < response.length; i++) {
-                        $scope.AgePeopleSum += response[i].age_count;
-                        $scope.AgeDistributionArray.push(response[i].key);
-                        $scope.AgeDistributionData.push(response[i].age_count);
-                    }
-
-                    options.xAxis[0].data = $scope.AgeDistributionArray;
-                    options.series[0].data = $scope.AgeDistributionData;
-
-                    AgeDistributionChart.setOption(options)
-                });
-
-        }
-
-        //TOP10地域分布分析数据
-
-        $scope.regionDataArray = [];
-        $scope.regionCityArray = [];
-        $scope.regionPeopleSum = 0;
-
-        $scope.getRegionAnalysisData = function () {
-            var options = RegionalDistributionChart.getOption();
-
-            $http.get("http://localhost:3000/api/regionAnalysis?time="+$scope.time)
-                .success(function (response) {
-
-                    for (var i = 0; i < response.length; i++) {
-                        $scope.regionCityArray.push(response[i].key);
-                        $scope.regionDataArray.push(response[i].region_count);
-                        $scope.regionPeopleSum += response[i].region_count;
-                    }
-                    options.yAxis[0].data = $scope.regionCityArray;
-                    options.series[0].data = $scope.regionDataArray;
-                    RegionalDistributionChart.setOption(options);
-
-                });
-
-        }
-
-        //职业分布数据
-        $scope.ProfessionDataArray = [];
-        $scope.ProfessionPeopleSum = 0;
-
-        $scope.getProfessionAnalysisData = function () {
-
-            $http.get("http://localhost:3000/api/professionAnalysis?time="+$scope.time)
-                .success(function (response) {
-                    var i = 0,
-                        len = response.length,
-                        j, d;
-                    for (; i < len; i++) {
-
-                        for (j = 0; j < len; j++) {
-                            if (response[i].pro_count > response[j].pro_count) {
-                                d = response[j];
-                                response[j] = response[i];
-                                response[i] = d;
-                            }
-                        }
-
-                    }
-                    $scope.ProfessionDataArray = response
-
-                    for (var k = 0; k < $scope.ProfessionDataArray.length; k++) {
-
-                        $scope.ProfessionPeopleSum += $scope.ProfessionDataArray[k].pro_count;
-                    }
-
-
-
-                });
-
-        }
-
-        //数组排序的方法
-        $scope.ArraySorting = function (array) {
-            var i = 0,
-                len = array.length,
-                j, d;
-            for (; i < len; i++) {
-                for (j = 0; j < len; j++) {
-                    if (array[i] > array[j]) {
-                        d = array[j];
-                        array[j] = array[i];
-                        array[i] = d;
-                    }
-                }
-            }
-            return array;
-        }
-        //学历分布
-        $scope.EducationPeopleSum=0;
-        $scope.EducationDataArray=[];
-        $scope.getEducationData=function(){
-            $http.get(" http://localhost:3000/api/eduAnalysis?time="+$scope.time)
-                .success(function (response) {
-
-
-                    var i = 0,
-                        len = response.length,
-                        j, d;
-                    for (; i < len; i++) {
-
-                        for (j = 0; j < len; j++) {
-                            if (response[i].edu_count > response[j].edu_count) {
-                                d = response[j];
-                                response[j] = response[i];
-                                response[i] = d;
-                            }
-                        }
-
-                    }
-                    $scope.EducationDataArray=response;
-                    console.log($scope.EducationDataArray);
-
-                    for(var k=0;k<$scope.EducationDataArray.length;k++){
-                        $scope.EducationPeopleSum+=response[k].edu_count;
-                    }
-                    console.log($scope.EducationPeopleSum);
-
-
-                });
-
-        }
-        $scope.show=function(id){
-            document.getElementById(id).style.display='block'
-        }
-        $scope.hide=function(id){
-            document.getElementById(id).style.display='none'
-        }
-
-
-        //地图分布分析数据
-        $scope.datas = [];
 
 
     }
