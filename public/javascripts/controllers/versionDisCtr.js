@@ -9,6 +9,7 @@
             $scope.templateVersion = {
                 "av": '2.1.0,1.1.0'
             };
+            $scope.versions = ['2.1.0', '1.1.0'];
             $scope.date = {
                 startDate: moment().subtract(1, "days"),
                 endDate: moment()
@@ -24,6 +25,55 @@
             };
             var versionAnalysisChart;
             var option;
+            $scope.chooseCM = function (cm, time, av) {
+                if (time == null) {
+                    var date1 = new Date($scope.formatTime($scope.date.startDate));  //开始时间
+                    var date2 = new Date($scope.formatTime($scope.date.endDate));    //结束时间
+                    var date3 = date2.getTime() - date1.getTime(); //时间差的毫秒数
+                    //计算出相差天数
+                    var days = Math.floor(date3 / (24 * 3600 * 1000));
+                    time = "";
+                    for (var i = 0; i < days; i++) {
+                        var dataTem = new Date(date1.getTime() + i * (24 * 3600 * 1000));
+                        time += $scope.formatTime(dataTem) + ",";
+                    }
+                    time += $scope.formatTime($scope.date.endDate);
+                }
+                if (av == null) {
+                    av = $scope.templateVersion.av;
+                }
+                console.log(av);
+                $http.get("http://localhost:3000/api/versionAnalysis?time=" + time + "&cm=" + cm + "&av=" + av).success(function (data) {
+                    var dateTimeTem = [];
+                    for (var c = 0; c < data.length; c++) {
+                        $scope.data.dateTime.push(data[c].index);
+                    }
+                    var seriesTem = [];
+                    for (var j = 0; j < data[0].data.length; j++) {
+                        $scope.data.legend.push(data[0].data[j].key);
+                        var serTem = [];
+                        for (var i = 0; i < data.length; i++) {
+                            serTem.push(data[i].data[j].register_user);
+                        }
+                        seriesTem.push({
+                            name: data[0].data[j].key,
+                            type: 'line',
+                            stack: '总量',
+                            data: serTem
+                        });
+                    }
+                    $scope.data.series = seriesTem;
+                    option.legend.data = $scope.data.legend;
+                    option.series = $scope.data.series;
+                    option.xAxis[0].data = $scope.data.dateTime;
+                    versionAnalysisChart.setOption(option);
+                    $scope.data = {
+                        dateTime: [],
+                        series: [],
+                        legend: []
+                    };
+                })
+            };
             require(
                 [
                     'echarts',
@@ -71,38 +121,7 @@
 
                 });
 
-            $scope.chooseCM = function (cm, time, av) {
-                $http.get("http://localhost:3000/api/versionAnalysis?time=" + time + "&cm=" + cm + "&av=" + av).success(function (data) {
-                    var dateTimeTem = [];
-                    for (var c = 0; c < data.length; c++) {
-                        $scope.data.dateTime.push(data[c].index);
-                    }
-                    var seriesTem = [];
-                    for (var j = 0; j < data[0].data.length; j++) {
-                        $scope.data.legend.push(data[0].data[j].key);
-                        var serTem = [];
-                        for (var i = 0; i < data.length; i++) {
-                            serTem.push(data[i].data[j].register_user);
-                        }
-                        seriesTem.push({
-                            name: data[0].data[j].key,
-                            type: 'line',
-                            stack: '总量',
-                            data: serTem
-                        });
-                    }
-                    $scope.data.series=seriesTem;
-                    option.legend.data = $scope.data.legend;
-                    option.series = $scope.data.series;
-                    option.xAxis[0].data = $scope.data.dateTime;
-                    versionAnalysisChart.setOption(option);
-                    $scope.data = {
-                        dateTime: [],
-                        series: [],
-                        legend: []
-                    };
-                })
-            };
+
             $scope.opts = {
                 locale: {
                     applyClass: 'btn-green',
@@ -138,6 +157,35 @@
                 time += $scope.formatTime(newDate.endDate);
                 $scope.chooseCM("all", time, $scope.templateVersion.av);
             }, false);
+            $scope.chooseVersion = function (version) {
+                for (var i = 0; i < 2; i++) {
+                    if ($scope.versions[i] == version) {
+                        return;
+                    }
+                }
+                $scope.versions[1] = version;
+                var html = "";
+                html += '<div  class="btn-group" role="group" aria-label="..." style="margin-left: 15px">';
+                var av="";
+                for (var j = 0; j < 2; j++) {
+                    html += '<a ng-click="deleteItem(this.val)" style="padding-left:15px" val=' + $scope.versions[j] + '>' + $scope.versions[j] + '<em>×</em></a>';
+                    av+=$scope.versions[j]+","
+                }
+                $scope.templateVersion.av=av.substring(0,av.length-1);
+                document.getElementById("testqwe").innerHTML = html+"</div>";
+                $scope.chooseCM("all", $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate), av.substring(0,av.length-1));
+
+            };
+            $scope.deleteItem = function (version) {
+                $scope.$apply(function () {
+                    for (var i = 0; i < $scope.versions.length; i++) {
+                        if ($scope.versions[i] == version) {
+                            $scope.versions.splice(i);
+                        }
+                    }
+                });
+            }
+            console.log($scope.date)
         }
     )
     ;
