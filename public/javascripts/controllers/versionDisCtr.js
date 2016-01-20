@@ -164,28 +164,51 @@
                     }
                 }
                 $scope.versions[1] = version;
-                var html = "";
-                html += '<div  class="btn-group" role="group" aria-label="..." style="margin-left: 15px">';
-                var av="";
-                for (var j = 0; j < 2; j++) {
-                    html += '<a ng-click="deleteItem(this.val)" style="padding-left:15px" val=' + $scope.versions[j] + '>' + $scope.versions[j] + '<em>×</em></a>';
-                    av+=$scope.versions[j]+","
-                }
-                $scope.templateVersion.av=av.substring(0,av.length-1);
-                document.getElementById("testqwe").innerHTML = html+"</div>";
-                $scope.chooseCM("all", $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate), av.substring(0,av.length-1));
+
+                $scope.chooseCM("all", $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate), av.substring(0, av.length - 1));
 
             };
             $scope.deleteItem = function (version) {
-                $scope.$apply(function () {
-                    for (var i = 0; i < $scope.versions.length; i++) {
-                        if ($scope.versions[i] == version) {
-                            $scope.versions.splice(i);
-                        }
+                console.log(version)
+            };
+            $scope.triggerTitle = function (index) {
+                for (var i = 1; i < 6; i++) {
+                    document.getElementById("tab_" + i).setAttribute("class", "");
+                }
+                document.getElementById("tab_" + index).setAttribute("class", "current");
+            };
+            //if () {
+            $('#versionModal').modal('show');
+            //}
+            $scope.selectItem = function (index, selectedVal) {
+                if (document.getElementById(index).firstElementChild.getAttribute("class") == "selected") {
+                    return;
+                }
+                for (var i = 0; i < 8; i++) {
+                    document.getElementById(i).firstElementChild.setAttribute("class", "");
+                }
+                document.getElementById(index).firstElementChild.setAttribute("class", "selected");
+                if (selectedVal == 'all') {
+                    console.log("yest")
+                    document.getElementById("versionSel").innerHTML = "";
+                    document.getElementById("versionSel").innerHTML = '<li><label class="selectedLable"><a val="全部">全部</a></label></li>';
+                    return;
+                }
+                var html = "";
+                //var av = "";
+                var htmlDom = document.getElementsByClassName("selectedLable");
+                for (var i = 0; i < htmlDom.length; i++) {
+                    var textContent = document.getElementsByClassName("selectedLable").item(i).textContent;
+                    if (textContent == selectedVal + '×') {
+                        return;
+                    } else if (textContent == "全部") {
+                        continue;
                     }
-                });
-            }
-            console.log($scope.date)
+                    html += '<li><label class="selectedLable"><a val=' + selectedVal + '>' + textContent.substring(0, textContent.length - 1) + '</a><em>×</em></label></li>';
+                }
+                html += '<li><label class="selectedLable"><a val=' + selectedVal + '>' + selectedVal + '</a><em>×</em></label></li>';
+                document.getElementById("versionSel").innerHTML = html;
+            };
         }
     )
     ;

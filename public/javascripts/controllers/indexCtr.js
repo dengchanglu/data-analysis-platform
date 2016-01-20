@@ -43,7 +43,7 @@
 
         //检查cookie缓存的用户信息
         if ($scope.cookie_user == undefined || $scope.cookie_user == null || $scope.cookie_user == "") {
-            $('#loginModal').modal('show');
+            //$('#loginModal').modal('show');
         }
 
         $scope.login = function () {
