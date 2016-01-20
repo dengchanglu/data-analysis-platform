@@ -9,7 +9,7 @@ var elasticsearch = require('elasticsearch');
 // 连接两个节点，负载均衡使用round-robin算法
 var client = elasticsearch.Client({
     hosts: [
-        '192.168.1.22:9200'
+        '192.168.1.11:9200'
     ],
     log: 'trace'
 });
