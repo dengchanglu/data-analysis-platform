@@ -282,11 +282,19 @@ var upAnalysis = {
         }
         var avs = queryData.av.split(",");
         for (var j = 0; j < avs.length; j++) {
-            queryBody.bool.should.push({
-                "term": {
-                    "av": avs[j]
-                }
-            });
+            if (avs[j] == "unknown") {
+                queryBody.bool.should.push({
+                    "term": {
+                        "av": "未知"
+                    }
+                });
+            } else {
+                queryBody.bool.should.push({
+                    "term": {
+                        "av": avs[j]
+                    }
+                });
+            }
         }
         var index = [];
         var time = queryData.time.split(",");

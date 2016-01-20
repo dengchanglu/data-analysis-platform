@@ -129,6 +129,33 @@ a.current:hover {
 .content-selected h5 {
     float: left;
     font-size: 12px;
-    margin: 0 8px 0 0;
+    /*margin: 0 8px 0 0;*/
     padding: 0;
+    margin: 10px auto;
+}
+.form-actions {
+    border-left: 1px dashed #a0a9b8;
+    bottom: 0;
+    margin: 10px auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 90px;
+}
+.form-actions button{
+    background: #5c96db;
+    border-radius: 2px;
+    border: 1px solid #2166A1;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    left: 50%;
+    line-height: 16px;
+    margin: -12px 0 0 -33px;
+    outline: 0;
+    padding: 3px 5px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 54px;
 }

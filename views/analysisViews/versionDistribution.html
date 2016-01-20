@@ -25,22 +25,24 @@
                                                                           itemfilter="">1.2.0</a></label></li>
                     <li id="6" ng-click="selectItem(6,'1.0.0')"><label><a val="1.1.1" title="1.1.1"
                                                                           itemfilter="">1.0.0</a></label></li>
-                    <li id="7" ng-click="selectItem(7,'未知')"><label><a val="-" title="未知" itemfilter="">未知</a></label>
+                    <!--<li id="7" ng-click="selectItem(7,'未知')"><label><a val="-" title="未知" itemfilter="">未知</a></label>-->
                     </li>
                 </ul>
             </div>
             <div class="condition-footer">
                 <div class="content-selected cf"><h5>已选择：</h5>
                     <ul class="list-horizontal" id="versionSel">
+                        <li><label class="selectedLable"><a val="1.1.0">1.1.0</a><em>×</em></label></li>
+                        <li><label class="selectedLable"><a val="2.1.0">2.1.0</a><em>×</em></label></li>
                     </ul>
                 </div>
-                <!--<div class="form-actions">-->
-                <!--<button type="button" class="btn btn-primary">确定</button>-->
-                <!--</div>-->
+                <div class="form-actions">
+                <button type="button" class="btn btn-primary" ng-click="clearVersionItem()">清空</button>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" ng-click="signIn()">确定</button>
+                <button type="button" class="btn btn-default" ng-click="exitSelectVersion()">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="queryByVersion()">确定</button>
             </div>
         </div>
     </div>
@@ -77,58 +79,21 @@
                 <button type="button" class="btn btn-default" ng-click="chooseCM('oppo',null,null)">oppo</button>
                 <button type="button" class="btn btn-default" ng-click="chooseCM('guanwang',null,null)">guanwang
                 </button>
-                <!--<button type="button" class="btn btn-default" ng-click="chooseCM('其他')">其他</button>-->
             </div>
         </div>
         <div class="title" style="margin-top: 10px">
             <h3 style="padding-left:0px">
-                <a style="padding-left:20px" href="#" id="a_top10" class="title-trigger">版本分布<i
+                <a style="padding-left:20px" ng-click="versionTrigger()" class="title-trigger">版本分布<i
                         class="icon_menu"></i></a>
             </h3>
             <!--指标tab-->
             <div class="tabs" id="div_item_tabs">
-                <a class="first current" id="tab_1" ng-click="triggerTitle(1)">新增用户（含重复安装）</a>
-                <a id="tab_2" ng-click="triggerTitle(2)">升级用户</a>
-                <a id="tab_3" ng-click="triggerTitle(3)">活跃用户</a>
-                <a id="tab_4" ng-click="triggerTitle(4)">启动次数</a>
-                <a class="last" id="tab_5" ng-click="triggerTitle(5)">次均使用时长</a>
+                <a class="first current" id="tab_1" ng-click="triggerTitle(1)">新增注册用户</a>
+                <!--<a id="tab_2" ng-click="triggerTitle(2)">升级用户</a>-->
+                <a id="tab_2" ng-click="triggerTitle(2)">活跃用户</a>
+                <a id="tab_3" ng-click="triggerTitle(3)">启动次数</a>
+                <!--<a class="last" id="tab_5" ng-click="triggerTitle(5)">次均使用时长</a>-->
             </div>
-        </div>
-        <!--<div style="margin-top: 10px">-->
-        <!--版本:-->
-        <!--<div class="btn-group" role="group" aria-label="..." style="margin-left: 15px">-->
-        <!--&lt;!&ndash;<button type="button" class="btn btn-default active" ng-click="chooseCM('all',null,null)">全部</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="chooseCM('OpenPlatform',null,null)">OpenPlatform</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="chooseCM('yingyongbao',null,null)">yingyongbao</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="chooseCM('unknown',null,null)">未知</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="chooseCM('oppo',null,null)">oppo</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="chooseCM('guanwang',null,null)">guanwang</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="chooseCM('其他')">其他</button>&ndash;&gt;"", "", "", "", "", ""&ndash;&gt;-->
-        <!--<a ng-click="chooseVersion('1.0.0')">1.0.0</a>-->
-        <!--<a ng-click="chooseVersion('1.1.0')">1.1.0</a>-->
-        <!--<a ng-click="chooseVersion('1.2.0')">1.2.0</a>-->
-        <!--<a ng-click="chooseVersion('2.1.0')">2.1.0</a>-->
-        <!--<a ng-click="chooseVersion('2.2.0')">2.2.0</a>-->
-        <!--<a ng-click="chooseVersion('3.0.0')">3.0.0</a>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div style="margin-top: 10px">-->
-        <!--已选版本:(默认只能选择两个)-->
-        <!--<div id="testqwe">-->
-        <!--<div class="btn-group" role="group" aria-label="..." style="margin-left: 15px"-->
-        <!--ng-repeat="version in versions">-->
-        <!--<a ng-click="deleteItem(this.val)" val="{{version}}">{{version}} <em>×</em></a>-->
-
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <div id="1453256641193591731257736683" class="multi-select condition-dropdown large-dropdown"
-             style="top: 347px; left: 261px;"><h5>选择器<span class="h-tips">(多选)</span><span class="more"><label
-                class="search-bar"><input type="text" value="请输入任意值搜索" class="input-search"><a href="#"
-                                                                                               class="btn-search"><i
-                class="icon-search2"></i></a></label></span></h5>
-
-
         </div>
 
     </div>
@@ -157,7 +122,7 @@
                             <tr>
                                 <th name="AppVersion" class="hover enable">版本名称<i class="icon-order-hover"></i></th>
                                 <th name="NewUser" class="hover enable">新增注册用户<i class="icon-order-hover"></i></th>
-                                <th name="UpgradeUv" class="hover enable">升级用户<i class="icon-order-hover"></i></th>
+                                <!--<th name="UpgradeUv" class="hover enable">升级用户<i class="icon-order-hover"></i></th>-->
                                 <th name="ActiveUser" class="hover enable">活跃用户<i class="icon-order-hover"></i></th>
                                 <th name="SessionNum" class="hover enable">启动次数<i class="icon-order-hover"></i></th>
                                 <!--<th name="time_per_session" class="hover enable">次均使用时长<i class="icon-order-hover"></i>-->
@@ -166,31 +131,25 @@
                                 <th name="TotalUserRate" class="hover enable">占比<i class="icon-order-hover"></i></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody ng-repeat="data_one in dataTable">
+
                             <tr>
                                 <td>
-                                    <div style="width: 100%; height: 100%;text-align:center;">3.0.1</div>
+                                    <div style="width: 100%; height: 100%;text-align:center;">{{data_one.key}}</div>
                                 </td>
                                 <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">3,135</div>
+                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.register_user}}</div>
                                 </td>
                                 <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">339</div>
+                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.active_user}}</div>
                                 </td>
                                 <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">11,559</div>
+                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.start_count}}</div>
+                                <td>
+                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.register_user+data_one.active_user+data_one.start_count}}</div>
                                 </td>
                                 <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">23,832</div>
-                                </td>
-                                <!--<td>-->
-                                <!--<div style="width: 100%; height: 100%;text-align:right;">0:00:00</div>-->
-                                <!--</td>-->
-                                <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">965,893</div>
-                                </td>
-                                <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">43.03%</div>
+                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.pre}}%</div>
                                 </td>
                             </tr>
 
