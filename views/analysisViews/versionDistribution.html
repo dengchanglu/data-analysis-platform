@@ -37,7 +37,7 @@
                     </ul>
                 </div>
                 <div class="form-actions">
-                <button type="button" class="btn btn-primary" ng-click="clearVersionItem()">清空</button>
+                    <button type="button" class="btn btn-primary" ng-click="clearVersionItem()">清空</button>
                 </div>
             </div>
             <div class="modal-footer">
@@ -131,28 +131,7 @@
                                 <th name="TotalUserRate" class="hover enable">占比<i class="icon-order-hover"></i></th>
                             </tr>
                             </thead>
-                            <tbody ng-repeat="data_one in dataTable">
-
-                            <tr>
-                                <td>
-                                    <div style="width: 100%; height: 100%;text-align:center;">{{data_one.key}}</div>
-                                </td>
-                                <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.register_user}}</div>
-                                </td>
-                                <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.active_user}}</div>
-                                </td>
-                                <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.start_count}}</div>
-                                <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.register_user+data_one.active_user+data_one.start_count}}</div>
-                                </td>
-                                <td>
-                                    <div style="width: 100%; height: 100%;text-align:right;">{{data_one.pre}}%</div>
-                                </td>
-                            </tr>
-
+                            <tbody id="tableData">
 
                             </tbody>
                         </table>
@@ -161,20 +140,20 @@
             </div>
             <div class="row" style="padding-top: 10px">
                 <div class="col-md-3">
-        <span style="margin-left: 20px">共15条记录,每页显示<div class="btn-group">
+        <span style="margin-left: 20px">共{{dataTable.length}}条记录 , 每页显示<div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle"
-                    data-toggle="dropdown">
-                10 <span class="caret"></span>
+                    data-toggle="dropdown" id="showPageSize">
+                5 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">5</a></li>
-                <li><a href="#">10</a></li>
-                <li><a href="#">15</a></li>
-                <li><a href="#">20</a></li>
-                <li><a href="#">30</a></li>
-                <li><a href="#">50</a></li>
-                <li><a href="#">100</a></li>
-                <li><a href="#">200</a></li>
+                <li><a ng-click="getPageSize(5)">5</a></li>
+                <li><a ng-click="getPageSize(10)">10</a></li>
+                <li><a ng-click="getPageSize(15)">15</a></li>
+                <li><a ng-click="getPageSize(20)">20</a></li>
+                <li><a ng-click="getPageSize(30)">30</a></li>
+                <li><a ng-click="getPageSize(50)">50</a></li>
+                <li><a ng-click="getPageSize(100)">100</a></li>
+                <li><a ng-click="getPageSize(200)">200</a></li>
             </ul>
         </div>条
                 </span>
@@ -182,11 +161,8 @@
                 </div>
                 <div class="col-md-3 col-md-offset-6">
 
-<span> <ul class="pagination " style="margin-right: 10px;position: relative;top: -20px">
-    <li><a href="#">&laquo;</a></li>
-    <li class="active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">&raquo;</a></li>
+<span> <ul class="pagination " style="margin-right: 10px;position: relative;top: -20px" id="pageNumber"
+           compile="templatePageNumHtml">
 </ul></span>
                 </div>
 
