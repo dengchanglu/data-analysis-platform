@@ -8,16 +8,7 @@
         .controller('userPortraitCtr', userPortraitCtr);
     function userPortraitCtr($scope, $location, ipCookie, $rootScope, $http) {
 
-        var sexRatioChart;
-        var mapChart;
-        var RegionalDistributionChart;
-        var AgeDistributionChart;
-
-        $scope.PeopleSum = 0;
-        $scope.legendArray = [];
-        $scope.DataArray = [];
-
-        //时间控件方法
+        //时间控件设置默认时间方法
         $scope.date = {
             startDate: moment().subtract(1, "days"),
             endDate: moment()
@@ -26,20 +17,28 @@
             dateTime: [],
             series: []
         };
+
+        //时间格式化方法
         $scope.formatTime = function (time) {
             var date = new Date(time);
             return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
         };
 
+        $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
+
+
         //性别分析数据
 
-        $scope.getSexAnalysisChartData = function () {
+        var sexRatioChart;
+        var sexOption;
+        $scope.getSexAnalysisChartData = function (time) {
 
-            var options = sexRatioChart.getOption();
+            $scope.PeopleSum = 0;
+            $scope.legendArray = [];
+            $scope.DataArray = [];
 
-            $http.get("http://localhost:3000/api/sexAnalysis?time="+ $scope.time)
 
-
+            $http.get("http://localhost:3000/api/sexAnalysis?time=" + time)
                 .success(function (response) {
 
                     for (var i = 0; i < 3; i++) {
@@ -56,62 +55,33 @@
                     $scope.DataArray.push(male);
 
 
-                    options.legend.data = $scope.legendArray;
-                    options.series[0].data[0].value = Girl;
-                    options.series[0].data[1].value = unknown;
-                    options.series[0].data[2].value = male;
+                    sexOption.legend.data = $scope.legendArray;
+                    sexOption.series[0].data[0].value = Girl;
+                    sexOption.series[0].data[1].value = unknown;
+                    sexOption.series[0].data[2].value = male;
 
-                    sexRatioChart.setOption(options);
+                    sexRatioChart.setOption(sexOption);
 
 
                 })
-                .error(function(data,header,config,status){
-                    console.log(status)
+                .error(function (data, header, config, status) {
+
                     //处理响应失败
                 });
         }
-        //时间控件设置
-        $scope.opts = {
-            locale: {
-                applyClass: 'btn-green',
-                applyLabel: "确定",
-                fromLabel: "Od",
-                toLabel: "Do",
-                cancelLabel: '取消',
-                customRangeLabel: '自定义时间',
-                daysOfWeek: ['六', '日', '一', '二', '三', '四', '五'],
-                firstDay: 1,
-                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月',
-                    '十月', '十一月', '十二月'
-                ]
-            },
-            ranges: {
-                '7天': [moment().subtract(6, 'days'), moment()],
-                '14天': [moment().subtract(13, 'days'), moment()],
-                '30天': [moment().subtract(29, 'days'), moment()]
-            }
-        };
-        //Watch for date changes
-        $scope.$watch('date', function (newDate) {
-            //console.log($scope.date);
-            //console.log('New date set: ', newDate);
-        }, false);
-        $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
-
-        $scope.data.dateTime = [$scope.formatTime($scope.date.startDate), $scope.formatTime($scope.date.endDate)];
-
-
 
 
         //年龄分布分析数据
 
-        $scope.AgeDistributionArray = [];
-        $scope.AgeDistributionData = [];
-        $scope.AgePeopleSum = 0;
+        var AgeDistributionChart;
+        var ageOption;
+        $scope.getAgeAnalysisData = function (time) {
 
-        $scope.getAgeAnalysisData = function () {
-            var options = AgeDistributionChart.getOption();
-            $http.get("http://localhost:3000/api/ageAnalysis?time="+$scope.time)
+            $scope.AgeDistributionArray = [];
+            $scope.AgeDistributionData = [];
+            $scope.AgePeopleSum = 0;
+
+            $http.get("http://localhost:3000/api/ageAnalysis?time=" + time)
                 .success(function (response) {
                     for (var i = 0; i < response.length; i++) {
                         $scope.AgePeopleSum += response[i].age_count;
@@ -119,46 +89,67 @@
                         $scope.AgeDistributionData.push(response[i].age_count);
                     }
 
-                    options.xAxis[0].data = $scope.AgeDistributionArray;
-                    options.series[0].data = $scope.AgeDistributionData;
+                    ageOption.xAxis[0].data = $scope.AgeDistributionArray;
+                    ageOption.series[0].data = $scope.AgeDistributionData;
 
-                    AgeDistributionChart.setOption(options)
+                    AgeDistributionChart.setOption(ageOption)
+                })
+                .error(function (data, header, config, status) {
+
+                    //处理响应失败
                 });
 
         }
 
         //TOP10地域分布分析数据
+        var RegionalDistributionChart;
+        var regionalOption;
+        $scope.getRegionAnalysisData = function (time) {
 
-        $scope.regionDataArray = [];
-        $scope.regionCityArray = [];
-        $scope.regionPeopleSum = 0;
+            $scope.regionDataArray = [];
+            $scope.regionCityArray = [];
+            $scope.regionPeopleSum = 0;
+            $scope.dataArray = [];
 
-        $scope.getRegionAnalysisData = function () {
-            var options = RegionalDistributionChart.getOption();
 
-            $http.get("http://localhost:3000/api/regionAnalysis?time="+$scope.time)
+            $http.get("http://localhost:3000/api/regionAnalysis?time=" + time)
                 .success(function (response) {
 
-                    for (var i = 0; i < 9; i++) {
-                        $scope.regionCityArray.push(response[i].key);
-                        $scope.regionDataArray.push(response[i].region_count);
-                        $scope.regionPeopleSum += response[i].region_count;
+                    var i = 0,
+                        len = response.length,
+                        j, d;
+                    for (; i < len; i++) {
+
+                        for (j = 0; j < len; j++) {
+                            if (response[i].region_count > response[j].region_count) {
+                                d = response[j];
+                                response[j] = response[i];
+                                response[i] = d;
+                            }
+                        }
+
                     }
-                    options.yAxis[0].data = $scope.regionCityArray;
-                    options.series[0].data = $scope.regionDataArray;
-                    RegionalDistributionChart.setOption(options);
+                    $scope.dataArray = response;
+
+                    for (var i = 0; i < 10; i++) {
+                        $scope.regionCityArray.push($scope.dataArray[i].key);
+                        $scope.regionDataArray.push($scope.dataArray[i].region_count);
+                        $scope.regionPeopleSum += $scope.dataArray[i].region_count;
+                    }
+                    regionalOption.yAxis[0].data = $scope.regionCityArray;
+                    regionalOption.series[0].data = $scope.regionDataArray;
+                    RegionalDistributionChart.setOption(regionalOption);
 
                 });
 
         }
 
         //职业分布数据
-        $scope.ProfessionDataArray = [];
-        $scope.ProfessionPeopleSum = 0;
+        $scope.getProfessionAnalysisData = function (time) {
+            $scope.ProfessionDataArray = [];
+            $scope.ProfessionPeopleSum = 0;
 
-        $scope.getProfessionAnalysisData = function () {
-
-            $http.get("http://localhost:3000/api/professionAnalysis?time="+$scope.time)
+            $http.get("http://localhost:3000/api/professionAnalysis?time=" + time)
                 .success(function (response) {
                     var i = 0,
                         len = response.length,
@@ -182,32 +173,18 @@
                     }
 
 
-
                 });
 
         }
 
-        //数组排序的方法
-        $scope.ArraySorting = function (array) {
-            var i = 0,
-                len = array.length,
-                j, d;
-            for (; i < len; i++) {
-                for (j = 0; j < len; j++) {
-                    if (array[i] > array[j]) {
-                        d = array[j];
-                        array[j] = array[i];
-                        array[i] = d;
-                    }
-                }
-            }
-            return array;
-        }
+
         //学历分布
-        $scope.EducationPeopleSum=0;
-        $scope.EducationDataArray=[];
-        $scope.getEducationData=function(){
-            $http.get(" http://localhost:3000/api/eduAnalysis?time="+$scope.time)
+        $scope.getEducationData = function (time) {
+
+            $scope.EducationPeopleSum = 0;
+            $scope.EducationDataArray = [];
+
+            $http.get(" http://localhost:3000/api/eduAnalysis?time=" + time)
                 .success(function (response) {
 
 
@@ -225,28 +202,93 @@
                         }
 
                     }
-                    $scope.EducationDataArray=response;
+                    $scope.EducationDataArray = response;
 
-                    for(var k=0;k<$scope.EducationDataArray.length;k++){
-                        $scope.EducationPeopleSum+=response[k].edu_count;
+                    for (var k = 0; k < $scope.EducationDataArray.length; k++) {
+                        $scope.EducationPeopleSum += response[k].edu_count;
                     }
-
 
 
                 });
 
         }
-        $scope.show=function(id){
-            document.getElementById(id).style.display='block'
+        $scope.show = function (id) {
+            document.getElementById(id).style.display = 'block'
         }
-        $scope.hide=function(id){
-            document.getElementById(id).style.display='none'
+        $scope.hide = function (id) {
+            document.getElementById(id).style.display = 'none'
         }
+
+        //时间控件设置
+        $scope.opts = {
+            locale: {
+                applyClass: 'btn-green',
+                applyLabel: "确定",
+                fromLabel: "Od",
+                toLabel: "Do",
+                cancelLabel: '取消',
+                customRangeLabel: '自定义时间',
+                daysOfWeek: ['六', '日', '一', '二', '三', '四', '五'],
+                firstDay: 1,
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月',
+                    '十月', '十一月', '十二月'
+                ]
+            },
+            ranges: {
+                '7天': [moment().subtract(6, 'days'), moment()],
+                '14天': [moment().subtract(13, 'days'), moment()],
+                '30天': [moment().subtract(29, 'days'), moment()]
+            }
+        };
+        //Watch for date changes时间改变后调用的方法
+        $scope.$watch('date', function (newDate) {
+            console.log('时间改变后执行的方法')
+            $scope.newTime = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate)
+            if ($scope.time != $scope.newTime) {
+
+                console.log('时间已改变')
+                $scope.getSexAnalysisChartData($scope.newTime);
+                $scope.getAgeAnalysisData($scope.newTime);
+                $scope.getRegionAnalysisData($scope.newTime);
+                $scope.getProfessionAnalysisData($scope.newTime);
+                $scope.getEducationData($scope.newTime);
+                $scope.getMapDistributionData($scope.newTime);
+            }
+            console.log($scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate))
+
+            //console.log($scope.date);
+            //console.log('New date set: ', newDate);
+        }, false);
 
 
         //地图分布分析数据
-        $scope.datas = [];
+        var mapChart;
+        var mapOption;
 
+        $scope.getMapDistributionData = function (time) {
+            $http.get("http://localhost:3000/api/regionAnalysis?time=" + time)
+                .success(function (response) {
+                    $scope.datas = [];
+
+                    for (var i = 0; i < response.length; i++) {
+                        $scope.datas.push(
+                            {
+                                name: '' + response[i].key + '市',
+                                value: '' + response[i].region_count
+                            }
+                        )
+                    }
+
+                })
+                .error(function (data, header, config, status) {
+                    console.log('响应失败')
+                    //处理响应失败
+                });
+
+
+        }
+
+        //图表渲染
         require(
             [
                 'echarts',
@@ -263,7 +305,7 @@
                 AgeDistributionChart = ec.init(document.getElementById('AgeDistributionChart'));
 
 
-                var option1 = {
+                sexOption = {
                     title: {
                         text: '性别比例',
 
@@ -301,7 +343,7 @@
                     ]
                 };
 
-                var option = {
+                mapOption = {
                     title: {
                         text: '地域分布'
                     },
@@ -380,25 +422,26 @@
                 var ecConfig = require('echarts/config');
                 mapChart.on(ecConfig.EVENT.MAP_SELECTED, function (param) {
 
+
                     var selected = param.selected;
                     var selectedProvince;
                     var name;
-                    for (var i = 0, l = option.series[0].data.length; i < l; i++) {
-                        name = option.series[0].data[i].name;
-                        option.series[0].data[i].selected = selected[name];
+                    for (var i = 0, l = mapOption.series[0].data.length; i < l; i++) {
+                        name = mapOption.series[0].data[i].name;
+                        mapOption.series[0].data[i].selected = selected[name];
                         if (selected[name]) {
                             selectedProvince = name;
                         }
                     }
                     if (typeof selectedProvince == 'undefined') {
-                        option.series.splice(1);
-                        option.legend = null;
-                        option.dataRange = null;
-                        mapChart.setOption(option, true);
+                        mapOption.series.splice(1);
+                        mapOption.legend = null;
+                        mapOption.dataRange = null;
+                        mapChart.setOption(mapOption, true);
                         return;
                     }
 
-                    option.series[1] = {
+                    mapOption.series[1] = {
                         name: '城市',
                         type: 'map',
                         mapType: selectedProvince,
@@ -418,7 +461,7 @@
                         data: $scope.datas
                     };
 
-                    option.dataRange = {
+                    mapOption.dataRange = {
                         orient: 'horizontal',
                         x: 'right',
                         min: 0,
@@ -427,12 +470,12 @@
                         text: ['低', '高'],           // 文本，默认为数值文本
                         splitNumber: 0
                     };
-                    mapChart.setOption(option, true);
+                    mapChart.setOption(mapOption, true);
                 })
-                mapChart.setOption(option);
+                mapChart.setOption(mapOption);
 
 
-                var option2 = {
+                regionalOption = {
                     title: {
                         text: 'Top10 地域分布',
 
@@ -500,7 +543,7 @@
                         }
                     ]
                 };
-                var option3 = {
+                ageOption = {
                     title: {
                         text: '年龄分布',
 
@@ -570,21 +613,36 @@
 
 
                 // 为echarts对象加载数据
-                sexRatioChart.setOption(option1);
-                RegionalDistributionChart.setOption(option2);
-                AgeDistributionChart.setOption(option3)
+                sexRatioChart.setOption(sexOption);
+                RegionalDistributionChart.setOption(regionalOption);
+                AgeDistributionChart.setOption(ageOption)
 
                 //动态加载数据
-                $scope.getSexAnalysisChartData();
-                $scope.getAgeAnalysisData();
-                $scope.getRegionAnalysisData();
-                $scope.getProfessionAnalysisData();
-                $scope.getEducationData();
+                $scope.getSexAnalysisChartData($scope.time);
+                $scope.getAgeAnalysisData($scope.time);
+                $scope.getRegionAnalysisData($scope.time);
+                $scope.getProfessionAnalysisData($scope.time);
+                $scope.getEducationData($scope.time);
+                $scope.getMapDistributionData($scope.time);
 
             }
         );
-
-
+        //数组排序的方法
+        $scope.ArraySorting = function (array) {
+            var i = 0,
+                len = array.length,
+                j, d;
+            for (; i < len; i++) {
+                for (j = 0; j < len; j++) {
+                    if (array[i] > array[j]) {
+                        d = array[j];
+                        array[j] = array[i];
+                        array[i] = d;
+                    }
+                }
+            }
+            return array;
+        }
 
 
     }
