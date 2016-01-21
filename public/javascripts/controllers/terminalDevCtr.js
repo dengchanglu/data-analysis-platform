@@ -37,20 +37,20 @@
                 '7天': [moment().subtract(6, 'days'), moment()],
                 '14天': [moment().subtract(13, 'days'), moment()],
                 '30天': [moment().subtract(29, 'days'), moment()]
-            }
+            },
+
         };
 
 
         $scope.time = $scope.formatTime($scope.date.startDate);
+        console.log($scope.date.startDate);
+        console.log($scope.time);
 
         var myChart;
         var option;
 
         //网络获取数据
         $scope.getChartData = function (time) {
-            console.log('传递的时间参数');
-            console.log(time)
-            console.log('网络加载数据');
 
             $http.get("http://localhost:3000/api/tdAnalysis?av=all&time=" + time + "&key=version")
                 .success(function (response) {
@@ -78,8 +78,6 @@
                     option.yAxis[0].data = $scope.VersionArray;
 
                     myChart.setOption(option);
-
-                    console.log($scope.NewUserSum)
 
 
                 })
@@ -190,16 +188,13 @@
                 };
                 // 为echarts对象加载数据
                 myChart.setOption(option);
-                console.log('默认加载数据');
                 $scope.getChartData($scope.time);
-
             }
         );
 
-
         //新增用户
-        $scope.getNewUserChartData = function () {
-
+        $scope.getNewUserChartData = function (index) {
+            $scope.triggerTitle(index)
             option.series[0].name = "新注册用户";
             option.title.text = 'TOP10新增用户操作系统版本分布';
             option.series[0].data = $scope.NewUserArray;
@@ -207,8 +202,8 @@
             myChart.setOption(option);
         }
         //活跃用户
-        $scope.getActiveUserChartData = function () {
-
+        $scope.getActiveUserChartData = function (index) {
+            $scope.triggerTitle(index)
             option.series[0].data = $scope.ActiveUserArray;
             option.series[0].name = "活跃用户"
             option.title.text = 'TOP10活跃用户操作系统版本分布';
@@ -216,8 +211,8 @@
             myChart.setOption(option);
         }
         //启动次数
-        $scope.getStartCountChartData = function () {
-
+        $scope.getStartCountChartData = function (index) {
+            $scope.triggerTitle(index)
             option.series[0].name = "启动次数"
             option.title.text = 'TOP10启动次数操作系统版本分布';
             option.series[0].data = $scope.StartCountArray;
@@ -226,17 +221,49 @@
         }
         //Watch for date changes时间控件时间改变时调用的方法
         $scope.$watch('date', function (newDate) {
-            console.log('时间改变执行的方法')
+
 
             if ($scope.time != $scope.formatTime($scope.date.startDate)) {
                 $scope.getChartData($scope.formatTime($scope.date.startDate))
 
             }
-
             //console.log($scope.date);
             //console.log('New date set: ', newDate);
 
         }, false);
+
+        $scope.triggerTitle = function (index) {
+            for (var i = 1; i < 4; i++) {
+                document.getElementById("tab_" + i).setAttribute("class", "");
+            }
+            document.getElementById("tab_" + index).setAttribute("class", "current");
+            $scope.templateKey = "tab_" + index;
+        };
+
+        $scope.setSingleDate = function () {
+
+          if(document.getElementById('singleDatePicker').checked==true){
+                console.log('显示单个时间')
+
+              $('#daterange3').daterangepicker({
+                  "singleDatePicker": true,
+                  "startDate": moment().subtract(1, "days"),
+                  "endDate": moment()
+              }, function (start, end, label) {
+
+              });
+          } else{
+              console.log('显示范围时间')
+              $('#daterange3').daterangepicker({
+                  "singleDatePicker": false,
+                  "startDate": moment().subtract(1, "days"),
+                  "endDate": moment()
+              }, function (start, end, label) {
+                  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+              });
+          }
+        }
+
 
 
     }
