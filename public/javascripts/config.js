@@ -2,7 +2,29 @@
  * Created by perfection on 15-12-3.
  */
 
-var dataAP = angular.module('dataAP', ['ui.router','ipCookie','ui.bootstrap','daterangepicker']);
+var dataAP = angular.module('dataAP', ['ui.router', 'ipCookie', 'ui.bootstrap', 'daterangepicker'], function ($compileProvider) {
+    $compileProvider.directive('compile', function ($compile) {
+        // directive factory creates a link function
+        return function (scope, element, attrs) {
+            scope.$watch(
+                function (scope) {
+                    // watch the 'compile' expression for changes
+                    return scope.$eval(attrs.compile);
+                },
+                function (value) {
+                    // when the 'compile' expression changes
+                    // assign it into the current DOM
+                    element.html(value);
+                    // compile the new DOM and link it to the current
+                    // scope.
+                    // NOTE: we only compile .childNodes so that
+                    // we don't get into infinite loop compiling ourselves
+                    $compile(element.contents())(scope);
+                }
+            );
+        };
+    });
+});
 dataAP.config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.when("", "index");
@@ -11,69 +33,67 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
             url: "/index",
             templateUrl: "views/index.html",
             controller: 'indexCtr',
-            cache:'true',
+            cache: 'true',
         })
         .state("index.channelDis", {
-            url:"/channelDis",
+            url: "/channelDis",
             templateUrl: "views/analysisViews/channelDistribution.html",
-            controller:"channelDisCtr",
-            cache:'true',
+            controller: "channelDisCtr",
+            cache: 'true',
         })
         .state("index.channelSS", {
-            url:"/channelSS",
+            url: "/channelSS",
             templateUrl: "views/analysisViews/channelSourceSegmentation.html",
-            cache:'true',
+            cache: 'true',
         })
         .state("index.versionDis", {
-            url:"/versionDis",
+            url: "/versionDis",
             templateUrl: "views/analysisViews/versionDistribution.html",
-            controller:"versionDisCtr",
-            cache:'true',
+            controller: "versionDisCtr",
+            cache: 'true',
         })
         .state("index.terminalDev", {
-            url:"/terminalDev",
+            url: "/terminalDev",
             templateUrl: "views/analysisViews/terminalDevice.html",
-            controller:"terminalDevCtr",
-            cache:'true',
+            controller: "terminalDevCtr",
+            cache: 'true',
 
         })
         .state("index.userPortrait", {
-            url:"/userPortrait",
+            url: "/userPortrait",
             templateUrl: "views/analysisViews/userPortrait.html",
-            controller:"userPortraitCtr",
-            cache:'true',
+            controller: "userPortraitCtr",
+            cache: 'true',
 
         })
         .state("index.userRetained", {
-            url:"/userRetained",
+            url: "/userRetained",
             templateUrl: "views/analysisViews/userRetained.html",
             /*controller:"usersRetainedCtr"*/
-            cache:'true',
+            cache: 'true',
 
         })
         .state("index.accessPage", {
-            url:"/accessPage",
+            url: "/accessPage",
             templateUrl: "views/analysisViews/accessPage.html",
-            controller:"accessPageCtr",
-            cache:'true',
+            controller: "accessPageCtr",
+            cache: 'true',
         })
         .state("index.usingTimeLength", {
-            url:"/usingTimeLength",
+            url: "/usingTimeLength",
             templateUrl: "views/analysisViews/usingTimeLength.html",
-            controller:"usingTimeLengthCtr",
-            cache:'true',
+            controller: "usingTimeLengthCtr",
+            cache: 'true',
         })
         .state("index.pathAnalysis", {
-            url:"/pathAnalysis",
+            url: "/pathAnalysis",
             templateUrl: "views/analysisViews/pathAnalysis.html",
-            controller:"pathAnalysisCtr",
-            cache:'true',
+            controller: "pathAnalysisCtr",
+            cache: 'true',
         })
 
 
     ;
-
-
 
 
     require.config({
