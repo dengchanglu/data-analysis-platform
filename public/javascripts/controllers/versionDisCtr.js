@@ -5,12 +5,21 @@
     'use strict';
     angular
         .module('dataAP')
-        .controller('versionDisCtr', function ($scope, $http) {
+        .controller('versionDisCtr', function ($scope, $http, $compile, $rootScope) {
+            //分页数据类型定义
+            $scope.templatePageNumHtml = "";
+            $scope.pageSize = 5;
+            $scope.pageNumber = 0;
+            $scope.pageNum = 1;
+            $scope.pageData = [];
+            $scope.dataTable = [];
+            $scope.tableData = [];
+
             $scope.templateKey = "tab_1";
             $scope.templateVersion = {
                 "av": '2.1.0,1.1.0'
             };
-            $scope.dataTable = [];
+
             $scope.versions = [];
             $scope.date = {
                 startDate: moment().subtract(1, "days"),
@@ -74,6 +83,8 @@
                             pre: (pre / pres * 100).toFixed(2)
                         });
                     }
+                    //分页方法调用
+                    $scope.createPageDatas($scope.dataTable, 1);
                     var dateTimeTem = [];
                     for (var c = 0; c < data.length; c++) {
                         $scope.data.dateTime.push(data[c].index);
@@ -265,6 +276,70 @@
                 }
                 document.getElementById("versionSel").innerHTML = html;
                 $('#versionModal').modal('hide');
+            };
+
+            //分页方法
+            $scope.getPageSize = function (pageSize) {
+                $scope.pageSize = pageSize;
+                $scope.createPageDatas($scope.dataTable, 1);
+            };
+            $scope.getPageData = function (pageNum) {
+                $scope.pageNum = pageNum;
+                $scope.createPageDatas($scope.dataTable, pageNum);
+            };
+            $scope.next = function (num) {
+                if (($scope.pageNum + num) >= 1 && ($scope.pageNum + num) <= $scope.pageNumber) {
+                    $scope.createPageDatas($scope.dataTable, ($scope.pageNum + num));
+                    $scope.pageNum = $scope.pageNum + num;
+                }
+
+            };
+            $scope.createPageDatas = function (tableData, pageNum) {
+                $scope.pageNumber = tableData.length % $scope.pageSize == 0 ? tableData.length / $scope.pageSize : Math.ceil(tableData.length / $scope.pageSize);
+                var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                for (var k = 0; k < $scope.pageNumber; k++) {
+                    if (k == (pageNum - 1)) {
+                        pageNumHtml += ('<li class="active" ng-click="getPageData(' + (k + 1) + ')"><a>' + (k + 1) + '</a></li>');
+                    } else {
+                        pageNumHtml += ('<li ng-click="getPageData(' + (k + 1) + ')"><a>' + (k + 1) + '</a></li>');
+                    }
+                }
+                pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                var PageDataHtml = "";
+                for (var i = $scope.pageSize * (pageNum - 1); i < $scope.pageSize * pageNum; i++) {
+                    if (i >= tableData.length) {
+                        break;
+                    }
+                    $scope.tableData.push({
+                        key: tableData[i].key,
+                        register_user: tableData[i].register_user,
+                        active_user: tableData[i].active_user,
+                        start_count: tableData[i].start_count,
+                        pre: tableData[i].pre
+                    });
+                    PageDataHtml += '<tr>'
+                        + ' <td>'
+                        + ' <div style="width: 100%; height: 100%;text-align:center;">' + tableData[i].key + '</div>'
+                        + ' </td>'
+                        + '<td>'
+                        + '<div style="width: 100%; height: 100%;text-align:right;">' + tableData[i].register_user + '</div>'
+                        + '</td>'
+                        + ' <td>'
+                        + '  <div style="width: 100%; height: 100%;text-align:right;">' + tableData[i].active_user + '</div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div style="width: 100%; height: 100%;text-align:right;">' + tableData[i].start_count + '</div>'
+                        + '<td>'
+                        + '<div style="width: 100%; height: 100%;text-align:right;">' + (tableData[i].register_user + tableData[i].active_user + tableData[i].start_count) + '</div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div style="width: 100%; height: 100%;text-align:right;">' + tableData[i].pre + '%</div>'
+                        + '</td>'
+                        + '</tr>';
+                }
+                document.getElementById("tableData").innerHTML = PageDataHtml;
+                $scope.templatePageNumHtml = pageNumHtml;
+                document.getElementById("showPageSize").innerHTML = $scope.pageSize + ' <span class="caret">';
             }
         }
     )
