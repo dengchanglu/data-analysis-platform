@@ -41,29 +41,29 @@
         };
 
 
-
-        $scope.NewUserSum = 0;
-        $scope.ActiveUser = 0;
-        $scope.StartCount = 0;
-        $scope.NewUserArray = [];
-        $scope.ActiveUserArray = [];
-        $scope.StartCountArray = [];
-        $scope.VersionArray = [];
-        $scope.dataArray = [];
-
-
+        $scope.time = $scope.formatTime($scope.date.startDate);
 
         var myChart;
         var option;
 
         //网络获取数据
-        $scope.getChartData=function (time) {
+        $scope.getChartData = function (time) {
+            console.log('传递的时间参数');
+            console.log(time)
             console.log('网络加载数据');
 
-            $http.get("http://localhost:3000/api/tdAnalysis?av=all&time="+ time+"&key=version")
+            $http.get("http://localhost:3000/api/tdAnalysis?av=all&time=" + time + "&key=version")
                 .success(function (response) {
 
+                    $scope.VersionArray = [];
+                    $scope.NewUserArray = [];
+                    $scope.dataArray = [];
+                    $scope.NewUserSum = 0;
+                    $scope.ActiveUser = 0;
+                    $scope.StartCount = 0;
 
+                    $scope.ActiveUserArray = [];
+                    $scope.StartCountArray = [];
                     for (var i = 0; i < response.length; i++) {
                         $scope.NewUserSum += response[i].register_user;
                         $scope.ActiveUser += response[i].active_user;
@@ -79,10 +79,11 @@
 
                     myChart.setOption(option);
 
+                    console.log($scope.NewUserSum)
 
 
                 })
-                .error(function(data,header,config,status){
+                .error(function (data, header, config, status) {
                     console.log('响应失败')
                     //处理响应失败
                 });
@@ -97,7 +98,7 @@
                 // 基于准备好的dom，初始化echarts图表
                 myChart = ec.init(document.getElementById('terminalDevice'));
 
-               option= {
+                option = {
                     title: {
                         text: 'TOP10新增用户操作系统版本分布',
                         textStyle: {
@@ -159,7 +160,7 @@
                                             var str2 = '活跃用户'
                                             var str3 = '启动次数'
 
-                                            label = ((params.value / $scope.NewUserSum) * 100).toFixed(2)
+
                                             switch (params.seriesName) {
                                                 case str1:
                                                     label = ((params.value / $scope.NewUserSum) * 100).toFixed(2)
@@ -190,12 +191,10 @@
                 // 为echarts对象加载数据
                 myChart.setOption(option);
                 console.log('默认加载数据');
-                console.log('第一次的时间');
-                $scope.getChartData($scope.formatTime($scope.date.startDate));
+                $scope.getChartData($scope.time);
 
             }
         );
-
 
 
         //新增用户
@@ -227,6 +226,12 @@
         }
         //Watch for date changes时间控件时间改变时调用的方法
         $scope.$watch('date', function (newDate) {
+            console.log('时间改变执行的方法')
+
+            if ($scope.time != $scope.formatTime($scope.date.startDate)) {
+                $scope.getChartData($scope.formatTime($scope.date.startDate))
+
+            }
 
             //console.log($scope.date);
             //console.log('New date set: ', newDate);
