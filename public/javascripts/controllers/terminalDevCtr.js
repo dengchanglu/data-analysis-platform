@@ -9,10 +9,7 @@
     function terminalDevCtr($scope, $location, ipCookie, $rootScope, $http) {
 
         //时间控件方法
-        $scope.date = {
-            startDate: moment().subtract(1, "days"),
-            endDate: moment()
-        };
+        $scope.singleDate = moment();
 
         $scope.formatTime = function (time) {
             var date = new Date(time);
@@ -38,22 +35,34 @@
                 '14天': [moment().subtract(13, 'days'), moment()],
                 '30天': [moment().subtract(29, 'days'), moment()]
             },
+            "singleDatePicker": true,
 
         };
 
+        $scope.time = $scope.formatTime($scope.singleDate);
 
-        $scope.time = $scope.formatTime($scope.date.startDate);
-        console.log($scope.date.startDate);
-        console.log($scope.time);
+        $scope.key='version';
+        $scope.av='all';
+
 
         var myChart;
         var option;
 
         //网络获取数据
-        $scope.getChartData = function (time) {
 
-            $http.get("http://localhost:3000/api/tdAnalysis?av=all&time=" + time + "&key=version")
+        $scope.getChartData = function (av,time,key,index) {
+
+
+            if(time == null){
+                time=$scope.time;
+            }
+            if(av == null){
+                av=$scope.av;
+            }
+
+            $http.get("http://localhost:3000/api/tdAnalysis?av="+av+"&time=" + time + "&key="+key)
                 .success(function (response) {
+
 
                     $scope.VersionArray = [];
                     $scope.NewUserArray = [];
@@ -61,6 +70,9 @@
                     $scope.NewUserSum = 0;
                     $scope.ActiveUser = 0;
                     $scope.StartCount = 0;
+
+                    console.log($scope.VersionArray);
+                    console.log($scope.NewUserArray);
 
                     $scope.ActiveUserArray = [];
                     $scope.StartCountArray = [];
@@ -78,6 +90,8 @@
                     option.yAxis[0].data = $scope.VersionArray;
 
                     myChart.setOption(option);
+                    console.log($scope.VersionArray);
+                    console.log($scope.NewUserArray);
 
 
                 })
@@ -107,7 +121,7 @@
                     },
                     tooltip: {
                         show: true,
-                        trigger: "axis",
+                        trigger: "item",
                         backgroundColor: 'white',
                         borderColor: 'darkgrey',
                         borderWidth: 2,
@@ -139,7 +153,7 @@
                             "name": "新注册用户",
                             "type": "bar",
                             "data": [1, 23, 81, 109, 145, 357, 439],
-                            barCategoryGap: '28',
+                            barCategoryGap: '30',
 
                             itemStyle: {
                                 normal: {
@@ -188,7 +202,7 @@
                 };
                 // 为echarts对象加载数据
                 myChart.setOption(option);
-                $scope.getChartData($scope.time);
+                $scope.getChartData('all',$scope.time, $scope.key);
             }
         );
 
@@ -220,16 +234,17 @@
             myChart.setOption(option);
         }
         //Watch for date changes时间控件时间改变时调用的方法
-        $scope.$watch('date', function (newDate) {
+        $scope.$watch('singleDate', function (newDate) {
 
+            console.log('时间改变后执行的方法')
+            console.log($scope.formatTime($scope.singleDate))
 
-            if ($scope.time != $scope.formatTime($scope.date.startDate)) {
-                $scope.getChartData($scope.formatTime($scope.date.startDate))
+            if ($scope.time != $scope.formatTime($scope.singleDate)) {
+                $scope.getChartData('all',$scope.formatTime($scope.singleDate), $scope.key)
 
             }
             //console.log($scope.date);
             //console.log('New date set: ', newDate);
-
         }, false);
 
         $scope.triggerTitle = function (index) {
@@ -237,32 +252,9 @@
                 document.getElementById("tab_" + i).setAttribute("class", "");
             }
             document.getElementById("tab_" + index).setAttribute("class", "current");
-            $scope.templateKey = "tab_" + index;
+
         };
 
-        $scope.setSingleDate = function () {
-
-          if(document.getElementById('singleDatePicker').checked==true){
-                console.log('显示单个时间')
-
-              $('#daterange3').daterangepicker({
-                  "singleDatePicker": true,
-                  "startDate": moment().subtract(1, "days"),
-                  "endDate": moment()
-              }, function (start, end, label) {
-
-              });
-          } else{
-              console.log('显示范围时间')
-              $('#daterange3').daterangepicker({
-                  "singleDatePicker": false,
-                  "startDate": moment().subtract(1, "days"),
-                  "endDate": moment()
-              }, function (start, end, label) {
-                  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-              });
-          }
-        }
 
 
 
