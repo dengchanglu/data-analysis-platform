@@ -6,10 +6,10 @@
     angular
         .module('dataAP')
         .controller('terminalDevCtr', terminalDevCtr);
-    function terminalDevCtr($scope, $location, ipCookie, $rootScope, $http) {
+    function terminalDevCtr($scope, $location, ipCookie, $rootScope, $http, URL) {
 
         //时间控件方法
-        $scope.singleDate = moment();
+        $scope.singleDate = moment().subtract(1, "days");
 
         $scope.formatTime = function (time) {
             var date = new Date(time);
@@ -41,28 +41,43 @@
 
         $scope.time = $scope.formatTime($scope.singleDate);
 
-        $scope.key='version';
-        $scope.av='all';
+        $scope.key = 'version';
 
+        $scope.av = 'all';
 
         var myChart;
-        var option;
+
 
         //网络获取数据
+        $scope.getChartData = function (time, key, type, av, index) {
 
-        $scope.getChartData = function (av,time,key,index) {
+            var options = myChart.getOption();
 
-
-            if(time == null){
-                time=$scope.time;
+            if (time == null) {
+                time = $scope.time;
             }
-            if(av == null){
-                av=$scope.av;
+            if (av == null) {
+                av = $scope.av;
+            }
+            if (type == null) {
+                type = $scope.key = 'version';
+            }
+            if (key == null) {
+                key = $scope.key = 'version';
+            }
+            if (index != null) {
+                $scope.setState(index);
             }
 
-            $http.get("http://localhost:3000/api/tdAnalysis?av="+av+"&time=" + time + "&key="+key)
+
+            console.log(time)
+            console.log(key);
+            console.log(type);
+            console.log(av);
+
+
+            $http.get(URL + "tdAnalysis?&time=" + time + "&key=" + key + "&" + type + "=" + av)
                 .success(function (response) {
-
 
                     $scope.VersionArray = [];
                     $scope.NewUserArray = [];
@@ -70,12 +85,9 @@
                     $scope.NewUserSum = 0;
                     $scope.ActiveUser = 0;
                     $scope.StartCount = 0;
-
-                    console.log($scope.VersionArray);
-                    console.log($scope.NewUserArray);
-
                     $scope.ActiveUserArray = [];
                     $scope.StartCountArray = [];
+
                     for (var i = 0; i < response.length; i++) {
                         $scope.NewUserSum += response[i].register_user;
                         $scope.ActiveUser += response[i].active_user;
@@ -86,19 +98,18 @@
                         $scope.StartCountArray.push(response[i].start_count)
                         $scope.VersionArray.push(response[i].key);
                     }
-                    option.series[0].data = $scope.NewUserArray;
-                    option.yAxis[0].data = $scope.VersionArray;
-
-                    myChart.setOption(option);
-                    console.log($scope.VersionArray);
-                    console.log($scope.NewUserArray);
-
+                    myChart.clear();//在刷新数据之前清空绘画内容，清空后实例可用
+                    options.series[0].data = $scope.NewUserArray;
+                    options.yAxis[0].data = $scope.VersionArray;
+                    myChart.setOption(options);
 
                 })
                 .error(function (data, header, config, status) {
                     console.log('响应失败')
                     //处理响应失败
                 });
+
+
         }
         require(
             [
@@ -106,11 +117,10 @@
                 'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
             ],
             function (ec) {
-
                 // 基于准备好的dom，初始化echarts图表
                 myChart = ec.init(document.getElementById('terminalDevice'));
 
-                option = {
+                var option = {
                     title: {
                         text: 'TOP10新增用户操作系统版本分布',
                         textStyle: {
@@ -142,7 +152,7 @@
                     yAxis: [
                         {
                             type: 'category',
-                            data: ["3.2", "6.0", "4.0.3-4.0.4", "2.3.3-2.3.7", "4.1.x", "5.0", "4.2-4.2.2"],
+                            data: ["3.2", "6.0", "4.0.3-4.0.4", "2.3.3-2.3.7", "4.1.x", "5.0"],
                             splitLine: false,
 
 
@@ -152,8 +162,8 @@
                         {
                             "name": "新注册用户",
                             "type": "bar",
-                            "data": [1, 23, 81, 109, 145, 357, 439],
-                            barCategoryGap: '30',
+                            "data": [1, 23, 81, 109, 145, 357],
+                            barCategoryGap: '15',
 
                             itemStyle: {
                                 normal: {
@@ -202,50 +212,59 @@
                 };
                 // 为echarts对象加载数据
                 myChart.setOption(option);
-                $scope.getChartData('all',$scope.time, $scope.key);
+                $scope.getChartData($scope.time, $scope.key, $scope.key, $scope.av, null);
             }
         );
 
         //新增用户
         $scope.getNewUserChartData = function (index) {
             $scope.triggerTitle(index)
-            option.series[0].name = "新注册用户";
-            option.title.text = 'TOP10新增用户操作系统版本分布';
-            option.series[0].data = $scope.NewUserArray;
-            option.yAxis[0].data = $scope.VersionArray;
-            myChart.setOption(option);
+
+            var options = myChart.getOption();
+            options.series[0].name = "新注册用户";
+            options.title.text = 'TOP10新增用户操作系统版本分布';
+            options.series[0].data = $scope.NewUserArray;
+            options.yAxis[0].data = $scope.VersionArray;
+            myChart.setOption(options);
         }
         //活跃用户
         $scope.getActiveUserChartData = function (index) {
             $scope.triggerTitle(index)
-            option.series[0].data = $scope.ActiveUserArray;
-            option.series[0].name = "活跃用户"
-            option.title.text = 'TOP10活跃用户操作系统版本分布';
-            option.yAxis[0].data = $scope.VersionArray;
-            myChart.setOption(option);
+            var options = myChart.getOption();
+            options.series[0].data = $scope.ActiveUserArray;
+            options.series[0].name = "活跃用户"
+            options.title.text = 'TOP10活跃用户操作系统版本分布';
+            options.yAxis[0].data = $scope.VersionArray;
+            myChart.setOption(options);
         }
         //启动次数
         $scope.getStartCountChartData = function (index) {
             $scope.triggerTitle(index)
-            option.series[0].name = "启动次数"
-            option.title.text = 'TOP10启动次数操作系统版本分布';
-            option.series[0].data = $scope.StartCountArray;
-            option.yAxis[0].data = $scope.VersionArray;
-            myChart.setOption(option);
+            var options = myChart.getOption();
+            options.series[0].name = "启动次数"
+            options.title.text = 'TOP10启动次数操作系统版本分布';
+            options.series[0].data = $scope.StartCountArray;
+            options.yAxis[0].data = $scope.VersionArray;
+            myChart.setOption(options);
         }
         //Watch for date changes时间控件时间改变时调用的方法
         $scope.$watch('singleDate', function (newDate) {
 
-            console.log('时间改变后执行的方法')
-            console.log($scope.formatTime($scope.singleDate))
-
             if ($scope.time != $scope.formatTime($scope.singleDate)) {
-                $scope.getChartData('all',$scope.formatTime($scope.singleDate), $scope.key)
+                $scope.getChartData($scope.formatTime($scope.singleDate), $scope.key, $scope.key, $scope.av, null)
 
             }
             //console.log($scope.date);
             //console.log('New date set: ', newDate);
         }, false);
+
+        $scope.setState = function (index) {
+
+            for (var i = 1; i < 6; i++) {
+                document.getElementById("navtab_" + i).setAttribute("class", "");
+            }
+            document.getElementById("navtab_" + index).setAttribute("class", "current");
+        }
 
         $scope.triggerTitle = function (index) {
             for (var i = 1; i < 4; i++) {
@@ -254,8 +273,6 @@
             document.getElementById("tab_" + index).setAttribute("class", "current");
 
         };
-
-
 
 
     }

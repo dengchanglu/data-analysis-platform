@@ -27,7 +27,7 @@ var tdAnalysis = {
                 queryBody = {
                     "match_all": {}
                 }
-            } else {
+            }else {
                 queryBody = {
                     "bool": {
                         "must": [

@@ -27,6 +27,7 @@
         $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
 
 
+
         //性别分析数据
 
         var sexRatioChart;
