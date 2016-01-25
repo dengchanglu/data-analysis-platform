@@ -23,7 +23,10 @@ var dataAP = angular.module('dataAP', ['ui.router', 'ipCookie', 'ui.bootstrap', 
                 }
             );
         };
-    });
+    })
+
+}).factory('URL', function () {
+    return "http://localhost:3000/api/";
 });
 dataAP.config(function ($stateProvider, $urlRouterProvider) {
 
