@@ -20,13 +20,16 @@
 
         </div>
         <div class="container-fluid" style="margin-top: 10px">
-            版本:
+            终端版本:
             <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default active">全部</button>
-                <button type="button" class="btn btn-default">v2.5.1-0</button>
-                <button type="button" class="btn btn-default">2.6.9.2</button>
-                <button type="button" class="btn btn-default">2.6.9.1</button>
-                <button type="button" class="btn btn-default">1.7.1.0</button>
+                <button type="button" class="btn btn-default current" ng-click="getChartData(null,null,null,'all',null)">全部</button>
+                <button type="button" class="btn btn-default"  ng-click="getChartData(null,null,null,'4.1',null)">4.1</button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.2',null)">4.2</button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.3',null)">4.3</button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.4',null)">4.4</button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'5.0',null)">5.0</button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'5.1',null)">5.1</button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'6.0',null)">6.0</button>
                 <button type="button" class="btn btn-default">其他</button>
             </div>
         </div>
@@ -36,11 +39,11 @@
             <label style="margin-left: 20px">关键指标详解</label>
 
             <div class="tabs" id="nav_tabs" style="padding: 0px">
-                <a class="first current" id="nav_tab1" ng-click="getChartData(null,null,'version',1)">操作系统版本</a>
-                <a  id="nav_tab2"  ng-click="getChartData(null,null,'sr',2)">分辨率</a>
-                <a  id="nav_tab3" ng-click="getChartData(null,null,'ne',3)">网络环境</a>
-                <a  id="nav_tab4" ng-click="getChartData(null,null,'co',4)">运营商</a>
-                <a  id="nav_tab5" ng-click="getChartData(null,null,'phoneType',5)">设备型号</a>
+                <a class="first current" id="navtab_1" ng-click="getChartData(null,'version','version',null,1)">操作系统版本</a>
+                <a  id="navtab_2"  ng-click="getChartData(null,'sr','sr',null,2)">分辨率</a>
+                <a  id="navtab_3" ng-click="getChartData(null,'ne','ne',null,3)">网络环境</a>
+                <a  id="navtab_4" ng-click="getChartData(null,'co','co',null,4)">运营商</a>
+                <a  id="navtab_5" ng-click="getChartData(null,'phoneType','phoneType',null,5)">设备型号</a>
             </div>
         </div>
         <div class="panel-body">
