@@ -5,7 +5,7 @@
     'use strict';
     angular
         .module('dataAP')
-        .controller('versionDisCtr', function ($scope, $http, $compile, $rootScope) {
+        .controller('versionDisCtr', function ($scope, $http, $compile, $rootScope, URL) {
             //分页数据类型定义
             $scope.templatePageNumHtml = "";
             $scope.pageSize = 5;
@@ -38,6 +38,16 @@
             var versionAnalysisChart;
             var option;
             $scope.chooseCM = function (cm, time, av) {
+                if (versionAnalysisChart == undefined) {
+                    return;
+                }
+                versionAnalysisChart.showLoading({
+                    text: "数据读取中...",
+                    effect: "whirling",
+                    textStyle: {
+                        fontSize: 20
+                    }
+                });
                 $scope.templateCh = cm;
                 if (time == null) {
                     var date1 = new Date($scope.formatTime($scope.date.startDate));  //开始时间
@@ -55,7 +65,7 @@
                 if (av == null) {
                     av = $scope.templateVersion.av;
                 }
-                $http.get("http://localhost:3000/api/versionAnalysis?time=" + time + "&cm=" + cm + "&av=" + av).success(function (data) {
+                $http.get(URL + "versionAnalysis?time=" + time + "&cm=" + cm + "&av=" + av).success(function (data) {
                     $scope.dataTable = [];
                     for (var o = 0; o < data[0].data.length; o++) {
                         var register_user = 0;
@@ -109,6 +119,17 @@
                             data: serTem
                         });
                     }
+                    if (seriesTem == []) {
+                        versionAnalysisChart.showLoading({
+                            text: "暂无数据",
+                            effect: "whirling",
+                            textStyle: {
+                                fontSize: 20
+                            }
+                        });
+                    } else {
+                        versionAnalysisChart.hideLoading();
+                    }
                     $scope.data.series = seriesTem;
                     option.legend.data = $scope.data.legend;
                     option.series = $scope.data.series;
@@ -119,7 +140,16 @@
                         series: [],
                         legend: []
                     };
-                })
+                }).error(function (data, status, headers, config) {
+                    versionAnalysisChart.hideLoading();
+                    versionAnalysisChart.showLoading({
+                        text: "暂无数据",
+                        effect: "whirling",
+                        textStyle: {
+                            fontSize: 20
+                        }
+                    });
+                });
             };
             require(
                 [
@@ -128,7 +158,22 @@
                 ],
                 function (ec) {
                     // 基于准备好的dom，初始化echarts图表}
-                    versionAnalysisChart = ec.init(document.getElementById('versionAnalysis'));
+                    versionAnalysisChart = ec.init(document.getElementById('versionAnalysis'), {
+                        noDataLoadingOption: {
+                            text: '暂无数据',
+                            x: 'center',
+                            y: 'center',
+                            effect: 'whirling',
+                            textStyle: {
+                                fontSize: 20
+                            },
+                            effectOption: {
+                                effect: {
+                                    n: 0
+                                }
+                            }
+                        }
+                    });
 
 
                     option = {
@@ -163,6 +208,7 @@
                         ],
                         series: $scope.data.series
                     };
+
                     versionAnalysisChart.setOption(option);
                     $scope.chooseCM("all", $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate), $scope.templateVersion.av);
 
