@@ -10,10 +10,9 @@ var app = express();
 
 /**
  * 终端设备分析
- * 请求的参数：url?time=2016-01-11&key=version&av=all;
+ * 请求的参数：url?time=2016-01-11&key=version&version=all;
  * 请求参数值：time的的值必须是这种格式2016-01-11;key指关键指标：
  * version-操作系统版本,sr-屏幕分辨率,ne-网络运行环境,co-运营商,phoneType-设备型号;
- * av指app版本现在仅有版本{"4.1", "4.2", "4.3", "4.4", "5.0", "5.1", "6.0"};
  * 请求url示例 ： http://ip:端口/api/tdAnalysis?av=all&time=2016-01-11&key=version
  * 返回值示例：[{"key":"android 4.1","active_user":10430,"start_count":5176,"register_user":1107}]
  */

@@ -4,23 +4,98 @@
 var tdAnalysis = {
     search: function (es, queryData, callback) {
         var queryBody = {};
-        if (queryData.av == "all") {
-            queryBody = {
-                "match_all": {}
-            }
-        } else {
-            queryBody = {
-                "bool": {
-                    "must": [
-                        {
-                            "term": {
-                                "av": "android " + queryData.av
+        if (queryData.key == "version") {
+            if (queryData.version == "all") {
+                queryBody = {
+                    "match_all": {}
+                }
+            } else {
+                queryBody = {
+                    "bool": {
+                        "must": [
+                            {
+                                "term": {
+                                    "version": "android " + queryData.version
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
+                }
+            }
+        } else if (queryData.key == "sr") {
+            if (queryData.sr == "all") {
+                queryBody = {
+                    "match_all": {}
+                }
+            } else {
+                queryBody = {
+                    "bool": {
+                        "must": [
+                            {
+                                "term": {
+                                    "sr": queryData.sr
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }else if(queryData.key=="ne"){
+            if (queryData.ne == "all") {
+                queryBody = {
+                    "match_all": {}
+                }
+            } else {
+                queryBody = {
+                    "bool": {
+                        "must": [
+                            {
+                                "term": {
+                                    "ne": queryData.ne
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }else if(queryData.key=="co"){
+            if (queryData.co == "all") {
+                queryBody = {
+                    "match_all": {}
+                }
+            } else {
+                queryBody = {
+                    "bool": {
+                        "must": [
+                            {
+                                "term": {
+                                    "co": queryData.co
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }else if(queryData.key=="phoneType"){
+            if (queryData.phoneType == "all") {
+                queryBody = {
+                    "match_all": {}
+                }
+            } else {
+                queryBody = {
+                    "bool": {
+                        "must": [
+                            {
+                                "term": {
+                                    "phoneType": queryData.phoneType
+                                }
+                            }
+                        ]
+                    }
                 }
             }
         }
+
         var requestJson = {
             "index": "app-" + queryData.time,
             "type": "appLog",
