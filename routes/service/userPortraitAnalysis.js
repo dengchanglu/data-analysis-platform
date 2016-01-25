@@ -386,6 +386,151 @@ var upAnalysis = {
             }
             callback(dataSort);
         });
+    },
+    channelSearch: function (es, queryData, callback) {
+        var queryBody;
+        if (queryData.av == "all") {
+            queryBody = {
+                "bool": {
+                    "should": []
+                }
+            };
+        } else {
+            if (queryData.av == "unknown") {
+                queryBody = {
+                    "bool": {
+                        "must": [{
+                            "term": {
+                                "av": "未知"
+                            }
+                        }],
+                        "should": [],
+                        "minimum_should_match": 1
+
+                    }
+                };
+            } else {
+                queryBody = {
+                    "bool": {
+                        "must": [{
+                            "term": {
+                                "av": queryData.av
+                            }
+                        }],
+                        "should": [],
+                        "minimum_should_match": 1
+
+                    }
+                };
+            }
+        }
+        var cms = queryData.cm.split(",");
+        for (var j = 0; j < cms.length; j++) {
+            if (cms[j] == "unknown") {
+                queryBody.bool.should.push({
+                    "term": {
+                        "cm": "未知"
+                    }
+                });
+            } else {
+                queryBody.bool.should.push({
+                    "term": {
+                        "cm": cms[j]
+                    }
+                });
+            }
+        }
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": queryBody,
+                "aggs": {
+                    "index": {
+                        "terms": {
+                            "field": "_index"
+                        },
+                        "aggs": {
+                            "data": {
+                                "terms": {
+                                    "field": "cm",
+                                    "size": "0"
+                                },
+                                "aggs": {
+                                    "register_user": {
+                                        "filter": {
+                                            "term": {
+                                                "btn": "注册"
+                                            }
+                                        }
+                                    },
+                                    "start_count": {
+                                        "filter": {
+                                            "term": {
+                                                "is": 1
+                                            }
+                                        }
+                                    },
+                                    "active_user": {
+                                        "cardinality": {
+                                            "field": "ip"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        var getData = function (data) {
+
+            var dataTem = [];
+            for (var j = 0; j < data.length; j++) {
+                dataTem.push({
+                    "key": data[j].key,
+                    "active_user": data[j].active_user.value,
+                    "start_count": data[j].start_count.doc_count,
+                    "register_user": data[j].register_user.doc_count
+                });
+            }
+            return dataTem;
+        };
+        es.search(requestJson).then(function (response) {
+            var data = [];
+            var dataSort = [];
+            if (response != null && response.aggregations != null && response.aggregations.index.buckets != []) {
+                var res = response.aggregations.index.buckets;
+
+                var i = 0;
+                for (i = 0; i < res.length; i++) {
+                    data.push(
+                        {
+                            "index": res[i].key.substring(4, res[i].key.length),
+                            "data": getData(res[i].data.buckets)
+                        }
+                    );
+                }
+                for (i = 0; i < time.length; i++) {
+                    for (var j = 0; j < data.length; j++) {
+                        if (time[i] == data[j].index) {
+                            dataSort.push({
+                                index: data[j].index,
+                                data: data[j].data
+                            });
+                        }
+                    }
+                }
+            }
+            console.log(dataSort)
+            callback(dataSort);
+        });
     }
 };
 exports.upAnalysis = upAnalysis;
