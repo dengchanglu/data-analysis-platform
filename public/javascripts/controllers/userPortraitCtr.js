@@ -66,7 +66,6 @@
 
                 })
                 .error(function (data, header, config, status) {
-
                     //处理响应失败
                 });
         }

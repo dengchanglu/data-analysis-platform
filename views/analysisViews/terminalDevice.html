@@ -22,14 +22,23 @@
         <div class="container-fluid" style="margin-top: 10px">
             终端版本:
             <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default current" ng-click="getChartData(null,null,null,'all',null)">全部</button>
-                <button type="button" class="btn btn-default"  ng-click="getChartData(null,null,null,'4.1',null)">4.1</button>
-                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.2',null)">4.2</button>
-                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.3',null)">4.3</button>
-                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.4',null)">4.4</button>
-                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'5.0',null)">5.0</button>
-                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'5.1',null)">5.1</button>
-                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'6.0',null)">6.0</button>
+                <button type="button" class="btn btn-default current"
+                        ng-click="getChartData(null,null,null,'all',null)">全部
+                </button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.1',null)">4.1
+                </button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.2',null)">4.2
+                </button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.3',null)">4.3
+                </button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'4.4',null)">4.4
+                </button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'5.0',null)">5.0
+                </button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'5.1',null)">5.1
+                </button>
+                <button type="button" class="btn btn-default" ng-click="getChartData(null,null,null,'6.0',null)">6.0
+                </button>
                 <button type="button" class="btn btn-default">其他</button>
             </div>
         </div>
@@ -39,11 +48,13 @@
             <label style="margin-left: 20px">关键指标详解</label>
 
             <div class="tabs" id="nav_tabs" style="padding: 0px">
-                <a class="first current" id="navtab_1" ng-click="getChartData(null,'version','version',null,1)">操作系统版本</a>
-                <a  id="navtab_2"  ng-click="getChartData(null,'sr','sr',null,2)">分辨率</a>
-                <a  id="navtab_3" ng-click="getChartData(null,'ne','ne',null,3)">网络环境</a>
-                <a  id="navtab_4" ng-click="getChartData(null,'co','co',null,4)">运营商</a>
-                <a  id="navtab_5" ng-click="getChartData(null,'phoneType','phoneType',null,5)">设备型号</a>
+                <a class="first current" id="navtab_1"
+                   ng-click="getChartData(null,'version','version',null,1)">操作系统版本</a>
+                <a id="navtab_2" ng-click="getChartData(null,'sr','sr',null,2)">分辨率</a>
+                <a id="navtab_3" ng-click="getChartData(null,'ne','ne',null,3)">网络环境</a>
+                <a id="navtab_4" ng-click="getChartData(null,'co','co',null,4)">运营商</a>
+                <a id="navtab_5" ng-click="getChartData(null,'phoneType','phoneType',null,5)">
+                    设备型号</a>
             </div>
         </div>
         <div class="panel-body">
@@ -59,20 +70,21 @@
 
             <div id="terminalDevice" style="height: 400px;width: 100%;margin-top: 10px">
             </div>
+
             <div class="container-fluid">
                 <table class="table table-hover table-striped">
                     <caption><label>详细数据</label></caption>
                     <thead>
                     <tr>
-                        <th>操作系统版本</th>
+                        <th id="title">操作系统版本</th>
                         <th>新增用户/占比</th>
                         <th>活跃用户/占比</th>
                         <th>启动次数/占比</th>
 
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr ng-repeat="data in dataArray">
+                    <tbody id="tableData">
+                    <tr ng-repeat="data in newDataArray">
                         <td>{{data.key}}</td>
                         <td>{{data.register_user}} <span style="margin-left: 10px">{{((data.register_user/NewUserSum)*100).toFixed(2)}}%</span>
                         </td>
@@ -91,37 +103,38 @@
     </div>
 
 </div>
+
+
 <div class="row">
     <div class="col-md-3">
-        <span style="margin-left: 20px">共15条记录,每页显示<div class="btn-group">
+        <span style="margin-left: 20px">共{{dataArray.length}}条记录,每页显示<div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle"
-                    data-toggle="dropdown">
+                    data-toggle="dropdown" id="showPageSize">
                 10 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">5</a></li>
-                <li><a href="#">10</a></li>
-                <li><a href="#">15</a></li>
-                <li><a href="#">20</a></li>
-                <li><a href="#">30</a></li>
-                <li><a href="#">50</a></li>
-                <li><a href="#">100</a></li>
-                <li><a href="#">200</a></li>
+                <li><a ng-click="getPageSize(5)">5</a></li>
+                <li><a ng-click="getPageSize(10)">10</a></li>
+                <li><a ng-click="getPageSize(15)">15</a></li>
+                <li><a ng-click="getPageSize(20)">20</a></li>
+                <li><a ng-click="getPageSize(30)">30</a></li>
+                <li><a ng-click="getPageSize(50)">50</a></li>
+                <li><a ng-click="getPageSize(100)">100</a></li>
+                <li><a ng-click="getPageSize(200)">200</a></li>
             </ul>
         </div>条
                 </span>
 
     </div>
     <div class="col-md-3 col-md-offset-6">
-
-<span> <ul class="pagination " style="margin-right: 10px;position: relative;top: -20px">
-    <li><a href="#">&laquo;</a></li>
-    <li class="active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">&raquo;</a></li>
-</ul></span>
+        <span >
+    <ul class="pagination " id="pageNumber" compile="templatePageNumHtml" style="margin-right: 10px;position: relative;top: -20px">
+        <li><a>&laquo;</a></li>
+        <li class="active" ><a>1</a></li>
+        <li><a>&raquo;</a></li>
+    </ul>
+    </span>
     </div>
-
 
 </div>
 

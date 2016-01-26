@@ -70,33 +70,37 @@
             }
 
 
-            console.log(time)
-            console.log(key);
-            console.log(type);
-            console.log(av);
-
-
             $http.get(URL + "tdAnalysis?&time=" + time + "&key=" + key + "&" + type + "=" + av)
                 .success(function (response) {
 
                     $scope.VersionArray = [];
                     $scope.NewUserArray = [];
                     $scope.dataArray = [];
-                    $scope.NewUserSum = 0;
-                    $scope.ActiveUser = 0;
-                    $scope.StartCount = 0;
+                    $scope.newDataArray = [];
+
+
+                    if (av == 'all') {
+                        $scope.NewUserSum = 0;
+                        $scope.ActiveUser = 0;
+                        $scope.StartCount = 0;
+                    }
                     $scope.ActiveUserArray = [];
                     $scope.StartCountArray = [];
 
+
                     for (var i = 0; i < response.length; i++) {
-                        $scope.NewUserSum += response[i].register_user;
-                        $scope.ActiveUser += response[i].active_user;
-                        $scope.StartCount += response[i].start_count;
+                        if (av == 'all') {
+                            $scope.NewUserSum += response[i].register_user;
+                            $scope.ActiveUser += response[i].active_user;
+                            $scope.StartCount += response[i].start_count;
+                        }
                         $scope.dataArray.push(response[i])
+                        $scope.newDataArray.push(response[i]);
                         $scope.NewUserArray.push(response[i].register_user);
                         $scope.ActiveUserArray.push(response[i].active_user);
                         $scope.StartCountArray.push(response[i].start_count)
                         $scope.VersionArray.push(response[i].key);
+
                     }
                     myChart.clear();//在刷新数据之前清空绘画内容，清空后实例可用
                     options.series[0].data = $scope.NewUserArray;
@@ -111,6 +115,306 @@
 
 
         }
+
+        //分页方法
+        $scope.getPageSize = function (PageSize) {
+
+            $scope.newDataArray = [];
+            var len = $scope.dataArray.length;
+
+            switch (PageSize) {
+                case 5:
+                    document.getElementById("showPageSize").innerHTML = PageSize + ' <span class="caret">'
+                    if (len > 5) {
+                        for (var i = 0; i < 5; i++) {
+                            $scope.newDataArray.push($scope.dataArray[i])
+                        }
+                        var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                        pageNumHtml += '<li  ng-click="next(1)"class="active" ><a >1</a></li>';
+                        pageNumHtml += '<li ng-click="next(2)"><a>2</a></li>';
+                        pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                        document.getElementById("pageNumber").innerHTML =
+                            pageNumHtml
+                        $scope.templatePageNumHtml = pageNumHtml;
+                        $scope.next = function (num) {
+                            $scope.newDataArray = [];
+                            switch (num) {
+                                case -1:
+                                    for (var i = 0; i < 5; i++) {
+                                        $scope.newDataArray.push($scope.dataArray[i])
+                                    }
+                                    var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                    pageNumHtml += '<li  ng-click="next(1)"class="active" ><a >1</a></li>';
+                                    pageNumHtml += '<li ng-click="next(2)" class=""> <a>2</a></li>';
+                                    pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                    document.getElementById("pageNumber").innerHTML =
+                                        pageNumHtml
+                                    $scope.templatePageNumHtml = pageNumHtml;
+                                    break;
+                                case 0:
+                                    for (var i = 5; i < len; i++) {
+                                        $scope.newDataArray.push($scope.dataArray[i])
+                                    }
+                                    var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                    pageNumHtml += '<li  ng-click="next(1)" class=""><a >1</a></li>';
+                                    pageNumHtml += '<li ng-click="next(2)" class="active"><a>2</a></li>';
+
+                                    pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                    document.getElementById("pageNumber").innerHTML =
+                                        pageNumHtml
+                                    $scope.templatePageNumHtml = pageNumHtml;
+                                    break;
+                                case 1:
+                                    for (var i = 0; i < 5; i++) {
+                                        $scope.newDataArray.push($scope.dataArray[i])
+                                    }
+                                    var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                    pageNumHtml += '<li  ng-click="next(1)"class="active" ><a >1</a></li>';
+                                    pageNumHtml += '<li ng-click="next(2)" class=""> <a>2</a></li>';
+
+                                    pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                    document.getElementById("pageNumber").innerHTML =
+                                        pageNumHtml
+                                    $scope.templatePageNumHtml = pageNumHtml;
+                                    break;
+                                case 2:
+                                    for (var i = 5; i < len; i++) {
+                                        $scope.newDataArray.push($scope.dataArray[i])
+                                    }
+                                    var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                    pageNumHtml += '<li  ng-click="next(1)" class=""><a >1</a></li>';
+                                    pageNumHtml += '<li ng-click="next(2)" class="active"><a>2</a></li>';
+
+                                    pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                    document.getElementById("pageNumber").innerHTML =
+                                        pageNumHtml
+                                    $scope.templatePageNumHtml = pageNumHtml;
+                                    break;
+                                default:
+                            }
+                        }
+                    } else {
+                        if (len < 5) {
+                            for (var i = 0; i < len; i++) {
+                                $scope.newDataArray.push($scope.dataArray[i])
+                            }
+                            var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                            pageNumHtml += '<li  class="active" ng-click="next(1)"><a>1</a></li>';
+                            pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                            document.getElementById("pageNumber").innerHTML =
+                                pageNumHtml
+
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                $scope.newDataArray.push($scope.dataArray[i])
+                            }
+                            var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                            pageNumHtml += '<li  class="active" ng-click="next(1)"><a>1</a></li>';
+                            pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                            document.getElementById("pageNumber").innerHTML =
+                                pageNumHtml
+                        }
+                    }
+                    break;
+                case 10:
+                    document.getElementById("showPageSize").innerHTML = PageSize + ' <span class="caret">'
+                    $scope.next = function (num) {
+                        $scope.newDataArray = [];
+                        switch (num) {
+                            case -1:
+                                for (var i = 0; i < 5; i++) {
+                                    $scope.newDataArray.push($scope.dataArray[i])
+                                }
+                                var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                pageNumHtml += '<li  ng-click="next(1)"class="active" ><a >1</a></li>';
+                                pageNumHtml += '<li ng-click="next(2)" class=""> <a>2</a></li>';
+                                pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                document.getElementById("pageNumber").innerHTML =
+                                    pageNumHtml
+                                $scope.templatePageNumHtml = pageNumHtml;
+                                break;
+                            case 0:
+                                for (var i = 5; i < len; i++) {
+                                    $scope.newDataArray.push($scope.dataArray[i])
+                                }
+                                var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                pageNumHtml += '<li  ng-click="next(1)" class=""><a >1</a></li>';
+                                pageNumHtml += '<li ng-click="next(2)" class="active"><a>2</a></li>';
+
+                                pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                document.getElementById("pageNumber").innerHTML =
+                                    pageNumHtml
+                                $scope.templatePageNumHtml = pageNumHtml;
+                                break;
+                            case 1:
+                                for (var i = 0; i < 5; i++) {
+                                    $scope.newDataArray.push($scope.dataArray[i])
+                                }
+                                var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                pageNumHtml += '<li  ng-click="next(1)"class="active" ><a >1</a></li>';
+                                pageNumHtml += '<li ng-click="next(2)" class=""> <a>2</a></li>';
+
+                                pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                document.getElementById("pageNumber").innerHTML =
+                                    pageNumHtml
+                                $scope.templatePageNumHtml = pageNumHtml;
+                                break;
+                            case 2:
+                                for (var i = 5; i < len; i++) {
+                                    $scope.newDataArray.push($scope.dataArray[i])
+                                }
+                                var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                pageNumHtml += '<li  ng-click="next(1)" class=""><a >1</a></li>';
+                                pageNumHtml += '<li ng-click="next(2)" class="active"><a>2</a></li>';
+
+                                pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                document.getElementById("pageNumber").innerHTML =
+                                    pageNumHtml
+                                $scope.templatePageNumHtml = pageNumHtml;
+                                break;
+                            default:
+                        }
+                    }
+                    if (len > 10) {
+                        for (var i = 0; i < 10; i++) {
+                            $scope.newDataArray.push($scope.dataArray[i])
+                        }
+                        var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                        pageNumHtml += '<li  class="active" ng-click="next(1)"><a>1</a></li>';
+                        pageNumHtml += '<li  ng-click="next(1)"><a>2</a></li>';
+                        pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                        document.getElementById("pageNumber").innerHTML =
+                            pageNumHtml
+                    } else {
+                        if (len < 10) {
+                            for (var i = 0; i < len; i++) {
+                                $scope.newDataArray.push($scope.dataArray[i])
+                            }
+                            var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                            pageNumHtml += '<li  class="active" ng-click="next(1)"><a>1</a></li>';
+
+
+                            pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                            document.getElementById("pageNumber").innerHTML =
+                                pageNumHtml
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                $scope.newDataArray.push($scope.dataArray[i])
+                            }
+                            var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                            pageNumHtml += '<li  class="active" ng-click="next(1)"><a>1</a></li>';
+                            pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                            document.getElementById("pageNumber").innerHTML =
+                                pageNumHtml
+                        }
+                    }
+                    break;
+                case 15:
+                    document.getElementById("showPageSize").innerHTML = PageSize + ' <span class="caret">'
+                    $scope.next = function (num) {
+                        $scope.newDataArray = [];
+                        switch (num) {
+                            case -1:
+                                for (var i = 0; i < 5; i++) {
+                                    $scope.newDataArray.push($scope.dataArray[i])
+                                }
+                                var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                pageNumHtml += '<li  ng-click="next(1)"class="active" ><a >1</a></li>';
+                                pageNumHtml += '<li ng-click="next(2)" class=""> <a>2</a></li>';
+                                pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                document.getElementById("pageNumber").innerHTML =
+                                    pageNumHtml
+                                $scope.templatePageNumHtml = pageNumHtml;
+                                break;
+                            case 0:
+                                for (var i = 5; i < len; i++) {
+                                    $scope.newDataArray.push($scope.dataArray[i])
+                                }
+                                var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                pageNumHtml += '<li  ng-click="next(1)" class=""><a >1</a></li>';
+                                pageNumHtml += '<li ng-click="next(2)" class="active"><a>2</a></li>';
+
+                                pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                document.getElementById("pageNumber").innerHTML =
+                                    pageNumHtml
+                                $scope.templatePageNumHtml = pageNumHtml;
+                                break;
+                            case 1:
+                                for (var i = 0; i < 5; i++) {
+                                    $scope.newDataArray.push($scope.dataArray[i])
+                                }
+                                var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                pageNumHtml += '<li  ng-click="next(1)"class="active" ><a >1</a></li>';
+                                pageNumHtml += '<li ng-click="next(2)" class=""> <a>2</a></li>';
+
+                                pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                document.getElementById("pageNumber").innerHTML =
+                                    pageNumHtml
+                                $scope.templatePageNumHtml = pageNumHtml;
+                                break;
+                            case 2:
+                                for (var i = 5; i < len; i++) {
+                                    $scope.newDataArray.push($scope.dataArray[i])
+                                }
+                                var pageNumHtml = '<li ng-click="next(-1)"><a >&laquo;</a></li>';
+                                pageNumHtml += '<li  ng-click="next(1)" class=""><a >1</a></li>';
+                                pageNumHtml += '<li ng-click="next(2)" class="active"><a>2</a></li>';
+
+                                pageNumHtml += '<li ng-click="next(0)"><a>&raquo;</a></li>';
+                                document.getElementById("pageNumber").innerHTML =
+                                    pageNumHtml
+                                $scope.templatePageNumHtml = pageNumHtml;
+                                break;
+                            default:
+                        }
+                    }
+                    if (len > 15) {
+                        for (var i = 0; i < 15; i++) {
+                            $scope.newDataArray.push($scope.dataArray[i])
+                        }
+                        var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                        pageNumHtml += '<li  class="active" ng-click="next(1)"><a>1</a></li>';
+                        pageNumHtml += '<li  ng-click="next(1)"><a>2</a></li>';
+
+                        pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                        document.getElementById("pageNumber").innerHTML =
+                            pageNumHtml
+                    } else {
+                        if (len < 15) {
+                            for (var i = 0; i < len; i++) {
+                                $scope.newDataArray.push($scope.dataArray[i])
+                            }
+                            var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                            pageNumHtml += '<li  class="active" ng-click="next(1)"><a>1</a></li>';
+
+
+                            pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                            document.getElementById("pageNumber").innerHTML =
+                                pageNumHtml
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                $scope.newDataArray.push($scope.dataArray[i])
+                            }
+                            var pageNumHtml = '<li ng-click="next(-1)"><a>&laquo;</a></li>';
+                            pageNumHtml += '<li  class="active" ng-click="next(1)"><a>1</a></li>';
+                            pageNumHtml += '<li  ng-click="next(1)"><a>2</a></li>';
+                            pageNumHtml += '<li ng-click="next(1)"><a>&raquo;</a></li>';
+                            document.getElementById("pageNumber").innerHTML =
+                                pageNumHtml
+                        }
+                    }
+
+                    break;
+                default:
+
+            }
+
+
+        }
+
         require(
             [
                 'echarts',
@@ -258,14 +562,35 @@
             //console.log('New date set: ', newDate);
         }, false);
 
+        //改变选项状态和动态设置表头数据
         $scope.setState = function (index) {
 
             for (var i = 1; i < 6; i++) {
                 document.getElementById("navtab_" + i).setAttribute("class", "");
             }
             document.getElementById("navtab_" + index).setAttribute("class", "current");
-        }
+            switch (index) {
+                case 1:
+                    document.getElementById('title').innerHTML = ' <th id="title">操作系统版本</th>'
+                    break;
+                case 2:
+                    document.getElementById('title').innerHTML = ' <th id="title">分辨率</th>'
+                    break;
+                case 3:
+                    document.getElementById('title').innerHTML = ' <th id="title">网络环境</th>'
+                    break;
+                case 4:
+                    document.getElementById('title').innerHTML = ' <th id="title">运营商</th>'
+                    break;
+                case 5:
+                    document.getElementById('title').innerHTML = ' <th id="title">设备型号</th>'
+                    break;
+                default :
 
+            }
+
+        }
+        //设置新增用户，活跃用户，启动次数状态切换
         $scope.triggerTitle = function (index) {
             for (var i = 1; i < 4; i++) {
                 document.getElementById("tab_" + i).setAttribute("class", "");

@@ -39,6 +39,8 @@
         var channelAnalysisChart;
         var option;
         $scope.chooseVersion = function (cm, time, av) {
+
+
             if (channelAnalysisChart == undefined) {
                 return;
             }
@@ -94,6 +96,7 @@
                         pre: (pre / pres * 100).toFixed(2)
                     });
                 }
+                console.log($scope.dataTable)
                 //分页方法调用
                 $scope.createPageDatas($scope.dataTable, 1);
                 var dateTimeTem = [];

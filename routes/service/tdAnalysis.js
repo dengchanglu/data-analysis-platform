@@ -4,10 +4,12 @@
 var tdAnalysis = {
     search: function (es, queryData, callback) {
         var queryBody = {};
+
         if (queryData.key == "version") {
             if (queryData.version == "all") {
                 queryBody = {
                     "match_all": {}
+
                 }
             } else {
                 queryBody = {
