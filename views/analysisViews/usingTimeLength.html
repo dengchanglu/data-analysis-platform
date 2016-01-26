@@ -4,44 +4,58 @@
         <span class="glyphicon glyphicon-question-sign" ng-click=""></span>
         <br>
 
-        <div class="btn-group" style="margin-top: 5px">
-            <button type="button" class="btn btn-default active">2015-12-25至2016-01-07</button>
-            <button type="button" class="btn btn-default dropdown-toggle active" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
+        <div class="btn-group">
+            <div class="form-group">
+                <div class="input-group col-md-6">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <input date-range-picker id="daterange3" name="daterange3" class="form-control date-picker"
+                           type="text"
+                           ng-model="date" options="opts" required/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-chevron-down"></span></span>
+                    <button type="button" class="btn btn-primary pull-right" style="margin-right: 30px">按时间对比</button>
+                </div>
 
-            </button>
-            <span style="margin-left: 20px;position: relative;bottom:-10px ">
-                 <a href="#">7天</a>
-            <a href="#" class="active" style="color: black">14天</a>
-            <a href="#">30天</a>
-            </span>
+            </div>
+
         </div>
-        <button type="button" class="btn btn-primary pull-right" style="margin-right: 30px">按时间对比</button>
+
 
         <div class="row" style="margin-top: 10px">
             <div class="col-md-6">
                 渠道:
                 <div class="btn-group" role="group" aria-label="..." style="margin-left: 10px">
-                    <button type="button" class="btn btn-default active">全部</button>
-                    <button type="button" class="btn btn-default">OpenPlatform</button>
-                    <button type="button" class="btn btn-default">未知</button>
-                    <button type="button" class="btn btn-default">yingyongbao</button>
-                    <button type="button" class="btn btn-default">oppo</button>
-                    <button type="button" class="btn btn-default">guanwang</button>
-                    <button type="button" class="btn btn-default">其他</button>
+                    <button type="button" class="btn btn-default active" ng-click="chooseCM('all',null,null)">全部
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseCM('OpenPlatform',null,null)">
+                        OpenPlatform
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseCM('yingyongbao',null,null)">
+                        yingyongbao
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseCM('unknown',null,null)">未知</button>
+                    <button type="button" class="btn btn-default" ng-click="chooseCM('oppo',null,null)">oppo</button>
+                    <button type="button" class="btn btn-default" ng-click="chooseCM('guanwang',null,null)">guanwang
+                    </button>
                 </div>
             </div>
             <div class="col-md-6">
                 版本:
                 <div class="btn-group" role="group" aria-label="..." style="margin-left: 10px">
-                    <button type="button" class="btn btn-default active">全部</button>
-                    <button type="button" class="btn btn-default">3.0.1</button>
-                    <button type="button" class="btn btn-default">v2.5.1_0</button>
-                    <button type="button" class="btn btn-default">2.6.9.2</button>
-                    <button type="button" class="btn btn-default">2.6.9.1</button>
-                    <button type="button" class="btn btn-default">2.6.2.0</button>
-                    <button type="button" class="btn btn-default">其他</button>
+                    <button type="button" class="btn btn-default active" ng-click="chooseVersion(null,null,'all')">全部
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'1.0.0')">
+                        1.0.0
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'1.1.0')">1.1.0
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'1.2.0')">1.2.0
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'2.1.0')">2.1.0
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'2.2.0')">2.2.0
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'3.0.0')">3.0.0
+                    </button>
                 </div>
             </div>
         </div>
@@ -55,16 +69,16 @@
             </div>
             <div>
                 <ul class="nav navbar-nav">
-                    <li class="active "><a href="#" style="background-color:#3389D4;color: white;font-weight: 700">人均使用时长</a>
+                    <li class="active "><a style="background-color:#3389D4;color: white;font-weight: 700">人均使用时长</a>
                     </li>
-                    <li><a href="#" style="font-weight: 700">次均使用时长</a></li>
+                    <!--<li><a href="#" style="font-weight: 700">次均使用时长</a></li>-->
                 </ul>
             </div>
         </nav>
-        <div style="margin: 20px;background-color:#EDF6FF;border:1px solid;border-color:#B5DBFF;border-radius:5px;padding: 10px">
-            <span class="glyphicon glyphicon-info-sign"></span>
-            以"用户"为单位统计使用时长。
-        </div>
+        <!--<div style="margin: 20px;background-color:#EDF6FF;border:1px solid;border-color:#B5DBFF;border-radius:5px;padding: 10px">-->
+        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
+        <!--以"用户"为单位统计使用时长。-->
+        <!--</div>-->
         <label style="margin-left: 40px">趋势图</label>
 
         <div id="usingTimeLengthChart" style="width: 100%;height: 300px"></div>
@@ -122,168 +136,6 @@
                                 <div style="width: 100%; height: 100%;text-align:right;">
                                     <div class="ui_progress">
                                         <div style="width:92.99%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="">
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:center;">[4,10)秒</div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">19,392 <span class="percent">3.56%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:4.56%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">515 <span
-                                        class="percent">0.95%</span></div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:1.95%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="gri_tr_clicked">
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:center;">[10,30)秒</div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">71,184 <span class="percent">13.06%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:14.06%; "class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">1,148 <span class="percent">2.13%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:3.13%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="gri_tr_clicked">
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:center;">[30,60)秒</div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">63,812 <span class="percent">11.71%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:12.71%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">910 <span
-                                        class="percent">1.69%</span></div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:2.69%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="gri_tr_clicked">
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:center;">[1,3)分钟</div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">70,864 <span class="percent">13.00%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:14%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">1,160 <span class="percent">2.15%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:3.15%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="gri_tr_clicked">
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:center;">[3,10)分钟</div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">20,267 <span class="percent">3.72%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:4.72%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">445 <span
-                                        class="percent">0.82%</span></div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:1.82%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="gri_tr_clicked">
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:center;">[10,30)分钟</div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">2,955 <span class="percent">0.54%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:1.54%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">113 <span
-                                        class="percent">0.21%</span></div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:1.21%; " class="ui_progress_bar"></div>
                                     </div>
                                 </div>
                             </td>

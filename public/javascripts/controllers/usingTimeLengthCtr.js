@@ -4,7 +4,14 @@
         .module('dataAP')
         .controller('usingTimeLengthCtr', usingTimeLengthCtr);
     function usingTimeLengthCtr($scope, $location, ipCookie, $rootScope) {
-
+        $scope.date = {
+            startDate: moment().subtract(1, "days"),
+            endDate: moment()
+        };
+        $scope.formatTime = function (time) {
+            var date = new Date(time);
+            return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+        };
         require(
             [
                 'echarts',

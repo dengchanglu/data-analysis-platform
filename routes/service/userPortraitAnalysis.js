@@ -531,6 +531,311 @@ var upAnalysis = {
             console.log(dataSort)
             callback(dataSort);
         });
+    },
+    timeOfUsingSearch: function (es, queryData, callback) {
+        var queryBody = {
+            "bool": {
+                "should": []
+            }
+        };
+        var j = 0;
+        if (queryData.av != "all") {
+            var avs = queryData.av.split(",");
+            for (j = 0; j < avs.length; j++) {
+                if (avs[j] == "unknown") {
+                    queryBody.bool.should.push({
+                        "term": {
+                            "cm": "未知"
+                        }
+                    });
+                } else {
+                    queryBody.bool.should.push({
+                        "term": {
+                            "cm": avs[j]
+                        }
+                    });
+                }
+            }
+        }
+        if (queryData.cm != "all") {
+            var cms = queryData.cm.split(",");
+            for (j = 0; j < cms.length; j++) {
+                if (cms[j] == "unknown") {
+                    queryBody.bool.should.push({
+                        "term": {
+                            "cm": "未知"
+                        }
+                    });
+                } else {
+                    queryBody.bool.should.push({
+                        "term": {
+                            "cm": cms[j]
+                        }
+                    });
+                }
+            }
+        }
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": queryBody,
+                "aggs": {
+                    "index_term": {
+                        "terms": {
+                            "field": "_index"
+                        },
+                        "aggs": {
+                            "DD_sr": {
+                                "terms": {
+                                    "field": "sr",
+                                    "size": "0"
+                                },
+                                "aggs": {
+                                    "DD_ne": {
+                                        "terms": {
+                                            "field": "ne",
+                                            "size": "0"
+                                        },
+                                        "aggs": {
+                                            "DD_co": {
+                                                "terms": {
+                                                    "field": "co",
+                                                    "size": "0"
+                                                },
+                                                "aggs": {
+                                                    "activeUserCount": {
+                                                        "cardinality": {
+                                                            "field": "ip"
+                                                        }
+                                                    },
+                                                    "DD_IP_count": {
+                                                        "terms": {
+                                                            "field": "ip"
+                                                        },
+                                                        "aggs": {
+                                                            "userCount": {
+                                                                "filters": {
+                                                                    "filters": {
+                                                                        "hasAdd": {
+                                                                            "term": {
+                                                                                "btn": "注册"
+                                                                            }
+                                                                        },
+                                                                        "all": {}
+                                                                    }
+                                                                },
+                                                                "aggs": {
+                                                                    "term_time": {
+                                                                        "terms": {
+                                                                            "field": "time"
+                                                                        },
+                                                                        "aggs": {
+                                                                            "time_max": {
+                                                                                "max": {
+                                                                                    "field": "time"
+                                                                                }
+                                                                            },
+                                                                            "time_min": {
+                                                                                "min": {
+                                                                                    "field": "time"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        es.search(requestJson).then(function (response) {
+            var data = {};
+            if (response != null && response.aggregations != null && response.aggregations.index_term.buckets != []) {
+                var index_term = response.aggregations.index_term.buckets;
+
+                var dataForm = [];
+                var dataTable = [];
+                var i = 0;
+                var s0_s4_newUser = 0;
+                var s4_s10_newUser = 0;
+                var s10_s30_newUser = 0;
+                var s30_s60_newUser = 0;
+                var m1_m3_newUser = 0;
+                var m3_m10_newUser = 0;
+                var m10_m30_newUser = 0;
+                var m30_more_newUser = 0;
+                var s0_s4_activeUser = 0;
+                var s4_s10_activeUser = 0;
+                var s10_s30_activeUser = 0;
+                var s30_s60_activeUser = 0;
+                var m1_m3_activeUser = 0;
+                var m3_m10_activeUser = 0;
+                var m10_m30_activeUser = 0;
+                var m30_more_activeUser = 0;
+                var active_all_sum = 0;
+                var newUser_all_sum = 0;
+                for (i = 0; i < index_term.length; i++) {
+                    var time_sum = 0;
+                    var active_user_sum = 0;
+                    var DD_sr = index_term[i].DD_sr.buckets;
+                    if (DD_sr.length == 0) {
+                        continue;
+                    }
+                    for (var j = 0; j < DD_sr.length; j++) {
+                        var DD_ne = DD_sr[j].DD_ne.buckets;
+
+                        if (DD_ne.length == 0) {
+                            continue;
+                        }
+                        for (var k = 0; k < DD_ne.length; k++) {
+                            var DD_co = DD_ne[k].DD_co.buckets;
+
+                            if (DD_co.length == 0) {
+                                continue;
+                            }
+                            for (var l = 0; l < DD_co.length; l++) {
+                                //active_user_sum += DD_co[l].activeUserCount.value;
+                                var DD_IP = DD_co[l].DD_IP_count.buckets;
+
+                                if (DD_IP.length == 0) {
+                                    continue;
+                                }
+                                for (var p = 0; p < DD_IP.length; p++) {
+                                    var activeUserCount = DD_IP[p].userCount.buckets.all.term_time.buckets;
+                                    if (activeUserCount.length != 0) {
+                                        time_sum += activeUserCount[0].time_max.value - activeUserCount[0].time_min.value;
+                                        active_user_sum+=1;
+                                        if (time_sum >= 0 && time_sum < (4 * 1000)) {
+                                            s0_s4_activeUser += 1;
+                                        } else if (time_sum >= (4 * 1000) && time_sum < (10 * 1000)) {
+                                            s4_s10_activeUser += 1;
+                                        } else if (time_sum >= (10 * 1000) && time_sum < (30 * 1000)) {
+                                            s10_s30_activeUser += 1;
+                                        } else if (time_sum >= (30 * 1000) && time_sum < (60 * 1000)) {
+                                            s30_s60_activeUser += 1;
+                                        } else if (time_sum >= (60 * 1000) && time_sum < (3 * 60 * 1000)) {
+                                            m1_m3_activeUser += 1;
+                                        } else if (time_sum >= (3 * 60 * 1000) && time_sum < (10 * 60 * 1000)) {
+                                            m3_m10_activeUser += 1;
+                                        } else if (time_sum >= (10 * 60 * 1000) && time_sum < (30 * 60 * 1000)) {
+                                            m10_m30_activeUser += 1;
+                                        } else {
+                                            m30_more_activeUser += 1;
+                                        }
+                                    }
+                                    var newUserCount = DD_IP[p].userCount.buckets.hasAdd.term_time.buckets;
+                                    if (newUserCount.length != 0) {
+                                        time_sum += newUserCount[0].time_max.value - newUserCount[0].time_min.value;
+                                        newUser_all_sum += 1;
+                                        if (time_sum >= 0 && time_sum < (4 * 1000)) {
+                                            s0_s4_newUser += 1;
+                                        } else if (time_sum >= (4 * 1000) && time_sum < (10 * 1000)) {
+                                            s4_s10_newUser += 1;
+                                        } else if (time_sum >= (10 * 1000) && time_sum < (30 * 1000)) {
+                                            s10_s30_newUser += 1;
+                                        } else if (time_sum >= (30 * 1000) && time_sum < (60 * 1000)) {
+                                            s30_s60_newUser += 1;
+                                        } else if (time_sum >= (60 * 1000) && time_sum < (3 * 60 * 1000)) {
+                                            m1_m3_newUser += 1;
+                                        } else if (time_sum >= (3 * 60 * 1000) && time_sum < (10 * 60 * 1000)) {
+                                            m3_m10_newUser += 1;
+                                        } else if (time_sum >= (10 * 60 * 1000) && time_sum < (30 * 60 * 1000)) {
+                                            m10_m30_newUser += 1;
+                                        } else {
+                                            m30_more_newUser += 1;
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    dataForm.push({
+                        day: index_term[i].key,
+                        time_difference: (time_sum / active_user_sum).toFixed(0)
+                    });
+                    active_all_sum += active_user_sum;
+                }
+                dataTable.push({
+                    key: "[0,4)秒",
+                    activeUser: s0_s4_activeUser,
+                    newUser: s0_s4_newUser,
+                    activeUser_percentage: (s0_s4_activeUser / active_all_sum * 100).toFixed(2),
+                    newUser_percentage: (s0_s4_newUser / newUser_all_sum * 100).toFixed(2)
+                });
+                dataTable.push({
+                    key: "[4,10)秒",
+                    activeUser: s4_s10_activeUser,
+                    newUser: s4_s10_newUser,
+                    activeUser_percentage: (s4_s10_activeUser / active_all_sum * 100).toFixed(2),
+                    newUser_percentage: (s4_s10_newUser / newUser_all_sum * 100).toFixed(2)
+                });
+                dataTable.push({
+                    key: "[10,30)秒",
+                    activeUser: s10_s30_activeUser,
+                    newUser: s10_s30_newUser,
+                    activeUser_percentage: (s10_s30_activeUser / active_all_sum * 100).toFixed(2),
+                    newUser_percentage: (s10_s30_newUser / newUser_all_sum * 100).toFixed(2)
+                });
+                dataTable.push({
+                    key: "[30,60)秒",
+                    activeUser: s30_s60_activeUser,
+                    newUser: s30_s60_newUser,
+                    activeUser_percentage: (s30_s60_activeUser / active_all_sum * 100).toFixed(2),
+                    newUser_percentage: (s30_s60_newUser / newUser_all_sum * 100).toFixed(2)
+                });
+                dataTable.push({
+                    key: "[1,3)分钟",
+                    activeUser: m1_m3_activeUser,
+                    newUser: m1_m3_newUser,
+                    activeUser_percentage: (m1_m3_activeUser / active_all_sum * 100).toFixed(2),
+                    newUser_percentage: (m1_m3_newUser / newUser_all_sum * 100).toFixed(2)
+                });
+                dataTable.push({
+                    key: "[3,10)分钟",
+                    activeUser: m3_m10_activeUser,
+                    newUser: m3_m10_newUser,
+                    activeUser_percentage: (m3_m10_activeUser / active_all_sum * 100).toFixed(2),
+                    newUser_percentage: (m3_m10_newUser / newUser_all_sum * 100).toFixed(2)
+                });
+                dataTable.push({
+                    key: "[10,30)分钟",
+                    activeUser: m10_m30_activeUser,
+                    newUser: m10_m30_newUser,
+                    activeUser_percentage: (m10_m30_activeUser / active_all_sum * 100).toFixed(2),
+                    newUser_percentage: (m10_m30_newUser / newUser_all_sum * 100).toFixed(2)
+                });
+                dataTable.push({
+                    key: "30分钟以上",
+                    activeUser: m30_more_activeUser,
+                    newUser: m30_more_newUser,
+                    activeUser_percentage: (m30_more_activeUser / active_all_sum * 100).toFixed(2),
+                    newUser_percentage: (m30_more_newUser / newUser_all_sum * 100).toFixed(2)
+                });
+                data = {
+                    dataForm: dataForm,
+                    dataTable: dataTable
+                };
+
+            }
+            callback(data);
+        });
     }
 };
 exports.upAnalysis = upAnalysis;
