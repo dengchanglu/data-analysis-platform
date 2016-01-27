@@ -195,7 +195,6 @@ var upAnalysis = {
         });
     },
     eduSearch: function (es, queryData, callback) {
-        console.log(queryData.time)
         var index = [];
         var time = queryData.time.split(",");
         for (var i = 0; i < time.length; i++) {
@@ -528,7 +527,6 @@ var upAnalysis = {
                     }
                 }
             }
-            console.log(dataSort)
             callback(dataSort);
         });
     },
@@ -664,6 +662,7 @@ var upAnalysis = {
                 }
             }
         };
+        var get
         es.search(requestJson).then(function (response) {
             var data = {};
             if (response != null && response.aggregations != null && response.aggregations.index_term.buckets != []) {
@@ -720,7 +719,7 @@ var upAnalysis = {
                                     var activeUserCount = DD_IP[p].userCount.buckets.all.term_time.buckets;
                                     if (activeUserCount.length != 0) {
                                         time_sum += activeUserCount[0].time_max.value - activeUserCount[0].time_min.value;
-                                        active_user_sum+=1;
+                                        active_user_sum += 1;
                                         if (time_sum >= 0 && time_sum < (4 * 1000)) {
                                             s0_s4_activeUser += 1;
                                         } else if (time_sum >= (4 * 1000) && time_sum < (10 * 1000)) {
@@ -776,57 +775,137 @@ var upAnalysis = {
                     key: "[0,4)秒",
                     activeUser: s0_s4_activeUser,
                     newUser: s0_s4_newUser,
-                    activeUser_percentage: (s0_s4_activeUser / active_all_sum * 100).toFixed(2),
-                    newUser_percentage: (s0_s4_newUser / newUser_all_sum * 100).toFixed(2)
+                    activeUser_percentage: (function () {
+                        if (active_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((s0_s4_activeUser / active_all_sum * 100).toFixed(2));
+                    }()),
+                    newUser_percentage: (function () {
+                        if (newUser_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((s0_s4_newUser / newUser_all_sum * 100).toFixed(2));
+                    }())
                 });
                 dataTable.push({
                     key: "[4,10)秒",
                     activeUser: s4_s10_activeUser,
                     newUser: s4_s10_newUser,
-                    activeUser_percentage: (s4_s10_activeUser / active_all_sum * 100).toFixed(2),
-                    newUser_percentage: (s4_s10_newUser / newUser_all_sum * 100).toFixed(2)
+                    activeUser_percentage: (function () {
+                        if (active_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((s4_s10_activeUser / active_all_sum * 100).toFixed(2));
+                    }()),
+                    newUser_percentage: ( function () {
+                        if (newUser_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((s4_s10_newUser / newUser_all_sum * 100).toFixed(2));
+                    }())
                 });
                 dataTable.push({
                     key: "[10,30)秒",
                     activeUser: s10_s30_activeUser,
                     newUser: s10_s30_newUser,
-                    activeUser_percentage: (s10_s30_activeUser / active_all_sum * 100).toFixed(2),
-                    newUser_percentage: (s10_s30_newUser / newUser_all_sum * 100).toFixed(2)
+                    activeUser_percentage: (function () {
+                        if (active_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((s10_s30_activeUser / active_all_sum * 100).toFixed(2));
+                    }()),
+                    newUser_percentage: (function () {
+                        if (newUser_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((s10_s30_newUser / newUser_all_sum * 100).toFixed(2));
+                    }())
                 });
                 dataTable.push({
                     key: "[30,60)秒",
                     activeUser: s30_s60_activeUser,
                     newUser: s30_s60_newUser,
-                    activeUser_percentage: (s30_s60_activeUser / active_all_sum * 100).toFixed(2),
-                    newUser_percentage: (s30_s60_newUser / newUser_all_sum * 100).toFixed(2)
+                    activeUser_percentage: ( function () {
+                        if (active_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((s30_s60_activeUser / active_all_sum * 100).toFixed(2));
+                    }()),
+                    newUser_percentage: (function () {
+                        if (newUser_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((s30_s60_newUser / newUser_all_sum * 100).toFixed(2));
+                    }())
                 });
                 dataTable.push({
                     key: "[1,3)分钟",
                     activeUser: m1_m3_activeUser,
                     newUser: m1_m3_newUser,
-                    activeUser_percentage: (m1_m3_activeUser / active_all_sum * 100).toFixed(2),
-                    newUser_percentage: (m1_m3_newUser / newUser_all_sum * 100).toFixed(2)
+                    activeUser_percentage: (function () {
+                        if (active_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((m1_m3_activeUser / active_all_sum * 100).toFixed(2));
+                    }()),
+                    newUser_percentage: (function () {
+                        if (newUser_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((m1_m3_newUser / newUser_all_sum * 100).toFixed(2));
+                    }())
                 });
                 dataTable.push({
                     key: "[3,10)分钟",
                     activeUser: m3_m10_activeUser,
                     newUser: m3_m10_newUser,
-                    activeUser_percentage: (m3_m10_activeUser / active_all_sum * 100).toFixed(2),
-                    newUser_percentage: (m3_m10_newUser / newUser_all_sum * 100).toFixed(2)
+                    activeUser_percentage: (function () {
+                        if (active_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((m3_m10_activeUser / active_all_sum * 100).toFixed(2));
+                    }()),
+                    newUser_percentage: (function () {
+                        if (newUser_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((m3_m10_newUser / newUser_all_sum * 100).toFixed(2));
+                    }())
                 });
                 dataTable.push({
                     key: "[10,30)分钟",
                     activeUser: m10_m30_activeUser,
                     newUser: m10_m30_newUser,
-                    activeUser_percentage: (m10_m30_activeUser / active_all_sum * 100).toFixed(2),
-                    newUser_percentage: (m10_m30_newUser / newUser_all_sum * 100).toFixed(2)
+                    activeUser_percentage: (function () {
+                        if (active_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((m10_m30_activeUser / active_all_sum * 100).toFixed(2));
+                    }()),
+                    newUser_percentage: (function () {
+                        if (newUser_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((m10_m30_newUser / newUser_all_sum * 100).toFixed(2));
+                    }())
                 });
                 dataTable.push({
                     key: "30分钟以上",
                     activeUser: m30_more_activeUser,
                     newUser: m30_more_newUser,
-                    activeUser_percentage: (m30_more_activeUser / active_all_sum * 100).toFixed(2),
-                    newUser_percentage: (m30_more_newUser / newUser_all_sum * 100).toFixed(2)
+                    activeUser_percentage: (function () {
+                        if (active_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((m30_more_activeUser / active_all_sum * 100).toFixed(2));
+                    }()),
+                    newUser_percentage: (function () {
+                        if (newUser_all_sum == 0) {
+                            return 0;
+                        }
+                        return Number((m30_more_newUser / newUser_all_sum * 100).toFixed(2));
+                    }())
                 });
                 data = {
                     dataForm: dataForm,
