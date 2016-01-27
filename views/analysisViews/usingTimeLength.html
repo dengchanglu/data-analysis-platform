@@ -4,22 +4,32 @@
         <span class="glyphicon glyphicon-question-sign" ng-click=""></span>
         <br>
 
-        <div class="btn-group">
+        <div class="form-horizontal" style="margin-left: 15px">
             <div class="form-group">
-                <div class="input-group col-md-6">
+                <div class="input-group col-sm-4" style="float: left">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     <input date-range-picker id="daterange3" name="daterange3" class="form-control date-picker"
                            type="text"
                            ng-model="date" options="opts" required/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-chevron-down"></span></span>
-                    <button type="button" class="btn btn-primary pull-right" style="margin-right: 30px">按时间对比</button>
+                </div>
+                <div id="contrastHtml" class="input-group col-sm-4" style="float: left;display: none;">
+                    <span class="input-group-addon"><span class="glyphicon">对比时间</span></span>
+                    <input date-range-picker id="daterange4" name="daterange4"
+                           class="form-control date-picker"
+                           type="text"
+                           ng-model="dateContrast" options="opts" required/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-chevron-down"></span></span>
+                </div>
+                <div class="input-group col-sm-4" style="float: right;">
+                    <button id="btn_createContrastData" type="button" class="btn btn-primary pull-right"
+                            style="margin-right: 30px" ng-click="createContrastData()">按时间对比
+                    </button>
                 </div>
 
             </div>
 
         </div>
-
-
         <div class="row" style="margin-top: 10px">
             <div class="col-md-6">
                 渠道:
