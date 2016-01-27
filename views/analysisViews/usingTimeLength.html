@@ -24,37 +24,52 @@
             <div class="col-md-6">
                 渠道:
                 <div class="btn-group" role="group" aria-label="..." style="margin-left: 10px">
-                    <button type="button" class="btn btn-default active" ng-click="chooseCM('all',null,null)">全部
+                    <button id="time_btn_cm_0" type="button" class="btn btn-default active"
+                            ng-click="chooseCM_time('all','time_btn_cm_0')">全部
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseCM('OpenPlatform',null,null)">
+                    <button id="time_btn_cm_1" type="button" class="btn btn-default"
+                            ng-click="chooseCM_time('OpenPlatform','time_btn_cm_1')">
                         OpenPlatform
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseCM('yingyongbao',null,null)">
+                    <button id="time_btn_cm_2" type="button" class="btn btn-default"
+                            ng-click="chooseCM_time('yingyongbao','time_btn_cm_2')">
                         yingyongbao
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseCM('unknown',null,null)">未知</button>
-                    <button type="button" class="btn btn-default" ng-click="chooseCM('oppo',null,null)">oppo</button>
-                    <button type="button" class="btn btn-default" ng-click="chooseCM('guanwang',null,null)">guanwang
+                    <button id="time_btn_cm_3" type="button" class="btn btn-default"
+                            ng-click="chooseCM_time('unknown','time_btn_cm_3')">未知
+                    </button>
+                    <button id="time_btn_cm_4" type="button" class="btn btn-default"
+                            ng-click="chooseCM_time('oppo','time_btn_cm_4')">
+                        oppo
+                    </button>
+                    <button id="time_btn_cm_5" type="button" class="btn btn-default"
+                            ng-click="chooseCM_time('guanwang','time_btn_cm_5')">guanwang
                     </button>
                 </div>
             </div>
             <div class="col-md-6">
                 版本:
                 <div class="btn-group" role="group" aria-label="..." style="margin-left: 10px">
-                    <button type="button" class="btn btn-default active" ng-click="chooseVersion(null,null,'all')">全部
+                    <button id="time_btn_av_0" type="button" class="btn btn-default active"
+                            ng-click="chooseVersion_time('all','time_btn_av_0')">全部
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'1.0.0')">
-                        1.0.0
+                    <button id="time_btn_av_1" type="button" class="btn btn-default"
+                            ng-click="chooseVersion_time('1.0.0','time_btn_av_1')">1.0.0
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'1.1.0')">1.1.0
+                    <button id="time_btn_av_2" type="button" class="btn btn-default"
+                            ng-click="chooseVersion_time('1.1.0','time_btn_av_2')">1.1.0
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'1.2.0')">1.2.0
+                    <button id="time_btn_av_3" type="button" class="btn btn-default"
+                            ng-click="chooseVersion_time('1.2.0','time_btn_av_3')">1.2.0
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'2.1.0')">2.1.0
+                    <button id="time_btn_av_4" type="button" class="btn btn-default"
+                            ng-click="chooseVersion_time('2.1.0','time_btn_av_4')">2.1.0
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'2.2.0')">2.2.0
+                    <button id="time_btn_av_5" type="button" class="btn btn-default"
+                            ng-click="chooseVersion_time('2.2.0','time_btn_av_5')">2.2.0
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="chooseVersion(null,null,'3.0.0')">3.0.0
+                    <button id="time_btn_av_6" type="button" class="btn btn-default"
+                            ng-click="chooseVersion_time('3.0.0','time_btn_av_6')">3.0.0
                     </button>
                 </div>
             </div>
@@ -112,61 +127,7 @@
                             <th name="NewPercent" class=""></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr class="">
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:center;">[0,4)秒</div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">295,906 <span class="percent">54.29%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:55.29%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">49,651 <span class="percent">91.99%</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:92.99%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="gri_tr_clicked">
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:center;">30分钟以上</div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">662 <span
-                                        class="percent">0.12%</span></div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:1.12%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">33 <span
-                                        class="percent">0.06%</span></div>
-                            </td>
-                            <td>
-                                <div style="width: 100%; height: 100%;text-align:right;">
-                                    <div class="ui_progress">
-                                        <div style="width:1.06%; " class="ui_progress_bar"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        <tbody id="tableData_time">
                         </tbody>
                     </table>
                 </div>
