@@ -84,7 +84,8 @@
                     </tr>
                     </thead>
                     <tbody id="tableData">
-                    <tr ng-repeat="data in newDataArray">
+                   <!-- 第一种表格分页方法-->
+                    <!--<tr ng-repeat="data in newDataArray">
                         <td>{{data.key}}</td>
                         <td>{{data.register_user}} <span style="margin-left: 10px">{{((data.register_user/NewUserSum)*100).toFixed(2)}}%</span>
                         </td>
@@ -92,7 +93,7 @@
                         </td>
                         <td>{{data.start_count}} <span style="margin-left: 10px">{{((data.start_count/StartCount)*100).toFixed(2)}}%</span>
                         </td>
-                    </tr>
+                    </tr>-->
 
                     </tbody>
                 </table>
@@ -107,7 +108,7 @@
 
 <div class="row">
     <div class="col-md-3">
-        <span style="margin-left: 20px">共{{dataArray.length}}条记录,每页显示<div class="btn-group">
+        <span style="margin-left: 20px">共{{dataTable.length}}条记录,每页显示<div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle"
                     data-toggle="dropdown" id="showPageSize">
                 10 <span class="caret"></span>

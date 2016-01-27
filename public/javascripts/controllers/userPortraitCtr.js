@@ -8,6 +8,7 @@
         .controller('userPortraitCtr', userPortraitCtr);
     function userPortraitCtr($scope, $location, ipCookie, $rootScope, $http) {
 
+
         //时间控件设置默认时间方法
         $scope.date = {
             startDate: moment().subtract(1, "days"),
@@ -25,7 +26,6 @@
         };
 
         $scope.time = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
-
 
 
         //性别分析数据
@@ -68,14 +68,21 @@
                 .error(function (data, header, config, status) {
                     //处理响应失败
                 });
-        }
+        };
 
 
         //年龄分布分析数据
-
         var AgeDistributionChart;
         var ageOption;
         $scope.getAgeAnalysisData = function (time) {
+
+            AgeDistributionChart.showLoading({
+                text: "数据读取中...",
+                effect: "whirling",
+                textStyle: {
+                    fontSize: 20
+                }
+            });
 
             $scope.AgeDistributionArray = [];
             $scope.AgeDistributionData = [];
@@ -89,22 +96,52 @@
                         $scope.AgeDistributionData.push(response[i].age_count);
                     }
 
+                    if ($scope.AgeDistributionArray == [] || $scope.AgeDistributionData == []) {
+                        AgeDistributionChart.showLoading({
+                            text: "暂无数据",
+                            effect: "whirling",
+                            textStyle: {
+                                fontSize: 20
+                            }
+                        });
+                    } else {
+                        AgeDistributionChart.hideLoading();
+                    }
                     ageOption.xAxis[0].data = $scope.AgeDistributionArray;
                     ageOption.series[0].data = $scope.AgeDistributionData;
 
                     AgeDistributionChart.setOption(ageOption)
+
+
                 })
                 .error(function (data, header, config, status) {
-
+                    console.log('响应失败')
                     //处理响应失败
+                    AgeDistributionChart.hideLoading();
+                    AgeDistributionChart.showLoading({
+                        text: "暂无数据",
+                        effect: "whirling",
+                        textStyle: {
+                            fontSize: 20
+                        }
+                    });
+
                 });
 
-        }
+        };
 
         //TOP10地域分布分析数据
         var RegionalDistributionChart;
         var regionalOption;
         $scope.getRegionAnalysisData = function (time) {
+
+            RegionalDistributionChart.showLoading({
+                text: "数据读取中...",
+                effect: "whirling",
+                textStyle: {
+                    fontSize: 20
+                }
+            });
 
             $scope.regionDataArray = [];
             $scope.regionCityArray = [];
@@ -121,7 +158,7 @@
                     for (; i < len; i++) {
 
                         for (j = 0; j < len; j++) {
-                            if (response[i].region_count > response[j].region_count) {
+                            if (response[i].region_count < response[j].region_count) {
                                 d = response[j];
                                 response[j] = response[i];
                                 response[i] = d;
@@ -136,13 +173,39 @@
                         $scope.regionDataArray.push($scope.dataArray[i].region_count);
                         $scope.regionPeopleSum += $scope.dataArray[i].region_count;
                     }
+
+                    if ($scope.regionCityArray == [] || $scope.regionDataArray == []) {
+                        RegionalDistributionChart.showLoading({
+                            text: "暂无数据",
+                            effect: "whirling",
+                            textStyle: {
+                                fontSize: 20
+                            }
+                        });
+                    } else {
+                        RegionalDistributionChart.hideLoading();
+                    }
                     regionalOption.yAxis[0].data = $scope.regionCityArray;
                     regionalOption.series[0].data = $scope.regionDataArray;
                     RegionalDistributionChart.setOption(regionalOption);
 
+                })
+                .error(function (data, header, config, status) {
+                    console.log('响应失败')
+                    //处理响应失败
+                    RegionalDistributionChart.hideLoading();
+                    RegionalDistributionChart.showLoading({
+                        text: "暂无数据",
+                        effect: "whirling",
+                        textStyle: {
+                            fontSize: 20
+                        }
+                    });
+
                 });
 
-        }
+        };
+
 
         //职业分布数据
         $scope.getProfessionAnalysisData = function (time) {
@@ -165,7 +228,7 @@
                         }
 
                     }
-                    $scope.ProfessionDataArray = response
+                    $scope.ProfessionDataArray = response;
 
                     for (var k = 0; k < $scope.ProfessionDataArray.length; k++) {
 
@@ -173,9 +236,14 @@
                     }
 
 
+                })
+                .error(function (data, header, config, status) {
+                    //处理响应失败
+                    
                 });
 
-        }
+
+        };
 
 
         //学历分布
@@ -211,13 +279,13 @@
 
                 });
 
-        }
+        };
         $scope.show = function (id) {
             document.getElementById(id).style.display = 'block'
-        }
+        };
         $scope.hide = function (id) {
             document.getElementById(id).style.display = 'none'
-        }
+        };
 
         //时间控件设置
         $scope.opts = {
@@ -242,11 +310,8 @@
         };
         //Watch for date changes时间改变后调用的方法
         $scope.$watch('date', function (newDate) {
-            console.log('时间改变后执行的方法')
             $scope.newTime = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate)
             if ($scope.time != $scope.newTime) {
-
-                console.log('时间已改变')
                 $scope.getSexAnalysisChartData($scope.newTime);
                 $scope.getAgeAnalysisData($scope.newTime);
                 $scope.getRegionAnalysisData($scope.newTime);
@@ -254,8 +319,6 @@
                 $scope.getEducationData($scope.newTime);
                 $scope.getMapDistributionData($scope.newTime);
             }
-            console.log($scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate))
-
             //console.log($scope.date);
             //console.log('New date set: ', newDate);
         }, false);
@@ -269,7 +332,6 @@
             $http.get("http://localhost:3000/api/regionAnalysis?time=" + time)
                 .success(function (response) {
                     $scope.datas = [];
-
                     for (var i = 0; i < response.length; i++) {
                         $scope.datas.push(
                             {
@@ -281,12 +343,13 @@
 
                 })
                 .error(function (data, header, config, status) {
-                    console.log('响应失败')
+
+                    console.log('响应失败');
                     //处理响应失败
                 });
 
 
-        }
+        };
 
         //图表渲染
         require(
@@ -306,10 +369,7 @@
 
 
                 sexOption = {
-                    title: {
-                        text: '性别比例',
 
-                    },
                     tooltip: {
                         show: true,
                         trigger: 'item',
@@ -328,28 +388,26 @@
                             radius: ['40%'],
                             data: [
                                 {
-                                    value: 41.5, name: '女',
+                                    value: 41.5, name: '女'
                                 },
                                 {
-                                    value: 57.39, name: '男',
+                                    value: 57.39, name: '男'
                                 },
                                 {
-                                    value: 1.11, name: '未知',
+                                    value: 1.11, name: '未知'
 
                                 }
 
-                            ],
+                            ]
                         }
                     ]
                 };
 
                 mapOption = {
-                    title: {
-                        text: '地域分布'
-                    },
+
                     tooltip: {
                         show: true,
-                        trigger: 'item',
+                        trigger: 'item'
 
                     },
                     series: [
@@ -471,18 +529,15 @@
                         splitNumber: 0
                     };
                     mapChart.setOption(mapOption, true);
-                })
+                });
                 mapChart.setOption(mapOption);
 
 
                 regionalOption = {
-                    title: {
-                        text: 'Top10 地域分布',
 
-                    },
                     tooltip: {
                         show: true,
-                        trigger: "item",
+                        trigger: "item"
 
                     },
                     xAxis: [
@@ -502,12 +557,12 @@
                     yAxis: [
                         {
                             type: 'category',
-                            data: ["湖北", "浙江", "北京", "重庆", "河北", "山东", "四川", "河南", "江苏", "广东"],
+                            data: $scope.regionCityArray,
                             splitLine: false,
                             axisLine: false,
                             axisTick: {
                                 show: false
-                            },
+                            }
 
                         }
                     ],
@@ -515,7 +570,7 @@
                         {
                             "name": "活跃用户数",
                             "type": "bar",
-                            "data": [667, 724, 758, 810, 888, 1134, 1169, 1263, 1299, 2298],
+                            "data":  $scope.regionDataArray,
                             barCategoryGap: '15',
                             borderWidth: 0,
                             itemStyle: {
@@ -529,51 +584,56 @@
                                         color: 'black',
                                         formatter: function (params, ticket, callback) {
                                             var label;
+                                            if($scope.regionPeopleSum==undefined){
 
-                                            label = ((params.value / $scope.regionPeopleSum) * 100).toFixed(2)
+                                                label='数据加载中';
 
-                                            return label + '%';
+                                                return label;
+                                            }else{
+                                                label = ((params.value / $scope.regionPeopleSum) * 100).toFixed(2);
+
+                                                return label + '%';
+                                            }
+
                                         }
                                     }
                                 },
                                 emphasis: {}
-                            },
+                            }
 
 
                         }
                     ]
                 };
-                ageOption = {
-                    title: {
-                        text: '年龄分布',
 
-                    },
+                ageOption = {
+
                     tooltip: {
-                        show: false,
+                        show: false
 
                     },
                     xAxis: [
                         {
                             type: 'category',
-                            data: ["0-17岁", "18-24岁", "25-29岁", "30-34岁", "35-39岁", "40岁以上"],
+                            data: $scope.AgeDistributionArray,
                             splitLine: false,
                             axisLine: false,
                             axisTick: {
                                 show: false
-                            },
+                            }
 
                         }
                     ],
                     yAxis: [
                         {
                             type: 'value',
-                            data: ['19.69', '39.85'],
+                            data: ['1.0', '1.0'],
                             splitNumber: 16,
                             axisLine: false,
                             splitLine: false,
                             axisLabel: {
                                 show: false
-                            },
+                            }
 
                         }
                     ],
@@ -581,12 +641,12 @@
 
                         {
                             type: 'bar',
-                            data: ['19.69', '39.85', '20.61', '8.84', '4.88', '6.13'],
+                            data: $scope.AgeDistributionData,
                             barCategoryGap: '30',
                             borderWidth: 0,
                             itemStyle: {
                                 normal: {
-                                    color: '#3AD2DC',//颜色
+                                    color: '#3AD2DC'//颜色
 
                                 },
                                 emphasis: {
@@ -596,9 +656,16 @@
                                         formatter: function (params, ticket, callback) {
                                             var label;
 
-                                            label = ((params.value / $scope.AgePeopleSum) * 100).toFixed(2)
+                                            if($scope.AgePeopleSum==undefined){
+                                                label='暂无数据'
+                                                return label;
+                                            }
+                                            else{
+                                                label = ((params.value / $scope.AgePeopleSum) * 100).toFixed(2);
 
-                                            return label + '%';
+                                                return label + '%';
+                                            }
+
                                         }
 
 
@@ -615,7 +682,7 @@
                 // 为echarts对象加载数据
                 sexRatioChart.setOption(sexOption);
                 RegionalDistributionChart.setOption(regionalOption);
-                AgeDistributionChart.setOption(ageOption)
+                AgeDistributionChart.setOption(ageOption);
 
                 //动态加载数据
                 $scope.getSexAnalysisChartData($scope.time);
