@@ -29,6 +29,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-5">
+                    <h4 style=" font-size: 18px;
+    font-weight: 900; ">性别比例</h4>
+
                     <div id="sexRatioChart" style="height: 300px;width: 500px;margin-top: 10px"></div>
                 </div>
 
@@ -62,41 +65,44 @@
             <hr>
             <div class="row" style="margin-top: 50px">
                 <div class="col-md-7">
+                    <h4 style=" font-size: 18px;
+    font-weight: 900; ">年龄分布</h4>
                     <div id="AgeDistributionChart" style="height: 300px;width: 600px;margin-top: 10px"></div>
                 </div>
                 <div class="col-md-5">
                     <div class="visitor_education cf">
-                        <h4>学历分布</h4>
+                        <h4 style=" font-size: 18px;
+    font-weight: 900; ">学历分布</h4>
 
                         <div class="visitor_streak cf" id="grade_chart_container">
                             <ul>
                                 <li>
                                     <a href="javascript:void(0);" ><em id="em0">{{((EducationDataArray[3].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
-                                    <i id="i_education0" style="width:26px;line-height: 80px" ng-Mouseenter="show('em0')" ng-Mouseleave="hide('em0')"
+                                    <i id="i_education0" style="width:43px;line-height: 80px" ng-Mouseenter="show('em0')" ng-Mouseleave="hide('em0')"
                                        class="i_education0"></i>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);"><em id="em1">{{((EducationDataArray[4].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
-                                    <i style="width:8px" class="i_education1" ng-Mouseenter="show('em1')" ng-Mouseleave="hide('em1')"></i>
+                                    <i style="width:41px" class="i_education1" ng-Mouseenter="show('em1')" ng-Mouseleave="hide('em1')"></i>
                                 </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);"><em id="em2">{{((EducationDataArray[2].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
-                                        <i style="width:54px" class="i_education2" ng-Mouseenter="show('em2')" ng-Mouseleave="hide('em2')"></i></a>
+                                        <i style="width:45px" class="i_education2" ng-Mouseenter="show('em2')" ng-Mouseleave="hide('em2')"></i></a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);"><em id="em3">{{((EducationDataArray[0].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
-                                        <i style="width:126px" class="i_education3" ng-Mouseenter="show('em3')" ng-Mouseleave="hide('em3')"></i>
+                                        <i style="width:50px" class="i_education3" ng-Mouseenter="show('em3')" ng-Mouseleave="hide('em3')"></i>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);"><em id="em4">{{((EducationDataArray[1].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
-                                        <i style="width:68px" class="i_education4" ng-Mouseenter="show('em4')" ng-Mouseleave="hide('em4')"></i>
+                                        <i style="width:47px" class="i_education4" ng-Mouseenter="show('em4')" ng-Mouseleave="hide('em4')"></i>
                                     </a>
                                 </li>
                                 <li><a href="javascript:void(0);"><em id="em5">{{((EducationDataArray[5].edu_count/EducationPeopleSum)*100).toFixed(2)}}%</em><br>
-                                    <i style="width:2px" class="i_education5" ng-Mouseenter="show('em5')" ng-Mouseleave="hide('em5')"></i></a>
+                                    <i style="width:40px" class="i_education5" ng-Mouseenter="show('em5')" ng-Mouseleave="hide('em5')"></i></a>
                                 </li>
 
                             </ul>
@@ -119,9 +125,14 @@
                 <hr>
                 <div class="row" style="margin-top: 50px">
                     <div class="col-md-6">
+                        <h4 style=" font-size: 16px;margin-left: 20px;margin-top: 10px;
+    font-weight: 700; ">地域分布</h4>
                         <div id="mapChart" style="height: 500px;width: 700px;margin-top: 10px"></div>
                     </div>
                     <div class="col-md-6">
+                        <h4 style=" font-size: 16px;
+    font-weight: 700; ">Top10 地域分布</h4>
+
                         <div id="RegionalDistributionChart" style="height: 500px;width: 700px;margin-top: 10px"></div>
                     </div>
                 </div>
@@ -136,11 +147,11 @@
                         <defs></defs>
                         <g>
                             <circle cx="100" cy="114" r="100" fill="#5D9CEC"></circle>
-                            <text x="74" y="114"
-                                  style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
+                            <text  x="74" y="114"
+                                  style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;color:#ffffff;fill:#ffffff;">
                                 {{ProfessionDataArray[0].key}}
                             </text>
-                            <text x="75" y="132"
+                            <text class="showPercentage"x="75" y="132"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[0].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -151,7 +162,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[1].key}}
                             </text>
-                            <text x="276" y="218"
+                            <text  class="showPercentage" x="276" y="218"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[1].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -162,7 +173,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[2].key}}
                             </text>
-                            <text x="762" y="98"
+                            <text class="showPercentage" x="762" y="98"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[2].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -173,7 +184,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[3].key}}
                             </text>
-                            <text x="844" y="241"
+                            <text class="showPercentage"x="844" y="241"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[3].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -184,7 +195,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[4].key}}
                             </text>
-                            <text x="506" y="244"
+                            <text class="showPercentage" x="506" y="244"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[4].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -195,7 +206,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[5].key}}
                             </text>
-                            <text x="655" y="252"
+                            <text class="showPercentage" x="655" y="252"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[5].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -206,7 +217,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[6].key}}
                             </text>
-                            <text x="459" y="91"
+                            <text class="showPercentage" x="459" y="91"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[6].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -217,7 +228,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[7].key}}
                             </text>
-                            <text x="268" y="61"
+                            <text class="showPercentage" x="268" y="61"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[7].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -228,7 +239,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[8].key}}
                             </text>
-                            <text x="590" y="129"
+                            <text class="showPercentage" x="590" y="129"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[8].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>
@@ -239,7 +250,7 @@
                                   style="color:#ffffff;font:14px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;fill:#ffffff;">
                                 {{ProfessionDataArray[9].key}}
                             </text>
-                            <text x="907" y="81"
+                            <text class="showPercentage"x="907" y="81"
                                   style="font:12px Tahoma,microsoft yahei,&quot;微软雅黑&quot;,&quot;宋体&quot;;color:#ffffff;fill:#ffffff;">
                                 {{(((ProfessionDataArray[9].pro_count)/ProfessionPeopleSum)*100).toFixed(2)}}%
                             </text>

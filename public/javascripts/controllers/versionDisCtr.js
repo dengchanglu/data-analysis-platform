@@ -67,7 +67,7 @@
                 }
                 $http.get(URL + "versionAnalysis?time=" + time + "&cm=" + cm + "&av=" + av).success(function (data) {
                     $scope.dataTable = [];
-                    console.log(data)
+
                     for (var o = 0; o < data[0].data.length; o++) {
                         var register_user = 0;
                         var active_user = 0;
@@ -93,6 +93,7 @@
                             start_count: start_count,
                             pre: (pre / pres * 100).toFixed(2)
                         });
+
 
                     }
 
