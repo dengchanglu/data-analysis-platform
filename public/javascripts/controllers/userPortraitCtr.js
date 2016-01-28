@@ -34,6 +34,14 @@
         var sexOption;
         $scope.getSexAnalysisChartData = function (time) {
 
+            sexRatioChart.showLoading({
+                text: "数据读取中...",
+                effect: "whirling",
+                textStyle: {
+                    fontSize: 20
+                }
+            });
+
             $scope.PeopleSum = 0;
             $scope.legendArray = [];
             $scope.DataArray = [];
@@ -41,25 +49,38 @@
 
             $http.get("http://localhost:3000/api/sexAnalysis?time=" + time)
                 .success(function (response) {
+                    $scope.legendArray = [];
 
                     for (var i = 0; i < 3; i++) {
                         $scope.PeopleSum += response[i].sex_count;
                         $scope.legendArray.push(response[i].key);
                     }
 
-                    var Girl = ((response[0].sex_count / $scope.PeopleSum) * 100).toFixed(2);
-                    var unknown = ((response[1].sex_count / $scope.PeopleSum) * 100).toFixed(2);
-                    var male = ((response[2].sex_count / $scope.PeopleSum) * 100).toFixed(2);
+                    $scope.Girl = ((response[0].sex_count / $scope.PeopleSum) * 100).toFixed(2);
+                    $scope.unknown = ((response[1].sex_count / $scope.PeopleSum) * 100).toFixed(2);
+                    $scope.male = ((response[2].sex_count / $scope.PeopleSum) * 100).toFixed(2);
 
-                    $scope.DataArray.push(Girl);
-                    $scope.DataArray.push(unknown);
-                    $scope.DataArray.push(male);
+                    $scope.DataArray.push($scope.Girl);
+                    $scope.DataArray.push( $scope.unknown);
+                    $scope.DataArray.push( $scope.male);
+
+                    if ($scope.legendArray == [] || $scope.Girl == [] ||  $scope.unknown == [] ||  $scope.male == []) {
+                        sexRatioChart.showLoading({
+                            text: "暂无数据",
+                            effect: "whirling",
+                            textStyle: {
+                                fontSize: 20
+                            }
+                        });
+                    } else {
+                        sexRatioChart.hideLoading();
+                    }
 
 
                     sexOption.legend.data = $scope.legendArray;
-                    sexOption.series[0].data[0].value = Girl;
-                    sexOption.series[0].data[1].value = unknown;
-                    sexOption.series[0].data[2].value = male;
+                    sexOption.series[0].data[0].value =  $scope.Girl;
+                    sexOption.series[0].data[1].value =  $scope.unknown;
+                    sexOption.series[0].data[2].value =  $scope.male;
 
                     sexRatioChart.setOption(sexOption);
 
@@ -67,6 +88,14 @@
                 })
                 .error(function (data, header, config, status) {
                     //处理响应失败
+                    sexRatioChart.hideLoading();
+                    sexRatioChart.showLoading({
+                        text: "暂无数据",
+                        effect: "whirling",
+                        textStyle: {
+                            fontSize: 20
+                        }
+                    });
                 });
         };
 
@@ -113,9 +142,7 @@
                     AgeDistributionChart.setOption(ageOption)
 
 
-                })
-                .error(function (data, header, config, status) {
-                    console.log('响应失败')
+                }).error(function (data, header, config, status) {
                     //处理响应失败
                     AgeDistributionChart.hideLoading();
                     AgeDistributionChart.showLoading({
@@ -209,11 +236,25 @@
 
         //职业分布数据
         $scope.getProfessionAnalysisData = function (time) {
-            $scope.ProfessionDataArray = [];
-            $scope.ProfessionPeopleSum = 0;
+
+            $scope.ProfessionDataArray = [
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0},
+                {key: '数据加载中', pro_count: 0}
+            ];
+            $scope.ProfessionPeopleSum = 10;
 
             $http.get("http://localhost:3000/api/professionAnalysis?time=" + time)
                 .success(function (response) {
+                    $scope.ProfessionDataArray = [];
+                    $scope.ProfessionPeopleSum = 0;
                     var i = 0,
                         len = response.length,
                         j, d;
@@ -236,10 +277,9 @@
                     }
 
 
-                })
-                .error(function (data, header, config, status) {
+                }).error(function (data, header, config, status) {
                     //处理响应失败
-                    
+
                 });
 
 
@@ -248,13 +288,21 @@
 
         //学历分布
         $scope.getEducationData = function (time) {
-
-            $scope.EducationPeopleSum = 0;
-            $scope.EducationDataArray = [];
+            $scope.EducationPeopleSum = 10;
+            $scope.EducationDataArray = [
+                {edu_count: 0},
+                {edu_count: 0},
+                {edu_count: 0},
+                {edu_count: 0},
+                {edu_count: 0},
+                {edu_count: 0}
+            ];
 
             $http.get(" http://localhost:3000/api/eduAnalysis?time=" + time)
                 .success(function (response) {
 
+                    $scope.EducationPeopleSum = 0;
+                    $scope.EducationDataArray = [];
 
                     var i = 0,
                         len = response.length,
@@ -280,6 +328,7 @@
                 });
 
         };
+
         $scope.show = function (id) {
             document.getElementById(id).style.display = 'block'
         };
@@ -310,7 +359,7 @@
         };
         //Watch for date changes时间改变后调用的方法
         $scope.$watch('date', function (newDate) {
-            $scope.newTime = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate)
+            $scope.newTime = $scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate);
             if ($scope.time != $scope.newTime) {
                 $scope.getSexAnalysisChartData($scope.newTime);
                 $scope.getAgeAnalysisData($scope.newTime);
@@ -368,6 +417,7 @@
                 AgeDistributionChart = ec.init(document.getElementById('AgeDistributionChart'));
 
 
+
                 sexOption = {
 
                     tooltip: {
@@ -388,13 +438,13 @@
                             radius: ['40%'],
                             data: [
                                 {
-                                    value: 41.5, name: '女'
+                                    value:  $scope.Girl, name: '女'
                                 },
                                 {
-                                    value: 57.39, name: '男'
+                                    value: $scope.male, name: '男'
                                 },
                                 {
-                                    value: 1.11, name: '未知'
+                                    value: $scope.unknown, name: '未知'
 
                                 }
 
@@ -570,7 +620,7 @@
                         {
                             "name": "活跃用户数",
                             "type": "bar",
-                            "data":  $scope.regionDataArray,
+                            "data": $scope.regionDataArray,
                             barCategoryGap: '15',
                             borderWidth: 0,
                             itemStyle: {
@@ -584,12 +634,12 @@
                                         color: 'black',
                                         formatter: function (params, ticket, callback) {
                                             var label;
-                                            if($scope.regionPeopleSum==undefined){
+                                            if ($scope.regionPeopleSum == undefined) {
 
-                                                label='数据加载中';
+                                                label = '数据加载中';
 
                                                 return label;
-                                            }else{
+                                            } else {
                                                 label = ((params.value / $scope.regionPeopleSum) * 100).toFixed(2);
 
                                                 return label + '%';
@@ -656,11 +706,11 @@
                                         formatter: function (params, ticket, callback) {
                                             var label;
 
-                                            if($scope.AgePeopleSum==undefined){
-                                                label='暂无数据'
+                                            if ($scope.AgePeopleSum == undefined) {
+                                                label = '暂无数据';
                                                 return label;
                                             }
-                                            else{
+                                            else {
                                                 label = ((params.value / $scope.AgePeopleSum) * 100).toFixed(2);
 
                                                 return label + '%';
@@ -709,6 +759,15 @@
                 }
             }
             return array;
+        }
+        $scope.bigger=function(id){
+            document.getElementById(id).style.height=25+'px';
+            document.getElementById(id).style.width=43+'px';
+        }
+        $scope.smaller=function(id){
+
+            document.getElementById(id).style.height=20+'px';
+            document.getElementById(id).style.width=38+'px';
         }
 
 
