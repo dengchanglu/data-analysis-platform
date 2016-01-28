@@ -61,10 +61,10 @@
                     $scope.male = ((response[2].sex_count / $scope.PeopleSum) * 100).toFixed(2);
 
                     $scope.DataArray.push($scope.Girl);
-                    $scope.DataArray.push( $scope.unknown);
-                    $scope.DataArray.push( $scope.male);
+                    $scope.DataArray.push($scope.unknown);
+                    $scope.DataArray.push($scope.male);
 
-                    if ($scope.legendArray == [] || $scope.Girl == [] ||  $scope.unknown == [] ||  $scope.male == []) {
+                    if ($scope.legendArray == [] || $scope.Girl == [] || $scope.unknown == [] || $scope.male == []) {
                         sexRatioChart.showLoading({
                             text: "暂无数据",
                             effect: "whirling",
@@ -78,9 +78,9 @@
 
 
                     sexOption.legend.data = $scope.legendArray;
-                    sexOption.series[0].data[0].value =  $scope.Girl;
-                    sexOption.series[0].data[1].value =  $scope.unknown;
-                    sexOption.series[0].data[2].value =  $scope.male;
+                    sexOption.series[0].data[0].value = $scope.Girl;
+                    sexOption.series[0].data[1].value = $scope.unknown;
+                    sexOption.series[0].data[2].value = $scope.male;
 
                     sexRatioChart.setOption(sexOption);
 
@@ -218,7 +218,7 @@
 
                 })
                 .error(function (data, header, config, status) {
-                    console.log('响应失败')
+
                     //处理响应失败
                     RegionalDistributionChart.hideLoading();
                     RegionalDistributionChart.showLoading({
@@ -237,24 +237,13 @@
         //职业分布数据
         $scope.getProfessionAnalysisData = function (time) {
 
-            $scope.ProfessionDataArray = [
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0},
-                {key: '数据加载中', pro_count: 0}
-            ];
-            $scope.ProfessionPeopleSum = 10;
+            $scope.professionalDynamic = [];
 
             $http.get("http://localhost:3000/api/professionAnalysis?time=" + time)
                 .success(function (response) {
                     $scope.ProfessionDataArray = [];
                     $scope.ProfessionPeopleSum = 0;
+
                     var i = 0,
                         len = response.length,
                         j, d;
@@ -276,6 +265,27 @@
                         $scope.ProfessionPeopleSum += $scope.ProfessionDataArray[k].pro_count;
                     }
 
+                    for (var n = 0; n < $scope.ProfessionDataArray.length; n++) {
+
+                        $scope.pre = (($scope.ProfessionDataArray[n].pro_count / $scope.ProfessionPeopleSum) * 100).toFixed(2);
+                        $scope.radius = ((($scope.ProfessionDataArray[n].pro_count / $scope.ProfessionPeopleSum).toFixed(2)) * 500).toFixed(0);
+                        $scope.key = $scope.ProfessionDataArray[n].key;
+                        $scope.pro_count = $scope.ProfessionDataArray[n].pro_count;
+
+                        $scope.professionalDynamic.push(
+                            {
+                                pre: $scope.pre,
+                                radius: $scope.radius,
+                                key: $scope.key,
+                                pro_count: $scope.pro_count
+                            }
+                        );
+
+
+                    }
+                    console.log($scope.professionalDynamic)
+                    //调用动态创建职业分布图表的方法
+                    $scope.createProfessional($scope.professionalDynamic);
 
                 }).error(function (data, header, config, status) {
                     //处理响应失败
@@ -285,24 +295,58 @@
 
         };
 
+        //动态创建职业分布图表的方法
+        $scope.createProfessional = function (tableData) {
 
+            var professionalHtml;
+
+            professionalHtml = '<svg version="1.1" style="font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="1000" height="300">'
+                + '<desc>Created with Highcharts 4.0.3</desc> <defs></defs>'
+                + ' <g> <circle cx="100" cy="114" r="' + tableData[0].radius + '" fill="#5D9CEC"></circle>'
+                + ' <text  x="74" y="114" style="color:#ffffff;fill:#ffffff;font-size: 14px">' + tableData[0].key + ' </text>'
+                + ' <text class="showPercentage" x="75" y="132" style="color:#ffffff;fill:#ffffff;">' + tableData[0].pre + '%' + '</text> </g>'
+                + ' <g> <circle cx="294" cy="200" r="' + tableData[1].radius + '" fill="#62C87F"></circle>'
+                + ' <text x="268" y="200" style="color:#ffffff;fill:#ffffff;">' + tableData[1].key + '</text>'
+                + ' <text  class="showPercentage" x="270" y="218" style="color:#ffffff;fill:#ffffff;">' + tableData[1].pre + '%' + '</text> </g>'
+                + ' <g> <circle cx="780" cy="80" r="' + tableData[2].radius + '" fill="#F15755"></circle>'
+                + ' <text x="754" y="80" style="color:#ffffff;fill:#ffffff;">' + tableData[2].key + ' </text>'
+                + ' <text class="showPercentage" x="757" y="98" style=";color:#ffffff;fill:#ffffff;"> ' + tableData[2].pre + '%' + '</text> </g>'
+                + ' <g> <circle cx="862" cy="223" r="' + tableData[3].radius + '" fill="#FC863F"></circle>'
+                + '<text x="836" y="223" style="color:#ffffff;;fill:#ffffff;"> ' + tableData[3].key + '</text>'
+                + ' <text class="showPercentage" x="840" y="241" style="color:#ffffff;fill:#ffffff;"> ' + tableData[3].pre + '%' + '</text> </g>'
+                + ' <g> <circle cx="524" cy="226" r="' + tableData[4].radius + '" fill="#7053B6"></circle>'
+                + '<text x="498" y="226" style="color:#ffffff;fill:#ffffff;">' + tableData[4].key + ' </text>'
+                + ' <text class="showPercentage" x="500" y="244" style="color:#ffffff;fill:#ffffff;">' + tableData[4].pre + '%' + ' </text> </g>'
+                + ' <g> <circle cx="673" cy="234" r="' + tableData[5].radius + '" fill="#FFCE55"></circle>'
+                + '<text x="647" y="234" style="color:#ffffff;fill:#ffffff;"> ' + tableData[5].key + '</text>'
+                + ' <text class="showPercentage" x="652" y="252" style="color:#ffffff;fill:#ffffff;"> ' + tableData[5].pre + '%' + ' </text> </g>'
+                + '<g> <circle cx="477" cy="73" r="' + tableData[6].radius + '" fill="#6ED5E6"></circle>'
+                + ' <text x="451" y="73" style="color:#ffffff;fill:#ffffff;">' + tableData[6].key + ' </text>'
+                + ' <text class="showPercentage" x="459" y="91" style="color:#ffffff;fill:#ffffff;">' + tableData[6].pre + '%' + ' </text> </g>'
+                + ' <g> <circle cx="286" cy="50" r="' + tableData[7].radius + '" fill="#F57BC1"></circle>'
+                + ' <text x="267" y="43" style="color:#ffffff;fill:#ffffff;"> ' + tableData[7].key + '</text>'
+                + '  <text class="showPercentage" x="268" y="61" style="color:#ffffff;fill:#ffffff;"> ' + tableData[7].pre + '%' + '</text> </g>'
+                + '<g> <circle cx="608" cy="111" r="' + tableData[8].radius + '" fill="#DCB186"></circle>'
+                + '<text x="582" y="111" style="color:#ffffff;fill:#ffffff;">' + tableData[8].key + ' </text>'
+                + '<text class="showPercentage" x="590" y="129" style="color:#ffffff;fill:#ffffff;"> ' + tableData[8].pre + '%' + '</text> </g>'
+                + ' <g> <circle cx="925" cy="63" r="' + tableData[9].radius + '" fill="#647C9D"></circle>'
+                + ' <text x="899" y="63" style="color:#ffffff;fill:#ffffff;"> ' + tableData[9].key + '</text>'
+                + ' <text class="showPercentage" x="907" y="81" style="color:#ffffff;fill:#ffffff;"> ' + tableData[9].pre + '%' + '</text> </g>'
+
+                + ' <g></g> <g></g> </svg>';
+            document.getElementById("prof_chart_container").innerHTML = professionalHtml;
+
+
+        };
         //学历分布
         $scope.getEducationData = function (time) {
-            $scope.EducationPeopleSum = 10;
-            $scope.EducationDataArray = [
-                {edu_count: 0},
-                {edu_count: 0},
-                {edu_count: 0},
-                {edu_count: 0},
-                {edu_count: 0},
-                {edu_count: 0}
-            ];
 
             $http.get(" http://localhost:3000/api/eduAnalysis?time=" + time)
                 .success(function (response) {
 
                     $scope.EducationPeopleSum = 0;
                     $scope.EducationDataArray = [];
+                    $scope.dynamicData = [];
 
                     var i = 0,
                         len = response.length,
@@ -322,17 +366,71 @@
 
                     for (var k = 0; k < $scope.EducationDataArray.length; k++) {
                         $scope.EducationPeopleSum += response[k].edu_count;
+
+                    }
+                    for (var n = 0; n < $scope.EducationDataArray.length; n++) {
+                        $scope.pre = (($scope.EducationDataArray[n].edu_count / $scope.EducationPeopleSum) * 100).toFixed(2);
+
+                        $scope.edu_count = $scope.EducationDataArray[n].edu_count;
+                        $scope.key = $scope.EducationDataArray[n].key;
+                        $scope.width = ((($scope.EducationDataArray[n].edu_count / $scope.EducationPeopleSum).toFixed(2)) * 290).toFixed(0);
+                        $scope.dynamicData.push(
+                            {
+                                key: $scope.key,
+                                edu_count: $scope.edu_count,
+                                pre: $scope.pre,
+                                width: $scope.width
+
+                            }
+                        )
                     }
 
-
+                    //调用动态创建学历图表的方法
+                    $scope.creatEducation($scope.dynamicData);
                 });
 
         };
+        //动态创建学历图表的方法
+        $scope.creatEducation = function (tableData) {
 
+            var EducationHtml;
+            var legendHtml;
+
+
+            EducationHtml = '<li><a href="javascript:void(0);" ><em id="em0">' + tableData[0].pre + '%'
+                + '</em><br>' + '<i id="i_education0" style="width:' + tableData[0].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(0)" ng-Mouseleave="hide(0)"class="i_education0"></i> </a>' + '<li>'
+                + '<li><a href="javascript:void(0);" ><em id="em1">' + tableData[1].pre + '%'
+                + '</em><br>' + '<i id="i_education1" style="width:' + tableData[1].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(1)" ng-Mouseleave="hide(1)"class="i_education1"></i> </a>' + '<li>'
+                + '<li><a href="javascript:void(0);" ><em id="em2">' + tableData[2].pre + '%'
+                + '</em><br>' + '<i id="i_education2" style="width:' + tableData[2].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(2)" ng-Mouseleave="hide(2)"class="i_education2"></i> </a>' + '<li>'
+                + '<li><a href="javascript:void(0);" ><em id="em3">' + tableData[3].pre + '%'
+                + '</em><br>' + '<i id="i_education3" style="width:' + tableData[3].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(3)" ng-Mouseleave="hide(3)"class="i_education3"></i> </a>' + '<li>'
+                + '<li><a href="javascript:void(0);" ><em id="em4">' + tableData[4].pre + '%'
+                + '</em><br>' + '<i id="i_education4" style="width:' + tableData[4].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(4)" ng-Mouseleave="hide(4)"class="i_education4"></i> </a>' + '<li>'
+                + '<li><a href="javascript:void(0);" ><em id="em5">' + tableData[5].pre + '%'
+                + '</em><br>' + '<i id="i_education5" style="width:' + tableData[5].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(5)" ng-Mouseleave="hide(5)"class="i_education5"></i> </a>' + '<li>';
+
+
+            legendHtml = '<p><i class="i_education0"></i>' + tableData[0].key + '</p>'
+                + '<p><i class="i_education1"></i>' + tableData[1].key + '</p>'
+                + '<p><i class="i_education2"></i>' + tableData[2].key + '</p>'
+                + '<p><i class="i_education3"></i>' + tableData[3].key + '</p>'
+                + '<p><i class="i_education4"></i>' + tableData[4].key + '</p>'
+                + '<p><i class="i_education5"></i>' + tableData[5].key + '</p>';
+
+            document.getElementById("education").innerHTML = EducationHtml;
+            $scope.templatePageNumHtml = EducationHtml;
+            document.getElementById("visitor_grade_legend").innerHTML = legendHtml;
+
+        };
+
+        //显示或隐藏的方法
         $scope.show = function (id) {
+            id = 'em' + id;
             document.getElementById(id).style.display = 'block'
         };
         $scope.hide = function (id) {
+            id = 'em' + id;
             document.getElementById(id).style.display = 'none'
         };
 
@@ -416,7 +514,7 @@
                 RegionalDistributionChart = ec.init(document.getElementById('RegionalDistributionChart'));
                 AgeDistributionChart = ec.init(document.getElementById('AgeDistributionChart'));
 
-
+                $scope.legendData = [];
 
                 sexOption = {
 
@@ -426,10 +524,10 @@
                         formatter: " <br/>{b} :{d}%"
 
                     },
-                    color: ['#5D9CEC', '#FF706E', '#7BE198'],
+                    color: ['#5D9CEC', '#F15755', '#62C87F'],
                     legend: {
                         y: 'bottom',
-                        data: ['女', '未知', '男']
+                        data: $scope.legendData
                     },
 
                     series: [
@@ -438,7 +536,7 @@
                             radius: ['40%'],
                             data: [
                                 {
-                                    value:  $scope.Girl, name: '女'
+                                    value: $scope.Girl, name: '女'
                                 },
                                 {
                                     value: $scope.male, name: '男'
@@ -529,8 +627,6 @@
                 };
                 var ecConfig = require('echarts/config');
                 mapChart.on(ecConfig.EVENT.MAP_SELECTED, function (param) {
-
-
                     var selected = param.selected;
                     var selectedProvince;
                     var name;
@@ -727,8 +823,6 @@
                     ]
 
                 };
-
-
                 // 为echarts对象加载数据
                 sexRatioChart.setOption(sexOption);
                 RegionalDistributionChart.setOption(regionalOption);
@@ -744,6 +838,7 @@
 
             }
         );
+
         //数组排序的方法
         $scope.ArraySorting = function (array) {
             var i = 0,
@@ -759,16 +854,17 @@
                 }
             }
             return array;
-        }
-        $scope.bigger=function(id){
-            document.getElementById(id).style.height=25+'px';
-            document.getElementById(id).style.width=43+'px';
-        }
-        $scope.smaller=function(id){
+        };
 
-            document.getElementById(id).style.height=20+'px';
-            document.getElementById(id).style.width=38+'px';
-        }
+        //更改样式的方法
+        $scope.bigger = function (id) {
+            document.getElementById(id).style.height = 25 + 'px';
+            document.getElementById(id).style.width = 43 + 'px';
+        };
+        $scope.smaller = function (id) {
+            document.getElementById(id).style.height = 20 + 'px';
+            document.getElementById(id).style.width = 38 + 'px';
+        };
 
 
     }

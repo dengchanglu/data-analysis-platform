@@ -84,16 +84,6 @@
                     </tr>
                     </thead>
                     <tbody id="tableData">
-                   <!-- 第一种表格分页方法-->
-                    <!--<tr ng-repeat="data in newDataArray">
-                        <td>{{data.key}}</td>
-                        <td>{{data.register_user}} <span style="margin-left: 10px">{{((data.register_user/NewUserSum)*100).toFixed(2)}}%</span>
-                        </td>
-                        <td>{{data.active_user}}<span style="margin-left: 10px">{{((data.active_user/ActiveUser)*100).toFixed(2)}}%</span>
-                        </td>
-                        <td>{{data.start_count}} <span style="margin-left: 10px">{{((data.start_count/StartCount)*100).toFixed(2)}}%</span>
-                        </td>
-                    </tr>-->
 
                     </tbody>
                 </table>
@@ -113,8 +103,14 @@
                     data-toggle="dropdown" id="showPageSize">
                 10 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a ng-click="getPageSize(5)">5</a></li>
+            <ul class="dropdown-menu" role="menu" style="width: 50px;
+    padding: 1px;
+    line-height: 18px;
+    border: 1px solid #c9c9c9;
+    font-size: 12px;
+
+            vertical-align: middle;">
+                <li style=""><a ng-click="getPageSize(5)">5</a></li>
                 <li><a ng-click="getPageSize(10)">10</a></li>
                 <li><a ng-click="getPageSize(15)">15</a></li>
                 <li><a ng-click="getPageSize(20)">20</a></li>
@@ -128,10 +124,11 @@
 
     </div>
     <div class="col-md-3 col-md-offset-6">
-        <span >
-    <ul class="pagination " id="pageNumber" compile="templatePageNumHtml" style="margin-right: 10px;position: relative;top: -20px">
+        <span>
+    <ul class="pagination " id="pageNumber" compile="templatePageNumHtml"
+        style="margin-right: 10px;position: relative;top: -20px">
         <li><a>&laquo;</a></li>
-        <li class="active" ><a>1</a></li>
+        <li class="active"><a>1</a></li>
         <li><a>&raquo;</a></li>
     </ul>
     </span>
