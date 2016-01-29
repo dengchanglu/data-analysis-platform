@@ -4,46 +4,58 @@
         <span class="glyphicon glyphicon-question-sign" ng-click=""></span>
         <br>
 
-        <div class="btn-group" style="margin-top: 5px">
-            <button type="button" class="btn btn-default active">2015-12-24至2016-01-06</button>
-            <button type="button" class="btn btn-default dropdown-toggle active" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
-
-            </button>
-<span style="margin-left: 20px;position: relative;bottom:-10px ">
-                 <a href="#">7天</a>
-            <a href="#" class="active">14天</a>
-            <a href="#">30天</a>
-            </span>
+        <div class="btn-group">
+            <div class="form-group">
+                <div class="input-group col-md-6">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <input date-range-picker id="daterange3" name="daterange3" class="form-control date-picker"
+                           type="text"
+                           ng-model="date" options="opts" required/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-chevron-down"></span></span>
+                </div>
+            </div>
         </div>
         <br>
 
-        <div style="margin-top: 10px">
+        <div class="col-md-6" style="margin-top: 20px">
             版本:
-            <div class="btn-group" role="group" aria-label="..." style="margin-left: 15px">
-                <button type="button" class="btn btn-default active">全部</button>
-                <button type="button" class="btn btn-default">3.0.1</button>
-                <button type="button" class="btn btn-default">2.6.9.2</button>
-                <button type="button" class="btn btn-default">v2.5.1_0</button>
-                <button type="button" class="btn btn-default">2.6.9.1</button>
-                <button type="button" class="btn btn-default">2.6.2.0</button>
-                <button type="button" class="btn btn-default">其他</button>
+            <div class="btn-group" role="group" aria-label="..." style="margin-left: 10px">
+                <button id="page_btn_av_0" type="button" class="btn btn-default active"
+                        ng-click="chooseVersion_page('all','page_btn_av_0')">全部
+                </button>
+                <button id="page_btn_av_1" type="button" class="btn btn-default"
+                        ng-click="chooseVersion_page('1.0.0','page_btn_av_1')">1.0.0
+                </button>
+                <button id="page_btn_av_2" type="button" class="btn btn-default"
+                        ng-click="chooseVersion_page('1.1.0','page_btn_av_2')">1.1.0
+                </button>
+                <button id="page_btn_av_3" type="button" class="btn btn-default"
+                        ng-click="chooseVersion_page('1.2.0','page_btn_av_3')">1.2.0
+                </button>
+                <button id="page_btn_av_4" type="button" class="btn btn-default"
+                        ng-click="chooseVersion_page('2.1.0','page_btn_av_4')">2.1.0
+                </button>
+                <button id="page_btn_av_5" type="button" class="btn btn-default"
+                        ng-click="chooseVersion_page('2.2.0','page_btn_av_5')">2.2.0
+                </button>
+                <button id="page_btn_av_6" type="button" class="btn btn-default"
+                        ng-click="chooseVersion_page('3.0.0','page_btn_av_6')">3.0.0
+                </button>
             </div>
         </div>
 
 
     </div>
     <div class="panel-body">
-        <div class="content" style="margin: 10px;border: 1px solid lightgray ; padding: 10px;border-radius: 5px">
-            <a href="javascript:void(0);" class="close" id="_info_close">×</a>
+        <!--<div class="content" style="margin: 10px;border: 1px solid lightgray ; padding: 10px;border-radius: 5px">-->
+            <!--<a href="javascript:void(0);" class="close" id="_info_close">×</a>-->
 
-            <span class="glyphicon glyphicon-info-sign"></span>
-            <span>页面名称默认显示备注名称，如果没有配置页面名称则显示页面ID。</span>
+            <!--<span class="glyphicon glyphicon-info-sign"></span>-->
+            <!--<span>页面名称默认显示备注名称，如果没有配置页面名称则显示页面ID。</span>-->
 
-            <p style="margin-left: 20px">管理页面备注名，请前往<a href="http://mta.qq.com/mta/operators/ctr_page_name?app_id=1"
-                                                       target="_blank">页面名称管理</a>。</p></d>
-        </div>
+            <!--<p style="margin-left: 20px">管理页面备注名，请前往<a href="http://mta.qq.com/mta/operators/ctr_page_name?app_id=1"-->
+                                                       <!--target="_blank">页面名称管理</a>。</p></d>-->
+        <!--</div>-->
     </div>
 
     <div class="panel panel-default" style="margin-left: 20px;margin-right: 20px">
