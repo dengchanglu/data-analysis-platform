@@ -543,13 +543,13 @@ var upAnalysis = {
                 if (avs[j] == "unknown") {
                     queryBody.bool.should.push({
                         "term": {
-                            "cm": "未知"
+                            "av": "未知"
                         }
                     });
                 } else {
                     queryBody.bool.should.push({
                         "term": {
-                            "cm": avs[j]
+                            "av": avs[j]
                         }
                     });
                 }
@@ -662,7 +662,6 @@ var upAnalysis = {
                 }
             }
         };
-        var get
         es.search(requestJson).then(function (response) {
             var data = {};
             if (response != null && response.aggregations != null && response.aggregations.index_term.buckets != []) {
@@ -912,6 +911,203 @@ var upAnalysis = {
                     dataTable: dataTable
                 };
 
+            }
+            callback(data);
+        });
+    },
+    pageViewsSearch: function (es, queryData, callback) {
+        var queryBody = {
+            "bool": {
+                "should": []
+            }
+        };
+        var j = 0;
+        if (queryData.av != "all") {
+            var avs = queryData.av.split(",");
+            for (j = 0; j < avs.length; j++) {
+                if (avs[j] == "unknown") {
+                    queryBody.bool.should.push({
+                        "term": {
+                            "av": "未知"
+                        }
+                    });
+                } else {
+                    queryBody.bool.should.push({
+                        "term": {
+                            "av": avs[j]
+                        }
+                    });
+                }
+            }
+        }
+
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": queryBody,
+                "aggs": {
+                    "data": {
+                        "terms": {
+                            "field": "_index"
+                        },
+                        "aggs": {
+                            "userCount": {
+                                "cardinality": {
+                                    "field": "ip"
+                                }
+                            },
+                            "page_terms": {
+                                "terms": {
+                                    "field": "locPage"
+                                },
+                                "aggs": {
+                                    "filter_page": {
+                                        "filters": {
+                                            "filters": {
+                                                "isPage": {
+                                                    "bool": {
+                                                        "must_not": {
+                                                            "term": {
+                                                                "locPage": "-"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "aggs": {
+                                            "page_time": {
+                                                "terms": {
+                                                    "field": "ip"
+                                                },
+                                                "aggs": {
+                                                    "page_max_time": {
+                                                        "max": {
+                                                            "field": "time"
+                                                        }
+                                                    },
+                                                    "page_min_time": {
+                                                        "min": {
+                                                            "field": "time"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "page_terms": {
+                        "terms": {
+                            "field": "locPage"
+                        },
+                        "aggs": {
+                            "userCount": {
+                                "cardinality": {
+                                    "field": "ip"
+                                }
+                            },
+                            "page_time": {
+                                "terms": {
+                                    "field": "ip"
+                                },
+                                "aggs": {
+                                    "page_max_time": {
+                                        "max": {
+                                            "field": "time"
+                                        }
+                                    },
+                                    "page_min_time": {
+                                        "min": {
+                                            "field": "time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        es.search(requestJson).then(function (response) {
+            var data = {};
+            if (response != null && response.aggregations != null) {
+                if (response.aggregations.data.buckets != []) {
+                    var res = response.aggregations.data.buckets;
+                    var page_terms_data = response.aggregations.page_terms.buckets;
+                    var dataForm = [];
+                    var dataTable = [];
+                    var i = 0;
+                    for (i = 0; i < page_terms_data.length; i++) {
+                        var userCount = page_terms_data[i].userCount.value;
+                        dataTable.push({
+                            page: page_terms_data[i].key,
+                            userCount: page_terms_data[i].userCount.value,
+                            pageViews_userCount: page_terms_data[i].doc_count,
+                            avg_time_userCount: (function () {
+                                var time_sum = 0;
+                                for (var j = 0; j < page_terms_data.page_time.buckets.length; j++) {
+                                    var time_difference = page_terms_data[i].page_time.buckets[j];
+                                    time_sum += time_difference.page_max_time - time_difference.page_min_time;
+                                }
+                                if (userCount == 0) {
+                                    return 0;
+                                } else {
+                                    return (time_sum / 1000) / userCount;
+                                }
+                            })
+                        });
+                    }
+                    for (i = 0; i < res.length; i++) {
+                        dataForm.push({
+                            time: res[i].key,
+                            avg_time_userCount: (function () {
+                                var time_sum = 0;
+                                var data_tem = res[i];
+                                for (var j = 0; j < data_tem.page_terms.buckets.length; j++) {
+                                    var page_time = data_tem.page_terms.buckets[j].filter_page.buckets.isPage;
+                                    for (var k = 0; k < page_time.page_time.buckets.length; k++) {
+                                        var time_difference = page_time.page_time.buckets[k];
+                                        time_sum += time_difference.page_max_time - time_difference.page_min_time;
+                                    }
+                                }
+                                if (data_tem.userCount.value == 0) {
+                                    return 0;
+                                } else {
+                                    return Number((time_sum / 1000 / data_tem.userCount.value).toFixed(2));
+                                }
+
+                            }),
+                            avg_page_userCount: (function () {
+                                var page_view_sum = 0;
+                                var data_tem = res[i];
+                                for (var j = 0; j < data_tem.page_terms.buckets.length; j++) {
+                                    page_view_sum += data_tem.page_terms.buckets[j].filter_page.buckets.isPage.doc_count;
+                                }
+                                if (data_tem.userCount.value == 0) {
+                                    return 0;
+                                } else {
+                                    return Number((page_view_sum / data_tem.userCount.value).toFixed(2));
+                                }
+
+                            })
+                        });
+                    }
+                    data = {
+                        dataTable: dataTable,
+                        dataForm: dataForm
+                    };
+                }
             }
             callback(data);
         });
