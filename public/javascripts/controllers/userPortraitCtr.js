@@ -29,9 +29,9 @@
 
 
         //性别分析数据
-
         var sexRatioChart;
         var sexOption;
+        $scope.sexdDynamicData = [];
         $scope.getSexAnalysisChartData = function (time) {
 
             sexRatioChart.showLoading({
@@ -45,24 +45,29 @@
             $scope.PeopleSum = 0;
             $scope.legendArray = [];
             $scope.DataArray = [];
+            $scope.sexdDynamicData = [];
 
 
             $http.get("http://localhost:3000/api/sexAnalysis?time=" + time)
                 .success(function (response) {
+
                     $scope.legendArray = [];
 
-                    for (var i = 0; i < 3; i++) {
+                    for (var i = 0; i < response.length; i++) {
                         $scope.PeopleSum += response[i].sex_count;
                         $scope.legendArray.push(response[i].key);
                     }
 
-                    $scope.Girl = ((response[0].sex_count / $scope.PeopleSum) * 100).toFixed(2);
-                    $scope.unknown = ((response[1].sex_count / $scope.PeopleSum) * 100).toFixed(2);
-                    $scope.male = ((response[2].sex_count / $scope.PeopleSum) * 100).toFixed(2);
+                    for (var j = 0; j < response.length; j++) {
 
-                    $scope.DataArray.push($scope.Girl);
-                    $scope.DataArray.push($scope.unknown);
-                    $scope.DataArray.push($scope.male);
+                        $scope.pre = ((response[j].sex_count / $scope.PeopleSum) * 100).toFixed(2);
+                        $scope.key = response[j].key;
+
+                        $scope.sexdDynamicData.push({
+                            value: $scope.pre,
+                            name: $scope.key
+                        })
+                    }
 
                     if ($scope.legendArray == [] || $scope.Girl == [] || $scope.unknown == [] || $scope.male == []) {
                         sexRatioChart.showLoading({
@@ -78,10 +83,7 @@
 
 
                     sexOption.legend.data = $scope.legendArray;
-                    sexOption.series[0].data[0].value = $scope.Girl;
-                    sexOption.series[0].data[1].value = $scope.unknown;
-                    sexOption.series[0].data[2].value = $scope.male;
-
+                    sexOption.series[0].data = $scope.sexdDynamicData;
                     sexRatioChart.setOption(sexOption);
 
 
@@ -121,7 +123,12 @@
                 .success(function (response) {
                     for (var i = 0; i < response.length; i++) {
                         $scope.AgePeopleSum += response[i].age_count;
-                        $scope.AgeDistributionArray.push(response[i].key);
+                        if (response[i].key == '40-') {
+                            $scope.AgeDistributionArray.push(response[i].key + '以上');
+                        } else {
+                            $scope.AgeDistributionArray.push(response[i].key);
+                        }
+
                         $scope.AgeDistributionData.push(response[i].age_count);
                     }
 
@@ -283,9 +290,8 @@
 
 
                     }
-                    console.log($scope.professionalDynamic)
                     //调用动态创建职业分布图表的方法
-                    $scope.createProfessional($scope.professionalDynamic);
+                    $scope.createProfessional($scope.professionalDynamic, $scope.location);
 
                 }).error(function (data, header, config, status) {
                     //处理响应失败
@@ -295,49 +301,92 @@
 
         };
 
+        /* //动态创建职业分布图表的方法
+         $scope.createProfessional = function (tableData) {
+
+         var professionalHtml;
+
+         console.log(tableData)
+
+         professionalHtml = '<svg version="1.1" style="font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="1000" height="300">'
+         + '<desc>Created with Highcharts 4.0.3</desc> <defs></defs>'
+         + ' <g> <circle cx="100" cy="114" r="' + tableData[0].radius + '" fill="#5D9CEC"></circle>'
+         + ' <text  x="74" y="114" style="color:#ffffff;fill:#ffffff;font-size: 14px">' + tableData[0].key + ' </text>'
+         + ' <text class="showPercentage" x="75" y="132" style="color:#ffffff;fill:#ffffff;">' + tableData[0].pre + '%' + '</text> </g>'
+
+         + ' <g> <circle cx="294" cy="200" r="' + tableData[1].radius + '" fill="#62C87F"></circle>'
+         + ' <text x="268" y="200" style="color:#ffffff;fill:#ffffff;">' + tableData[1].key + '</text>'
+         + ' <text  class="showPercentage" x="270" y="218" style="color:#ffffff;fill:#ffffff;">' + tableData[1].pre + '%' + '</text> </g>'
+
+         + ' <g> <circle cx="780" cy="80" r="' + tableData[2].radius + '" fill="#F15755"></circle>'
+         + ' <text x="754" y="80" style="color:#ffffff;fill:#ffffff;">' + tableData[2].key + ' </text>'
+         + ' <text class="showPercentage" x="757" y="98" style=";color:#ffffff;fill:#ffffff;"> ' + tableData[2].pre + '%' + '</text> </g>'
+
+         + ' <g> <circle cx="862" cy="223" r="' + tableData[3].radius + '" fill="#FC863F"></circle>'
+         + '<text x="836" y="223" style="color:#ffffff;;fill:#ffffff;"> ' + tableData[3].key + '</text>'
+         + ' <text class="showPercentage" x="840" y="241" style="color:#ffffff;fill:#ffffff;"> ' + tableData[3].pre + '%' + '</text> </g>'
+
+         + ' <g> <circle cx="524" cy="226" r="' + tableData[4].radius + '" fill="#7053B6"></circle>'
+         + '<text x="498" y="226" style="color:#ffffff;fill:#ffffff;">' + tableData[4].key + ' </text>'
+         + ' <text class="showPercentage" x="500" y="244" style="color:#ffffff;fill:#ffffff;">' + tableData[4].pre + '%' + ' </text> </g>'
+
+         + ' <g> <circle cx="673" cy="234" r="' + tableData[5].radius + '" fill="#FFCE55"></circle>'
+         + '<text x="647" y="234" style="color:#ffffff;fill:#ffffff;"> ' + tableData[5].key + '</text>'
+         + ' <text class="showPercentage" x="652" y="252" style="color:#ffffff;fill:#ffffff;"> ' + tableData[5].pre + '%' + ' </text> </g>'
+
+         + '<g> <circle cx="477" cy="73" r="' + tableData[6].radius + '" fill="#6ED5E6"></circle>'
+         + ' <text x="451" y="73" style="color:#ffffff;fill:#ffffff;">' + tableData[6].key + ' </text>'
+         + ' <text class="showPercentage" x="459" y="91" style="color:#ffffff;fill:#ffffff;">' + tableData[6].pre + '%' + ' </text> </g>'
+
+         + ' <g> <circle cx="286" cy="50" r="' + tableData[7].radius + '" fill="#F57BC1"></circle>'
+         + ' <text x="267" y="43" style="color:#ffffff;fill:#ffffff;"> ' + tableData[7].key + '</text>'
+         + '  <text class="showPercentage" x="268" y="61" style="color:#ffffff;fill:#ffffff;"> ' + tableData[7].pre + '%' + '</text> </g>'
+
+         + '<g> <circle cx="608" cy="111" r="' + tableData[8].radius + '" fill="#DCB186"></circle>'
+         + '<text x="582" y="111" style="color:#ffffff;fill:#ffffff;">' + tableData[8].key + ' </text>'
+         + '<text class="showPercentage" x="590" y="129" style="color:#ffffff;fill:#ffffff;"> ' + tableData[8].pre + '%' + '</text> </g>'
+
+         + ' <g> <circle cx="925" cy="63" r="' + tableData[9].radius + '" fill="#647C9D"></circle>'
+         + ' <text x="899" y="63" style="color:#ffffff;fill:#ffffff;"> ' + tableData[9].key + '</text>'
+         + ' <text class="showPercentage" x="907" y="81" style="color:#ffffff;fill:#ffffff;"> ' + tableData[9].pre + '%' + '</text> </g>'
+
+         + ' <g></g> <g></g> </svg>';
+         document.getElementById("prof_chart_container").innerHTML = professionalHtml;
+
+
+         };*/
+        $scope.location = [
+            {cx: 100, cy: 114, titleX: 74, titleY: 114, valueX: 75, valueY: 132, fillColor: '#5D9CEC'},
+            {cx: 294, cy: 200, titleX: 268, titleY: 200, valueX: 270, valueY: 218, fillColor: '#62C87F'},
+            {cx: 780, cy: 80, titleX: 754, titleY: 80, valueX: 757, valueY: 98, fillColor: '#F15755'},
+            {cx: 862, cy: 223, titleX: 836, titleY: 223, valueX: 840, valueY: 241, fillColor: '#FC863F'},
+            {cx: 524, cy: 226, titleX: 498, titleY: 226, valueX: 500, valueY: 244, fillColor: '#7053B6'},
+            {cx: 673, cy: 234, titleX: 647, titleY: 234, valueX: 652, valueY: 252, fillColor: '#FFCE55'},
+            {cx: 477, cy: 73, titleX: 451, titleY: 73, valueX: 459, valueY: 91, fillColor: '#6ED5E6'},
+            {cx: 286, cy: 50, titleX: 267, titleY: 43, valueX: 268, valueY: 61, fillColor: '#F57BC1'},
+            {cx: 608, cy: 111, titleX: 582, titleY: 111, valueX: 590, valueY: 129, fillColor: '#DCB186'},
+            {cx: 925, cy: 63, titleX: 899, titleY: 63, valueX: 907, valueY: 81, fillColor: '#647C9D'}
+        ];
+
         //动态创建职业分布图表的方法
-        $scope.createProfessional = function (tableData) {
+        $scope.createProfessional = function (tableData, location) {
 
-            var professionalHtml;
+            var professionalHtml = '';
+            professionalHtml += '<svg version="1.1" style="font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="1000" height="300">'
+                + '<desc>Created with Highcharts 4.0.3</desc> <defs></defs>';
 
-            professionalHtml = '<svg version="1.1" style="font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="1000" height="300">'
-                + '<desc>Created with Highcharts 4.0.3</desc> <defs></defs>'
-                + ' <g> <circle cx="100" cy="114" r="' + tableData[0].radius + '" fill="#5D9CEC"></circle>'
-                + ' <text  x="74" y="114" style="color:#ffffff;fill:#ffffff;font-size: 14px">' + tableData[0].key + ' </text>'
-                + ' <text class="showPercentage" x="75" y="132" style="color:#ffffff;fill:#ffffff;">' + tableData[0].pre + '%' + '</text> </g>'
-                + ' <g> <circle cx="294" cy="200" r="' + tableData[1].radius + '" fill="#62C87F"></circle>'
-                + ' <text x="268" y="200" style="color:#ffffff;fill:#ffffff;">' + tableData[1].key + '</text>'
-                + ' <text  class="showPercentage" x="270" y="218" style="color:#ffffff;fill:#ffffff;">' + tableData[1].pre + '%' + '</text> </g>'
-                + ' <g> <circle cx="780" cy="80" r="' + tableData[2].radius + '" fill="#F15755"></circle>'
-                + ' <text x="754" y="80" style="color:#ffffff;fill:#ffffff;">' + tableData[2].key + ' </text>'
-                + ' <text class="showPercentage" x="757" y="98" style=";color:#ffffff;fill:#ffffff;"> ' + tableData[2].pre + '%' + '</text> </g>'
-                + ' <g> <circle cx="862" cy="223" r="' + tableData[3].radius + '" fill="#FC863F"></circle>'
-                + '<text x="836" y="223" style="color:#ffffff;;fill:#ffffff;"> ' + tableData[3].key + '</text>'
-                + ' <text class="showPercentage" x="840" y="241" style="color:#ffffff;fill:#ffffff;"> ' + tableData[3].pre + '%' + '</text> </g>'
-                + ' <g> <circle cx="524" cy="226" r="' + tableData[4].radius + '" fill="#7053B6"></circle>'
-                + '<text x="498" y="226" style="color:#ffffff;fill:#ffffff;">' + tableData[4].key + ' </text>'
-                + ' <text class="showPercentage" x="500" y="244" style="color:#ffffff;fill:#ffffff;">' + tableData[4].pre + '%' + ' </text> </g>'
-                + ' <g> <circle cx="673" cy="234" r="' + tableData[5].radius + '" fill="#FFCE55"></circle>'
-                + '<text x="647" y="234" style="color:#ffffff;fill:#ffffff;"> ' + tableData[5].key + '</text>'
-                + ' <text class="showPercentage" x="652" y="252" style="color:#ffffff;fill:#ffffff;"> ' + tableData[5].pre + '%' + ' </text> </g>'
-                + '<g> <circle cx="477" cy="73" r="' + tableData[6].radius + '" fill="#6ED5E6"></circle>'
-                + ' <text x="451" y="73" style="color:#ffffff;fill:#ffffff;">' + tableData[6].key + ' </text>'
-                + ' <text class="showPercentage" x="459" y="91" style="color:#ffffff;fill:#ffffff;">' + tableData[6].pre + '%' + ' </text> </g>'
-                + ' <g> <circle cx="286" cy="50" r="' + tableData[7].radius + '" fill="#F57BC1"></circle>'
-                + ' <text x="267" y="43" style="color:#ffffff;fill:#ffffff;"> ' + tableData[7].key + '</text>'
-                + '  <text class="showPercentage" x="268" y="61" style="color:#ffffff;fill:#ffffff;"> ' + tableData[7].pre + '%' + '</text> </g>'
-                + '<g> <circle cx="608" cy="111" r="' + tableData[8].radius + '" fill="#DCB186"></circle>'
-                + '<text x="582" y="111" style="color:#ffffff;fill:#ffffff;">' + tableData[8].key + ' </text>'
-                + '<text class="showPercentage" x="590" y="129" style="color:#ffffff;fill:#ffffff;"> ' + tableData[8].pre + '%' + '</text> </g>'
-                + ' <g> <circle cx="925" cy="63" r="' + tableData[9].radius + '" fill="#647C9D"></circle>'
-                + ' <text x="899" y="63" style="color:#ffffff;fill:#ffffff;"> ' + tableData[9].key + '</text>'
-                + ' <text class="showPercentage" x="907" y="81" style="color:#ffffff;fill:#ffffff;"> ' + tableData[9].pre + '%' + '</text> </g>'
+            for (var i = 0; i < tableData.length; i++) {
 
-                + ' <g></g> <g></g> </svg>';
+                professionalHtml += ' <g> <circle cx="' + location[i].cx + '" cy="' + location[i].cy + '" r="' + tableData[i].radius + '" fill="' + location[i].fillColor + '"></circle>'
+                    + ' <text  x="' + location[i].titleX + '" y="' + location[i].titleY + '" style="color:#ffffff;fill:#ffffff;font-size: 14px">' + tableData[i].key + ' </text>'
+                    + ' <text class="showPercentage" x="' + location[i].valueX + '" y="' + location[i].valueY + '" style="color:#ffffff;fill:#ffffff;">' + tableData[i].pre + '%' + '</text> </g>'
+
+            }
             document.getElementById("prof_chart_container").innerHTML = professionalHtml;
 
-
         };
+
+
         //学历分布
         $scope.getEducationData = function (time) {
 
@@ -374,6 +423,7 @@
                         $scope.edu_count = $scope.EducationDataArray[n].edu_count;
                         $scope.key = $scope.EducationDataArray[n].key;
                         $scope.width = ((($scope.EducationDataArray[n].edu_count / $scope.EducationPeopleSum).toFixed(2)) * 290).toFixed(0);
+
                         $scope.dynamicData.push(
                             {
                                 key: $scope.key,
@@ -387,51 +437,56 @@
 
                     //调用动态创建学历图表的方法
                     $scope.creatEducation($scope.dynamicData);
+                }).error(function (data, header, config, status) {
+                    //处理响应失败
+                    var EducationHtml = '';
+                    EducationHtml+='<div style="text-align: center">数据加载中</div>'
+                    document.getElementById("education").innerHTML = EducationHtml;
+                    $scope.templatePageNumHtml = EducationHtml;
+
+
                 });
 
         };
         //动态创建学历图表的方法
         $scope.creatEducation = function (tableData) {
 
-            var EducationHtml;
-            var legendHtml;
+            var EducationHtml = '';
+            var legendHtml = '';
 
+            for (var i = 0; i < tableData.length; i++) {
 
-            EducationHtml = '<li><a href="javascript:void(0);" ><em id="em0">' + tableData[0].pre + '%'
-                + '</em><br>' + '<i id="i_education0" style="width:' + tableData[0].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(0)" ng-Mouseleave="hide(0)"class="i_education0"></i> </a>' + '<li>'
-                + '<li><a href="javascript:void(0);" ><em id="em1">' + tableData[1].pre + '%'
-                + '</em><br>' + '<i id="i_education1" style="width:' + tableData[1].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(1)" ng-Mouseleave="hide(1)"class="i_education1"></i> </a>' + '<li>'
-                + '<li><a href="javascript:void(0);" ><em id="em2">' + tableData[2].pre + '%'
-                + '</em><br>' + '<i id="i_education2" style="width:' + tableData[2].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(2)" ng-Mouseleave="hide(2)"class="i_education2"></i> </a>' + '<li>'
-                + '<li><a href="javascript:void(0);" ><em id="em3">' + tableData[3].pre + '%'
-                + '</em><br>' + '<i id="i_education3" style="width:' + tableData[3].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(3)" ng-Mouseleave="hide(3)"class="i_education3"></i> </a>' + '<li>'
-                + '<li><a href="javascript:void(0);" ><em id="em4">' + tableData[4].pre + '%'
-                + '</em><br>' + '<i id="i_education4" style="width:' + tableData[4].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(4)" ng-Mouseleave="hide(4)"class="i_education4"></i> </a>' + '<li>'
-                + '<li><a href="javascript:void(0);" ><em id="em5">' + tableData[5].pre + '%'
-                + '</em><br>' + '<i id="i_education5" style="width:' + tableData[5].width + 'px;' + 'line-height: 80px" ng-Mouseenter="show(5)" ng-Mouseleave="hide(5)"class="i_education5"></i> </a>' + '<li>';
+                EducationHtml += '<li><a><em id="em' + i + '">' + tableData[i].pre + '%'
+                    + '</em><br>' + '<i id="i_education' + i + '" style="width:' + tableData[i].width + 'px;' + 'line-height: 20px" ng-Mouseenter="show(' + i + ')" ng-Mouseleave="hide(' + i + ')"class="i_education' + i + '"></i> </a>' + '<li>';
 
-
-            legendHtml = '<p><i class="i_education0"></i>' + tableData[0].key + '</p>'
-                + '<p><i class="i_education1"></i>' + tableData[1].key + '</p>'
-                + '<p><i class="i_education2"></i>' + tableData[2].key + '</p>'
-                + '<p><i class="i_education3"></i>' + tableData[3].key + '</p>'
-                + '<p><i class="i_education4"></i>' + tableData[4].key + '</p>'
-                + '<p><i class="i_education5"></i>' + tableData[5].key + '</p>';
+                legendHtml += '<p><i class="i_education' + i + '"></i>' + tableData[i].key + '</p>';
+            }
 
             document.getElementById("education").innerHTML = EducationHtml;
             $scope.templatePageNumHtml = EducationHtml;
             document.getElementById("visitor_grade_legend").innerHTML = legendHtml;
 
+
         };
 
         //显示或隐藏的方法
         $scope.show = function (id) {
-            id = 'em' + id;
-            document.getElementById(id).style.display = 'block'
+
+            var emId = 'em' + id;
+            var i_educationID = 'i_education' + id;
+            document.getElementById(emId).style.display = 'block';
+            document.getElementById(i_educationID).style.height = 80 + 'px';
+
+
         };
         $scope.hide = function (id) {
-            id = 'em' + id;
-            document.getElementById(id).style.display = 'none'
+
+            var emId = 'em' + id;
+            var i_educationID = 'i_education' + id;
+            document.getElementById(emId).style.display = 'none';
+            document.getElementById(i_educationID).style.height = 60 + 'px';
+
+
         };
 
         //时间控件设置
@@ -474,25 +529,57 @@
         //地图分布分析数据
         var mapChart;
         var mapOption;
-
+        //直辖市数据不能设置
         $scope.getMapDistributionData = function (time) {
             $http.get("http://localhost:3000/api/regionAnalysis?time=" + time)
                 .success(function (response) {
+                    mapChart.showLoading({
+                        text: "数据读取中...",
+                        effect: "whirling",
+                        textStyle: {
+                            fontSize: 20
+                        }
+                    });
                     $scope.datas = [];
                     for (var i = 0; i < response.length; i++) {
-                        $scope.datas.push(
-                            {
-                                name: '' + response[i].key + '市',
-                                value: '' + response[i].region_count
-                            }
-                        )
+                        if (response[i].key == '香港' || response[i].key == '澳门' || response[i].key == '台湾') {
+                            $scope.datas.push(
+                                {
+                                    name: '' + response[i].key,
+                                    value: '' + response[i].region_count
+                                }
+                            )
+                        } else {
+                            $scope.datas.push(
+                                {
+                                    name: '' + response[i].key + '市',
+                                    value: '' + response[i].region_count
+                                }
+                            )
+                        }
                     }
-
+                    if ($scope.datas == []) {
+                        mapChart.showLoading({
+                            text: "暂无数据",
+                            effect: "whirling",
+                            textStyle: {
+                                fontSize: 20
+                            }
+                        });
+                    } else {
+                        mapChart.hideLoading();
+                    }
                 })
                 .error(function (data, header, config, status) {
-
-                    console.log('响应失败');
                     //处理响应失败
+                    mapChart.hideLoading();
+                    mapChart.showLoading({
+                        text: "暂无数据",
+                        effect: "whirling",
+                        textStyle: {
+                            fontSize: 20
+                        }
+                    });
                 });
 
 
@@ -524,7 +611,7 @@
                         formatter: " <br/>{b} :{d}%"
 
                     },
-                    color: ['#5D9CEC', '#F15755', '#62C87F'],
+                    color: ['#62C87F', '#5D9CEC', '#F15755'],
                     legend: {
                         y: 'bottom',
                         data: $scope.legendData
@@ -534,23 +621,11 @@
                         {
                             "type": "pie",
                             radius: ['40%'],
-                            data: [
-                                {
-                                    value: $scope.Girl, name: '女'
-                                },
-                                {
-                                    value: $scope.male, name: '男'
-                                },
-                                {
-                                    value: $scope.unknown, name: '未知'
-
-                                }
-
-                            ]
+                            data: $scope.sexdDynamicData
                         }
                     ]
                 };
-
+                //直辖市不能下钻设置数据
                 mapOption = {
 
                     tooltip: {
@@ -613,7 +688,7 @@
                                 {name: '广东', selected: false},
                                 {name: '青海', selected: false},
                                 {name: '西藏', selected: false},
-                                {name: '四川', selected: true},
+                                {name: '四川', selected: false},
                                 {name: '宁夏', selected: false},
                                 {name: '海南', selected: false},
                                 {name: '台湾', selected: false},
@@ -627,6 +702,7 @@
                 };
                 var ecConfig = require('echarts/config');
                 mapChart.on(ecConfig.EVENT.MAP_SELECTED, function (param) {
+
                     var selected = param.selected;
                     var selectedProvince;
                     var name;
@@ -684,7 +760,6 @@
                     tooltip: {
                         show: true,
                         trigger: "item"
-
                     },
                     xAxis: [
                         {
@@ -751,7 +826,6 @@
                         }
                     ]
                 };
-
                 ageOption = {
 
                     tooltip: {
@@ -773,7 +847,6 @@
                     yAxis: [
                         {
                             type: 'value',
-                            data: ['1.0', '1.0'],
                             splitNumber: 16,
                             axisLine: false,
                             splitLine: false,

@@ -55,11 +55,13 @@
 
         $scope.av = 'all';
 
+        $scope.state = 1;
+
         var myChart;
         var option;
 
         //网络获取数据
-        $scope.getChartData = function (time, key, type, av, index) {
+        $scope.getChartData = function (time, key, type, av, index, state) {
 
             if (time == null) {
                 time = $scope.time;
@@ -75,6 +77,9 @@
             }
             if (index != null) {
                 $scope.setState(index);
+            }
+            if (state == null) {
+                state = $scope.state;
             }
             if (myChart == undefined) {
                 return;
@@ -103,25 +108,30 @@
                         $scope.ActiveUser = 0;
                         $scope.StartCount = 0;
                     }
+
+
+
                     $scope.ActiveUserArray = [];
                     $scope.StartCountArray = [];
 
-
                     for (var i = 0; i < response.length; i++) {
+
                         if (av == 'all') {
                             $scope.NewUserSum += response[i].register_user;
                             $scope.ActiveUser += response[i].active_user;
                             $scope.StartCount += response[i].start_count;
                         }
+
                         $scope.dataArray.push(response[i]);
                         $scope.newDataArray.push(response[i]);
                         $scope.NewUserArray.push(response[i].register_user);
                         $scope.ActiveUserArray.push(response[i].active_user);
                         $scope.StartCountArray.push(response[i].start_count);
                         $scope.VersionArray.push(response[i].key);
-
                     }
+
                     if ($scope.NewUserArray == [] || $scope.VersionArray == []) {
+
                         myChart.showLoading({
                             text: "暂无数据",
                             effect: "whirling",
@@ -137,6 +147,18 @@
                     option.yAxis[0].data = $scope.VersionArray;
                     myChart.setOption(option);
 
+                    switch (state) {
+                        case 1:
+                            $scope.getNewUserChartData(null);
+                            break;
+                        case 2:
+                            $scope.getActiveUserChartData(null);
+                            break;
+                        case 3:
+                            $scope.getStartCountChartData(null);
+                            break;
+                    }
+
                     for (var i = 0; i < $scope.dataArray.length; i++) {
                         $scope.newUserPre = (($scope.dataArray[i].register_user / $scope.NewUserSum) * 100).toFixed(2);
                         $scope.activeUserPre = (($scope.dataArray[i].active_user / $scope.ActiveUser) * 100).toFixed(2);
@@ -151,6 +173,7 @@
                             StartCountPre: $scope.startCountPre
                         })
                     }
+
                     //分页方法调用
                     $scope.createPageDatas($scope.dataTable, 1);
 
@@ -220,7 +243,7 @@
                     xAxis: [
                         {
                             type: 'value',
-                            splitNumber: 1500,
+                            splitNumber: 2000,
                             axisLine: false
 
 
@@ -286,14 +309,15 @@
                 };
                 // 为echarts对象加载数据
                 myChart.setOption(option);
-                $scope.getChartData($scope.time, $scope.key, $scope.key, $scope.av, null);
+                $scope.getChartData($scope.time, $scope.key, $scope.key, $scope.av, null, $scope.state);
             }
         );
 
         //新增用户
         $scope.getNewUserChartData = function (index) {
-            $scope.triggerTitle(index);
-
+            if (index != null) {
+                $scope.triggerTitle(index);
+            }
             var options = myChart.getOption();
             options.series[0].name = "新注册用户";
             options.title.text = 'TOP10新增用户操作系统版本分布';
@@ -303,7 +327,9 @@
         };
         //活跃用户
         $scope.getActiveUserChartData = function (index) {
-            $scope.triggerTitle(index);
+            if (index != null) {
+                $scope.triggerTitle(index);
+            }
             var options = myChart.getOption();
             options.series[0].data = $scope.ActiveUserArray;
             options.series[0].name = "活跃用户";
@@ -313,7 +339,9 @@
         };
         //启动次数
         $scope.getStartCountChartData = function (index) {
-            $scope.triggerTitle(index);
+            if (index != null) {
+                $scope.triggerTitle(index);
+            }
             var options = myChart.getOption();
             options.series[0].name = "启动次数";
             options.title.text = 'TOP10启动次数操作系统版本分布';
@@ -322,16 +350,6 @@
             myChart.setOption(options);
         };
 
-        //时间控件时间改变时调用的方法
-        $scope.$watch('singleDate', function (newDate) {
-
-            if ($scope.time != $scope.formatTime($scope.singleDate)) {
-                $scope.getChartData($scope.formatTime($scope.singleDate), $scope.key, $scope.key, $scope.av, null)
-            }
-            //console.log($scope.date);
-            //console.log('New date set: ', newDate);
-        }, false);
-
         //改变选项状态和动态设置表头数据
         $scope.setState = function (index) {
 
@@ -339,20 +357,26 @@
                 document.getElementById("navtab_" + i).setAttribute("class", "");
             }
             document.getElementById("navtab_" + index).setAttribute("class", "current");
+
             switch (index) {
                 case 1:
+                    $scope.key = 'version';
                     document.getElementById('title').innerHTML = ' <th id="title">操作系统版本</th>';
                     break;
                 case 2:
+                    $scope.key = 'sr';
                     document.getElementById('title').innerHTML = ' <th id="title">分辨率</th>';
                     break;
                 case 3:
+                    $scope.key = 'ne';
                     document.getElementById('title').innerHTML = ' <th id="title">网络环境</th>';
                     break;
                 case 4:
+                    $scope.key = 'co';
                     document.getElementById('title').innerHTML = ' <th id="title">运营商</th>';
                     break;
                 case 5:
+                    $scope.key = 'phoneType';
                     document.getElementById('title').innerHTML = ' <th id="title">设备型号</th>';
                     break;
                 default :
@@ -360,14 +384,38 @@
             }
 
         };
+
         //设置新增用户，活跃用户，启动次数状态切换
         $scope.triggerTitle = function (index) {
             for (var i = 1; i < 4; i++) {
                 document.getElementById("tab_" + i).setAttribute("class", "");
             }
             document.getElementById("tab_" + index).setAttribute("class", "current");
+            switch (index) {
+                case 1:
+                    $scope.state = 1;
+                    break;
+                case 2:
+                    $scope.state = 2;
+                    break;
+                case 3:
+                    $scope.state = 3;
+                    break;
+            }
 
         };
+        //时间控件时间改变时调用的方法
+        $scope.$watch('singleDate', function (newDate) {
+
+            if ($scope.time != $scope.formatTime($scope.singleDate)) {
+                $scope.getChartData($scope.formatTime($scope.singleDate), $scope.key, $scope.key, $scope.av, null, $scope.state)
+
+            }
+
+            //console.log($scope.date);
+            //console.log('New date set: ', newDate);
+        }, false);
+
 
         //分页方法
         $scope.getPageSize = function (pageSize) {
