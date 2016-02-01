@@ -48,13 +48,13 @@
     </div>
     <div class="panel-body">
         <!--<div class="content" style="margin: 10px;border: 1px solid lightgray ; padding: 10px;border-radius: 5px">-->
-            <!--<a href="javascript:void(0);" class="close" id="_info_close">×</a>-->
+        <!--<a href="javascript:void(0);" class="close" id="_info_close">×</a>-->
 
-            <!--<span class="glyphicon glyphicon-info-sign"></span>-->
-            <!--<span>页面名称默认显示备注名称，如果没有配置页面名称则显示页面ID。</span>-->
+        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
+        <!--<span>页面名称默认显示备注名称，如果没有配置页面名称则显示页面ID。</span>-->
 
-            <!--<p style="margin-left: 20px">管理页面备注名，请前往<a href="http://mta.qq.com/mta/operators/ctr_page_name?app_id=1"-->
-                                                       <!--target="_blank">页面名称管理</a>。</p></d>-->
+        <!--<p style="margin-left: 20px">管理页面备注名，请前往<a href="http://mta.qq.com/mta/operators/ctr_page_name?app_id=1"-->
+        <!--target="_blank">页面名称管理</a>。</p></d>-->
         <!--</div>-->
     </div>
 
@@ -65,18 +65,14 @@
                 <a class="navbar-brand" href="#"><label
                         style="font-size: 18px; font-weight: 700; color: black">关键指标详解</label></a>
             </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li class="active "><a href="#" style="background-color:#3389D4;color: white;font-weight: 700">人均访问页面数</a>
-                    </li>
-                    <li><a href="#" style="font-weight: 700">人均访问时长</a></li>
-
-                </ul>
+            <div class="tabs" id="div_item_tabs">
+                <a class="first current" id="key_page_0" ng-click="triggerKey(0)">人均访问页面数</a>
+                <a class="last" id="key_page_1" ng-click="triggerKey(1)">人均访问时长</a>
             </div>
         </nav>
         <label style="margin-left: 40px">趋势图</label>
 
-        <div id="TrendChart" style="width: 100%;height: 400px"></div>
+        <div id="pageView" style="width: 100%;height: 400px"></div>
         <hr>
         <label style="margin-left: 40px;margin-bottom: 20px">详细数据</label>
     </div>
@@ -89,95 +85,22 @@
                 <caption><label style="font-size: 18px; font-weight: 700; color: black">详细数据</label></caption>
                 <thead>
                 <tr>
-                    <th>页面ID</th>
+                    <!--<th>页面ID</th>-->
                     <th>页面名称</th>
                     <th>访问次数/占比</th>
                     <th>访问人数/占比</th>
                     <th>人均访问时长/占比</th>
-                    <th>跳出率</th>
+                    <!--<th>跳出率</th>-->
                 </tr>
                 </thead>
-                <tbody>
+                <tbody ng-repeat="table in templateTable">
                 <tr>
-                    <td>com.tencent.mta.211</td>
-                    <td>Test</td>
-                    <td>12,087 33.72%</td>
-                    <td>43,511 29.45%</td>
-                    <td>504,489 32.09%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.87</td>
-                    <td>439 10.69%</td>
-                    <td>6,088 16.98%</td>
-                    <td>35,856 24.27%
-                    </td>
-                    <td>470,453 29.93%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.227</td>
-                    <td>529 12.88%</td>
-                    <td>4,335 12.09%</td>
-                    <td>19,074 12.91%</td>
-                    <td>133,893 8.52%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.208</td>
-                    <td>0 0.00%</td>
-                    <td>3,723 10.39%</td>
-                    <td>5,686 3.85%</td>
-                    <td>55,587 3.54%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.228</td>
-                    <td>145 3.53%</td>
-                    <td>2,850 7.95%</td>
-                    <td>17,016 11.52%</td>
-                    <td>182,133 11.59%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.175</td>
-                    <td>357 8.69%</td>
-                    <td>2,408 6.72%</td>
-                    <td>7,451 5.04%</td>
-                    <td>323 0.02%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.204</td>
-                    <td>980 23.86%</td>
-                    <td>2,175 6.07%</td>
-                    <td>4,216 2.85%</td>
-                    <td>0 0.00%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.46</td>
-                    <td>109 2.65%</td>
-                    <td>1,083 3.02%</td>
-                    <td>8,483 5.74%</td>
-                    <td>130,545 8.30%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.94</td>
-                    <td>81 1.97%</td>
-                    <td>982 2.74%</td>
-                    <td>6,018 4.07%</td>
-                    <td>86,726 5.52%</td>
-                    <td>20.97%</td>
-                </tr>
-                <tr>
-                    <td>com.tencent.mta.109</td>
-                    <td>0 0.00%</td>
-                    <td>45 0.13%</td>
-                    <td>231 0.16%</td>
-                    <td>6,578 0.42%</td>
-                    <td>20.97%</td>
+                    <!--<td>com.tencent.mta.211</td>-->
+                    <td>{{table.page}}</td>
+                    <td>{{table.pageViews_userCount}} {{table.pageViews_userCount_pre}}%</td>
+                    <td>{{table.userCount}} {{table.userCount_pre}}%</td>
+                    <td>{{table.avg_time_userCount}} {{table.avg_time_userCount_pre}}%</td>
+                    <!--<td>20.97%</td>-->
                 </tr>
                 </tbody>
             </table>
@@ -188,44 +111,44 @@
     </div>
 
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <div style="margin-left: 20px">共256条记录,每页显示
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle"
-                        data-toggle="dropdown">
-                    10 <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">10</a></li>
-                    <li><a href="#">15</a></li>
-                    <li><a href="#">20</a></li>
-                    <li><a href="#">30</a></li>
-                    <li><a href="#">50</a></li>
-                    <li><a href="#">100</a></li>
-                    <li><a href="#">200</a></li>
-                </ul>
-            </div>
-            条
-        </div>
-    </div>
-    <div class="col-md-6">
-        <ul class="pagination pull-right" style="margin-right: 30px;position: relative;top: -20px">
-            <li><a href="#">&laquo;</a></li>
-            <li><a href="#">&lt;</a></li>
-            <li class="active"><a href="#"
-                                  style=";background-color: white;color: black;border-color: lightgray;border-top-color: #0044cc">1</a>
-            </li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li class="disabled"><a href="#">...</a></li>
-            <li><a href="#">26</a></li>
-            <li><a href="#">&raquo;</a></li>
-            <li><a href="#">&gt;</a></li>
-        </ul>
-    </div>
+<!--<div class="row">-->
+    <!--<div class="col-md-6">-->
+        <!--<div style="margin-left: 20px">共256条记录,每页显示-->
+            <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-default dropdown-toggle"-->
+                        <!--data-toggle="dropdown">-->
+                    <!--10 <span class="caret"></span>-->
+                <!--</button>-->
+                <!--<ul class="dropdown-menu" role="menu">-->
+                    <!--<li><a href="#">5</a></li>-->
+                    <!--<li><a href="#">10</a></li>-->
+                    <!--<li><a href="#">15</a></li>-->
+                    <!--<li><a href="#">20</a></li>-->
+                    <!--<li><a href="#">30</a></li>-->
+                    <!--<li><a href="#">50</a></li>-->
+                    <!--<li><a href="#">100</a></li>-->
+                    <!--<li><a href="#">200</a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <!--条-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-md-6">-->
+        <!--<ul class="pagination pull-right" style="margin-right: 30px;position: relative;top: -20px">-->
+            <!--<li><a href="#">&laquo;</a></li>-->
+            <!--<li><a href="#">&lt;</a></li>-->
+            <!--<li class="active"><a href="#"-->
+                                  <!--style=";background-color: white;color: black;border-color: lightgray;border-top-color: #0044cc">1</a>-->
+            <!--</li>-->
+            <!--<li><a href="#">2</a></li>-->
+            <!--<li><a href="#">3</a></li>-->
+            <!--<li><a href="#">4</a></li>-->
+            <!--<li><a href="#">5</a></li>-->
+            <!--<li class="disabled"><a href="#">...</a></li>-->
+            <!--<li><a href="#">26</a></li>-->
+            <!--<li><a href="#">&raquo;</a></li>-->
+            <!--<li><a href="#">&gt;</a></li>-->
+        <!--</ul>-->
+    <!--</div>-->
 
-</div>
+<!--</div>-->

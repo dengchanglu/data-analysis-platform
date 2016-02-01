@@ -1048,24 +1048,54 @@ var upAnalysis = {
                     var dataForm = [];
                     var dataTable = [];
                     var i = 0;
+                    var userCount_sum = 0;
+                    var pageViews_userCount_sum = 0;
+                    var avg_time_userCount_sum = 0;
+                    for (i = 0; i < page_terms_data.length; i++) {
+                        userCount_sum += page_terms_data[i].userCount.value;
+                        pageViews_userCount_sum += page_terms_data[i].doc_count;
+                        var time_sum = 0;
+                        for (var j = 0; j < page_terms_data[i].page_time.buckets.length; j++) {
+                            var time_difference = page_terms_data[i].page_time.buckets[j];
+                            time_sum += Number(time_difference.page_max_time.value) - Number(time_difference.page_min_time.value);
+                        }
+                        avg_time_userCount_sum += Number(((time_sum / 1000) / page_terms_data[i].userCount.value).toFixed(2));
+                    }
                     for (i = 0; i < page_terms_data.length; i++) {
                         var userCount = page_terms_data[i].userCount.value;
                         dataTable.push({
                             page: page_terms_data[i].key,
                             userCount: page_terms_data[i].userCount.value,
+                            userCount_pre: Number((page_terms_data[i].userCount.value / userCount_sum * 100).toFixed(2)),
                             pageViews_userCount: page_terms_data[i].doc_count,
+                            pageViews_userCount_pre: Number((page_terms_data[i].doc_count / pageViews_userCount_sum * 100).toFixed(2)),
                             avg_time_userCount: (function () {
                                 var time_sum = 0;
-                                for (var j = 0; j < page_terms_data.page_time.buckets.length; j++) {
+                                for (var j = 0; j < page_terms_data[i].page_time.buckets.length; j++) {
                                     var time_difference = page_terms_data[i].page_time.buckets[j];
-                                    time_sum += time_difference.page_max_time - time_difference.page_min_time;
+                                    time_sum += Number(time_difference.page_max_time.value) - Number(time_difference.page_min_time.value);
                                 }
                                 if (userCount == 0) {
                                     return 0;
                                 } else {
-                                    return (time_sum / 1000) / userCount;
+                                    return Number(((time_sum / 1000) / userCount).toFixed(2));
                                 }
-                            })
+                            }()),
+                            avg_time_userCount_pre: (function () {
+                                var time_sum = 0;
+                                for (var j = 0; j < page_terms_data[i].page_time.buckets.length; j++) {
+                                    var time_difference = page_terms_data[i].page_time.buckets[j];
+                                    time_sum += Number(time_difference.page_max_time.value) - Number(time_difference.page_min_time.value);
+                                }
+                                if (userCount == 0) {
+                                    return 0;
+                                } else if (avg_time_userCount_sum == 0) {
+                                    return 0;
+                                } else {
+                                    return Number((Number(((time_sum / 1000) / userCount).toFixed(2)) / avg_time_userCount_sum * 100).toFixed(2));
+                                }
+
+                            }())
                         });
                     }
                     for (i = 0; i < res.length; i++) {
@@ -1078,7 +1108,7 @@ var upAnalysis = {
                                     var page_time = data_tem.page_terms.buckets[j].filter_page.buckets.isPage;
                                     for (var k = 0; k < page_time.page_time.buckets.length; k++) {
                                         var time_difference = page_time.page_time.buckets[k];
-                                        time_sum += time_difference.page_max_time - time_difference.page_min_time;
+                                        time_sum += time_difference.page_max_time.value - time_difference.page_min_time.value;
                                     }
                                 }
                                 if (data_tem.userCount.value == 0) {
@@ -1087,7 +1117,7 @@ var upAnalysis = {
                                     return Number((time_sum / 1000 / data_tem.userCount.value).toFixed(2));
                                 }
 
-                            }),
+                            }()),
                             avg_page_userCount: (function () {
                                 var page_view_sum = 0;
                                 var data_tem = res[i];
@@ -1100,7 +1130,7 @@ var upAnalysis = {
                                     return Number((page_view_sum / data_tem.userCount.value).toFixed(2));
                                 }
 
-                            })
+                            }())
                         });
                     }
                     data = {
