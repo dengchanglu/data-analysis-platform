@@ -6,11 +6,22 @@
     angular
         .module('dataAP')
         .controller('accessPageCtr', accessPageCtr);
-    function accessPageCtr($scope, $location, ipCookie, $rootScope) {
+    function accessPageCtr($scope, $location, ipCookie, $rootScope, $http, URL) {
+
+        $scope.templateAV = "all";
+        $scope.isGetDataTermsTime = true;
+        $scope.templateForm_page = {
+            time: [],
+            data: {
+                avg_page_userCount: [],
+                avg_time_userCount: []
+            }
+        };
+        $scope.templateTable = [];
 
         $scope.date = {
-            startDate: moment().subtract(1, "days"),
-            endDate: moment()
+            startDate: moment().subtract(2, "days"),
+            endDate: moment().subtract(1, "days")
         };
         $scope.opts = {
             locale: {
@@ -32,6 +43,78 @@
                 '30天': [moment().subtract(29, 'days'), moment()]
             }
         };
+        $scope.formatTime = function (time) {
+            var date = new Date(time);
+            return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+        };
+        var pageView;
+        var option;
+        $scope.getPageViewData = function (time, av) {
+            $scope.templateForm_page = {
+                time: [],
+                data: {
+                    avg_page_userCount: [],
+                    avg_time_userCount: []
+                }
+            };
+            $scope.templateTable = [];
+            if (pageView == undefined) {
+                return;
+            }
+            pageView.showLoading({
+                text: "数据读取中...",
+                effect: "whirling",
+                textStyle: {
+                    fontSize: 20
+                }
+            });
+            if (time == null) {
+                var date1 = new Date($scope.formatTime($scope.date.startDate));  //开始时间
+                var date2 = new Date($scope.formatTime($scope.date.endDate));    //结束时间
+                var date3 = date2.getTime() - date1.getTime(); //时间差的毫秒数
+                //计算出相差天数
+                var days = Math.floor(date3 / (24 * 3600 * 1000));
+                time = "";
+                for (var i = 0; i < days; i++) {
+                    var dataTem = new Date(date1.getTime() + i * (24 * 3600 * 1000));
+                    time += $scope.formatTime(dataTem) + ",";
+                }
+                time += $scope.formatTime($scope.date.endDate);
+            }
+            $http.get(URL + "pageViewsAnalysis?time=" + time + "&av=" + av).success(function (data) {
+                pageView.hideLoading();
+                console.log(data);
+                var i = 0;
+                for (i = 0; i < data.dataForm.length; i++) {
+                    $scope.templateForm_page.time.push(data.dataForm[i].time);
+                    $scope.templateForm_page.data.avg_page_userCount.push(data.dataForm[i].avg_page_userCount);
+                    $scope.templateForm_page.data.avg_time_userCount.push(data.dataForm[i].avg_time_userCount);
+                }
+                if ($scope.isGetDataTermsTime) {
+                    option.series[0].data = $scope.templateForm_page.data.avg_page_userCount;
+                    option.xAxis[0].data = $scope.templateForm_page.time;
+                } else {
+                    option.series[0].data = $scope.templateForm_page.data.avg_time_userCount;
+                    option.xAxis[0].data = $scope.templateForm_page.time;
+                }
+                //for (i = 0; i < data.dataTable.length; i++) {
+
+                //$apply(function () {
+                    $scope.templateTable = data.dataTable;
+                //});
+                //}
+                pageView.setOption(option);
+            }).error(function (data, status, headers, config) {
+                pageView.hideLoading();
+                pageView.showLoading({
+                    text: "暂无数据",
+                    effect: "whirling",
+                    textStyle: {
+                        fontSize: 20
+                    }
+                });
+            });
+        };
         require(
             [
                 'echarts',
@@ -39,11 +122,11 @@
             ],
             function (ec) {
                 // 基于准备好的dom，初始化echarts图表}
-                var TrendChart = ec.init(document.getElementById('TrendChart'));
-                var option = {
+                pageView = ec.init(document.getElementById('pageView'));
+                option = {
                     title: {
                         text: '人均访问页面数',
-                        x: 'center',
+                        x: 'center'
 
                     },
                     tooltip: {
@@ -54,7 +137,7 @@
                                 color: '#78C354',
                                 width: 2,
                                 type: 'dotted'
-                            },
+                            }
                         }
                     }
                     ,
@@ -62,64 +145,24 @@
                     xAxis: [
                         {
                             type: 'category',
-                            data: ['2015-12-24',
-                                {
-                                    value: '2015-12-25',
-
-                                },
-                                '2015-12-26',
-                                {
-                                    value: '2015-12-27',
-
-                                },
-                                '2015-12-28',
-                                {
-                                    value: '2015-12-29',
-
-                                },
-                                '2015-12-30',
-                                {
-                                    value: '2015-12-31',
-                                    label: {
-                                        show: false
-                                    }
-                                }, '2016-01-01',
-                                {
-                                    value: '2016-01-02',
-                                    label: {
-                                        show: false
-                                    }
-                                }, '2016-01-03',
-
-                                {
-                                    value: '2016-01-04',
-                                    label: {
-                                        show: false
-                                    }
-                                }, '2016-01-05',
-                                {
-                                    value: '2016-01-06',
-                                    label: {
-                                        show: false
-                                    }
-                                },],
+                            data: [],
                             splitLine: false,
                             axisLabel: {
                                 //X轴刻度配置
                                 interval: 1,//0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
 
                                 textStyle: {
-                                    align: 'left',
+                                    align: 'left'
 
                                 }
-                            },
+                            }
 
                         }
                     ],
                     yAxis: [
                         {
                             type: 'value',
-                            axisLine: false,
+                            axisLine: false
 
                         }
                     ],
@@ -143,19 +186,19 @@
                                     lineStyle: {
                                         color: '#3389D4',
                                         width: 3
-                                    },
+                                    }
 
                                 },
                                 emphasis: {}
                             },
-                            data: [2.02, 1.88, 1.89, 1.99, 1.96, 1.83, 1.79, 1.80, 1.80, 1.89, 1.97, 1.97, 0.00, 0.00]
+                            data: []
                         }
 
                     ]
                 };
 
-                TrendChart.setOption(option);
-
+                pageView.setOption(option);
+                $scope.getPageViewData(null, $scope.templateAV);
             });
         $scope.changeActive = function (type, id, number) {
             for (var i = 0; i < number; i++) {
@@ -165,10 +208,8 @@
         };
         $scope.chooseVersion_page = function (av, id) {
             $scope.changeActive("av", id, 7);
-        };
-        $scope.formatTime = function (time) {
-            var date = new Date(time);
-            return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+            $scope.templateAV = av;
+            $scope.getPageViewData(null, av);
         };
         //Watch for date changes
         $scope.$watch('date', function (newDate) {
@@ -183,8 +224,27 @@
                 time += $scope.formatTime(dataTem) + ",";
             }
             time += $scope.formatTime(newDate.endDate);
-            //$scope.chooseCM($scope.templateCh, time, $scope.templateVersion.av);
+            $scope.getPageViewData(time, $scope.templateAV);
         }, false);
+        $scope.triggerKey = function (index) {
+            //$scope.$apply(function(){
+            //    $scope.templateTable = [];
+            //});
+            if (index == 0) {
+                document.getElementById("key_page_0").setAttribute("class", "first current");
+                document.getElementById("key_page_1").setAttribute("class", "last");
+                $scope.isGetDataTermsTime = true;
+                option.series[0].data = $scope.templateForm_page.data.avg_page_userCount;
+                option.xAxis[0].data = $scope.templateForm_page.time;
+            } else {
+                document.getElementById("key_page_1").setAttribute("class", "last current");
+                document.getElementById("key_page_0").setAttribute("class", "first");
+                $scope.isGetDataTermsTime = false;
+                option.series[0].data = $scope.templateForm_page.data.avg_time_userCount;
+                option.xAxis[0].data = $scope.templateForm_page.time;
+            }
+            pageView.setOption(option);
+        };
 
     }
 
