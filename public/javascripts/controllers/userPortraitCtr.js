@@ -6,7 +6,7 @@
     angular
         .module('dataAP')
         .controller('userPortraitCtr', userPortraitCtr);
-    function userPortraitCtr($scope, $location, ipCookie, $rootScope, $http) {
+    function userPortraitCtr($scope, $location, ipCookie, $rootScope, $http, URL) {
 
 
         //时间控件设置默认时间方法
@@ -48,7 +48,7 @@
             $scope.sexdDynamicData = [];
 
 
-            $http.get("http://localhost:3000/api/sexAnalysis?time=" + time)
+            $http.get(URL + "sexAnalysis?time=" + time)
                 .success(function (response) {
 
                     $scope.legendArray = [];
@@ -119,7 +119,7 @@
             $scope.AgeDistributionData = [];
             $scope.AgePeopleSum = 0;
 
-            $http.get("http://localhost:3000/api/ageAnalysis?time=" + time)
+            $http.get(URL + "ageAnalysis?time=" + time)
                 .success(function (response) {
                     for (var i = 0; i < response.length; i++) {
                         $scope.AgePeopleSum += response[i].age_count;
@@ -183,7 +183,7 @@
             $scope.dataArray = [];
 
 
-            $http.get("http://localhost:3000/api/regionAnalysis?time=" + time)
+            $http.get(URL + "regionAnalysis?time=" + time)
                 .success(function (response) {
 
                     var i = 0,
@@ -246,7 +246,7 @@
 
             $scope.professionalDynamic = [];
 
-            $http.get("http://localhost:3000/api/professionAnalysis?time=" + time)
+            $http.get(URL + "professionAnalysis?time=" + time)
                 .success(function (response) {
                     $scope.ProfessionDataArray = [];
                     $scope.ProfessionPeopleSum = 0;
@@ -390,7 +390,7 @@
         //学历分布
         $scope.getEducationData = function (time) {
 
-            $http.get(" http://localhost:3000/api/eduAnalysis?time=" + time)
+            $http.get(URL + "eduAnalysis?time=" + time)
                 .success(function (response) {
 
                     $scope.EducationPeopleSum = 0;
@@ -440,7 +440,7 @@
                 }).error(function (data, header, config, status) {
                     //处理响应失败
                     var EducationHtml = '';
-                    EducationHtml+='<div style="text-align: center">数据加载中</div>'
+                    EducationHtml += '<div style="text-align: center">数据加载中</div>'
                     document.getElementById("education").innerHTML = EducationHtml;
                     $scope.templatePageNumHtml = EducationHtml;
 
@@ -531,7 +531,7 @@
         var mapOption;
         //直辖市数据不能设置
         $scope.getMapDistributionData = function (time) {
-            $http.get("http://localhost:3000/api/regionAnalysis?time=" + time)
+            $http.get(URL + "regionAnalysis?time=" + time)
                 .success(function (response) {
                     mapChart.showLoading({
                         text: "数据读取中...",

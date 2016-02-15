@@ -32,67 +32,84 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.when("", "index");
     $stateProvider
+        //首页跳转
         .state("index", {
             url: "/index",
             templateUrl: "views/index.html",
             controller: 'indexCtr',
-            cache: 'true',
+            cache: 'true'
         })
+        //渠道分析
         .state("index.channelDis", {
             url: "/channelDis",
             templateUrl: "views/analysisViews/channelDistribution.html",
             controller: "channelDisCtr",
-            cache: 'true',
+            cache: 'true'
         })
+        //渠道来源细分
         .state("index.channelSS", {
             url: "/channelSS",
             templateUrl: "views/analysisViews/channelSourceSegmentation.html",
-            cache: 'true',
+            cache: 'true'
         })
+        //版本分布分析
         .state("index.versionDis", {
             url: "/versionDis",
             templateUrl: "views/analysisViews/versionDistribution.html",
             controller: "versionDisCtr",
-            cache: 'true',
+            cache: 'true'
         })
+        //终端分析
         .state("index.terminalDev", {
             url: "/terminalDev",
             templateUrl: "views/analysisViews/terminalDevice.html",
             controller: "terminalDevCtr",
-            cache: 'true',
+            cache: 'true'
 
         })
+        //用户画像分析
         .state("index.userPortrait", {
             url: "/userPortrait",
             templateUrl: "views/analysisViews/userPortrait.html",
             controller: "userPortraitCtr",
-            cache: 'true',
+            cache: 'true'
 
         })
+        //用户留存分析
         .state("index.userRetained", {
             url: "/userRetained",
             templateUrl: "views/analysisViews/userRetained.html",
             /*controller:"usersRetainedCtr"*/
-            cache: 'true',
+            cache: 'true'
 
         })
+        //访问页面分析
         .state("index.accessPage", {
             url: "/accessPage",
             templateUrl: "views/analysisViews/accessPage.html",
             controller: "accessPageCtr",
-            cache: 'true',
+            cache: 'true'
         })
+        //使用时长分析
         .state("index.usingTimeLength", {
             url: "/usingTimeLength",
             templateUrl: "views/analysisViews/usingTimeLength.html",
             controller: "usingTimeLengthCtr",
-            cache: 'true',
+            cache: 'true'
         })
+        //页面来源分析
+        .state("index.sourceAnalysis", {
+            url: "/sourceAnalysis",
+            templateUrl: "views/analysisViews/sourceAnalysis.html",
+            controller: "sourceAnalysisCtr",
+            cache: 'true'
+        })
+        //路径分析
         .state("index.pathAnalysis", {
             url: "/pathAnalysis",
             templateUrl: "views/analysisViews/pathAnalysis.html",
             controller: "pathAnalysisCtr",
-            cache: 'true',
+            cache: 'true'
         })
 
 
