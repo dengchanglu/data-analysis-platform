@@ -1,6 +1,7 @@
 /**
  * Created by perfection on 16-1-11.
  */
+var util = require('../util/convertToChinese');
 var upAnalysis = {
     sexSearch: function (es, queryData, callback) {
         var index = [];
@@ -1138,6 +1139,107 @@ var upAnalysis = {
                         dataForm: dataForm
                     };
                 }
+            }
+            callback(data);
+        });
+    },
+    sourceAnalysisSearch: function (es, queryData, callback) {
+        var index = [];
+        var must = [];
+        if (queryData.av != "all") {
+            must.push({
+                "term": {
+                    "bp": util.convertText(queryData.bp)
+                }
+            });
+            must.push({
+                term: {
+                    "av": queryData.av
+                }
+            });
+        } else {
+            must.push({
+                "term": {
+                    "bp": util.convertText(queryData.bp)
+                }
+            });
+        }
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": {
+                    "bool": {
+                        "must": must
+                    }
+                },
+                "aggs": {
+                    "data": {
+                        "terms": {
+                            "field": "bp"
+                        },
+                        "aggs": {
+                            "uv": {
+                                "cardinality": {
+                                    "field": "ip"
+                                }
+                            },
+                            "localpage": {
+                                "terms": {
+                                    "field": "locPage"
+                                },
+                                "aggs": {
+                                    "uv": {
+                                        "cardinality": {
+                                            "field": "ip"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        es.search(requestJson).then(function (response) {
+            var data = {
+                rootPage: {
+                    key: "",
+                    pv: "",
+                    uv: "",
+                    rootPageOut: ""
+                },
+                leavesPage: []
+            };
+            if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
+                var res = response.aggregations.data.buckets[0];
+
+                data.rootPage.key = res.key;
+                data.rootPage.pv = res.doc_count;
+                data.rootPage.uv = res.uv.value;
+                var rootPageOut = 0;
+                var dataTem = null;
+                var i = 0;
+                for (i = 0; i < res.localpage.buckets.length; i++) {
+                    dataTem = res.localpage.buckets[i];
+                    rootPageOut += dataTem.doc_count;
+                }
+                for (i = 0; i < res.localpage.buckets.length; i++) {
+                    dataTem = res.localpage.buckets[i];
+                    data.leavesPage.push({
+                        key: dataTem.key,
+                        pv: dataTem.doc_count,
+                        uv: dataTem.uv.value,
+                        leavesPageOut: (dataTem.doc_count / rootPageOut * 100).toFixed(2) + "%"
+                    });
+                }
+                data.rootPage.rootPageOut = ((1 - rootPageOut / res.doc_count) * 100).toFixed(2) + "%"
             }
             callback(data);
         });
