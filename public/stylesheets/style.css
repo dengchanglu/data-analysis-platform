@@ -82,18 +82,7 @@
     padding: 10px 0;
 }
 
-/**
- * =================================================
- * 列表的默认样式文件。
- * @author xiangchen(xiangchen@tencent.com)
- * @version 2013-03-24
- *
- * =================================================
- */
-/*========== reset ==========*/
 @charset "utf-8";
-
-/*========== reset ==========*/
 .gri_wrapper {
     overflow: auto;
 }
@@ -533,6 +522,7 @@ td:hover .gri_wrapper_td_show {
     height: 10px;
     background: #5D9CEC;
 }
+
 .page_path_container {
     overflow: auto;
     padding: 10px;
@@ -542,38 +532,45 @@ td:hover .gri_wrapper_td_show {
     font-size: 12px;
     min-height: 200px;
 }
+
 table {
     display: table;
     border-collapse: separate;
     border-spacing: 2px;
     border-color: grey;
 }
+
 tbody {
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
 }
+
 tr {
     display: table-row;
     vertical-align: inherit;
     border-color: inherit;
 }
+
 td, th {
     display: table-cell;
     vertical-align: inherit;
 }
+
 .page_path_container .path_summary {
     width: 201px;
     font-size: 12px;
     line-height: 1.2em;
     position: relative;
 }
+
 .page_path_container .start {
     width: 179px;
     height: 126px;
     display: inline-block;
     z-index: 3;
 }
+
 .page_path_container .start h5 {
     line-height: 26px;
     font-size: 14px;
@@ -584,33 +581,42 @@ td, th {
     text-shadow: 0 -1px 1px #456da1;
     background: url(http://mta.qq.com/mta/resource/imgcache/images/path.png) no-repeat;
 }
+
 .page_path_container .start .content {
     border: 1px solid #bdc7d4;
     background-color: #ecf4ff;
     color: #0f233d;
 }
+
 .page_path_container .start table {
     width: 100%;
-}tbody {
-     display: table-row-group;
-     vertical-align: middle;
-     border-color: inherit;
- }
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
 tr {
     display: table-row;
     vertical-align: inherit;
     border-color: inherit;
 }
+
 .page_path_container .start th {
     font-weight: 700;
 }
+
 .page_path_container .start td, .page_path_container .start th {
     height: 26px;
     padding: 0 5px;
 }
+
 .page_path_container .next {
     width: 192px;
 }
+
 .page_path_container .next li {
     width: 192px;
     height: 55px;
@@ -618,10 +624,12 @@ tr {
     cursor: pointer;
     vertical-align: middle;
 }
+
 .page_path_container li:first-child .bg_left {
     border-top-width: 1px;
     height: 54px;
 }
+
 .page_path_container .bg_left {
     width: 2px;
     height: 55px;
@@ -631,13 +639,16 @@ tr {
     border-style: solid;
     border-color: #2a64ae;
 }
+
 .page_path_container .next_1 .current .box {
     border-color: #2a64ae;
     background-color: #5688c8;
 }
+
 .page_path_container .current .box {
     color: #0f233d;
 }
+
 .page_path_container .box {
     float: left;
     width: 161px;
@@ -648,6 +659,7 @@ tr {
     left: 2px;
     color: #526884;
 }
+
 .page_path_container .fav {
     width: 27px;
     height: 27px;
@@ -659,12 +671,15 @@ tr {
     color: #fff;
     display: none;
 }
+
 a {
     text-decoration: none;
 }
+
 .page_path_container .fav i {
     margin: -1px 0 0 -1px;
 }
+
 [class^="icon_"], [class*=" icon_"] {
     font-family: 'mta';
     speak: none;
@@ -676,33 +691,42 @@ a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 .page_path_container h6 {
     font-weight: 700;
 }
+
 .page_path_container h6, .page_path_container p {
     margin-left: 15px;
 }
+
 address, caption, cite, code, dfn, em, i, strong, th, var {
     font-style: normal;
     font-weight: 400;
 }
+
 user agent stylesheeti, cite, em, var, address, dfn {
     font-style: italic;
 }
+
 .page_path_container p {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .page_path_container h6, .page_path_container p {
     margin-left: 15px;
 }
+
 .page_path_container .next .current .bg_right {
     display: block;
 }
+
 .page_path_container .next_1 .bg_right, .page_path_container .next_2 .bg_left, .page_path_container .next_2 .current .box {
     border-color: #598ac9;
     background-color: #6ea2e4;
 }
+
 .page_path_container .next li {
     width: 192px;
     height: 55px;
@@ -710,10 +734,12 @@ user agent stylesheeti, cite, em, var, address, dfn {
     cursor: pointer;
     vertical-align: middle;
 }
+
 blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, td, textarea, th, ul {
     margin: 0;
     padding: 0;
 }
+
 .page_path_container .next li {
     width: 192px;
     height: 55px;
@@ -721,22 +747,27 @@ blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4,
     cursor: pointer;
     vertical-align: middle;
 }
+
 blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, td, textarea, th, ul {
     margin: 0;
     padding: 0;
 }
+
 .page_path_container .path_summary .bg_right {
     top: 40%;
     right: -1px;
 }
+
 .page_path_container li:first-child .bg_left {
     border-top-width: 1px;
     height: 54px;
 }
+
 .page_path_container .next_2 .bg_right, .page_path_container .next_3 .bg_left, .page_path_container .next_3 .current .box {
     border-color: #6c97cd;
     background-color: #87b8f7;
 }
+
 .page_path_container .bg_left {
     width: 2px;
     height: 55px;
@@ -746,32 +777,39 @@ blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4,
     border-style: solid;
     border-color: #2a64ae;
 }
+
 .page_path_container .last .box {
     height: 32px;
     border-color: #d7c1b4;
     background-color: #faece3;
     color: #9b7f6f;
 }
+
 .page_path_container .last .box h6, .page_path_container .last .box p {
     line-height: 32px;
 }
+
 .page_path_container .last .box h6 {
     float: left;
 }
+
 .page_path_container .last .box p {
     float: right;
     padding-right: 5px;
 }
+
 .page_path_container .next_1 .bg_right, .page_path_container .next_2 .bg_left, .page_path_container .next_2 .current .box {
     border-color: #598ac9;
     background-color: #6ea2e4;
 }
+
 .page_path_container .next .bg_right {
     top: 13px;
     right: -1px;
     display: none;
     z-index: 2;
 }
+
 .bg_right {
     width: 20px;
     height: 20px;
@@ -782,24 +820,29 @@ blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4,
     background: url(http://mta.qq.com/mta/resource/imgcache/images/path.png) 0 -74px no-repeat #5688c8;
     z-index: 2;
 }
+
 .visitor_user {
 
     width: 55%;
 }
+
 .visitor h4 {
     font-size: 18px;
     font-weight: 400;
 }
+
 .visitor_user .visitor_cont {
     cursor: pointer;
     margin: 0px auto;
     padding-top: 70px;
     width: 260px;
 }
+
 .visitor_cont {
     padding: 50px 0;
     text-align: center;
 }
+
 ol, ul {
     list-style: none;
 }
@@ -808,6 +851,7 @@ ol, ul {
     float: left;
     margin-right: 4px;
 }
+
 .i_unew {
     background-position: 0 0;
     background: url("http://mta.qq.com/mta/resource/imgcache/images/visitor.png") no-repeat;
@@ -816,6 +860,7 @@ ol, ul {
     vertical-align: middle;
     width: 22px;
 }
+
 .i_ucurrent {
     background-position: -26px 0;
     background: url("http://mta.qq.com/mta/resource/imgcache/images/visitor.png") no-repeat;
@@ -824,6 +869,7 @@ ol, ul {
     vertical-align: middle;
     width: 22px;
 }
+
 .visitor_user .current {
     background: #8cc151;
     color: #fff;
@@ -837,6 +883,7 @@ ol, ul {
     top: -20px;
     width: 38px;
 }
+
 .i_uold {
     background-position: -52px 0;
     background: url("http://mta.qq.com/mta/resource/imgcache/images/visitor.png") no-repeat;
@@ -845,14 +892,16 @@ ol, ul {
     vertical-align: middle;
     width: 22px;
 }
+
 .visitor_user .legend {
     color: #6c6c6c;
     float: right;
     width: 80px;
     position: relative;
     right: -100px;
-    top:-50px;
+    top: -50px;
 }
+
 p {
     display: block;
     -webkit-margin-before: 1em;
@@ -860,6 +909,7 @@ p {
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
 }
+
 .visitor_user .legend i {
     display: inline-block;
     font-size: 0;
@@ -867,15 +917,19 @@ p {
     margin-right: 5px;
     width: 10px;
 }
+
 .visitor_user .i_new {
     background: #8cc151;
 }
+
 .visitor_user .i_old {
     background: #3ad2dc;
 }
+
 .visitor_user .i_ucurrent {
     position: relative;
 }
+
 .i_ucurrent {
     background-position: -26px 0;
     background: url("http://mta.qq.com/mta/resource/imgcache/images/visitor.png") no-repeat;
@@ -887,10 +941,12 @@ p {
 
 .cf {
 }
+
 .visitor_education {
 
     width: 40%;
 }
+
 .visitor h4 {
     font-size: 18px;
     font-weight: 400;
@@ -900,27 +956,33 @@ p {
     margin: 30px auto 0;
     width: 300px;
 }
+
 ol, ul {
     list-style: none;
 }
+
 .visitor_streak li {
     float: left;
     height: 120px;
 
 }
+
 a {
     text-decoration: none;
 }
+
 .visitor_streak em {
     color: #3ad2dc;
     display: none;
     position: absolute;
 }
+
 .visitor_streak i {
     display: inline-block;
     height: 60px;
     margin-top: 40px;
 }
+
 .i_education0 {
     background: #0ea4ae;
 }
@@ -928,29 +990,36 @@ a {
 .i_education1 {
     background: #96e9ee;
 }
+
 .i_education2 {
     background: #65dde5;
 }
+
 .i_education3 {
     background: #8cc151;
 }
+
 .i_education4 {
     background: #3ad2dc;
 }
+
 .i_education5 {
     background: #1cbec9;
 }
+
 .visitor_education .legend {
     color: #6c6c6c;
     font-size: 12px;
     margin: 15px auto 0;
     width: 300px;
 }
+
 .visitor_education .legend p {
     float: left;
     margin-right: 10px;
 
 }
+
 .visitor_education .legend i {
     display: inline-block;
     font-size: 0;
@@ -958,24 +1027,31 @@ a {
     margin-right: 5px;
     width: 10px;
 }
+
 .i_education0 {
     background: #0ea4ae;
 }
+
 .i_education1 {
     background: #96e9ee;
 }
+
 .i_education2 {
     background: #65dde5;
 }
+
 .i_education3 {
     background: #8cc151;
 }
+
 .i_education4 {
     background: #3ad2dc;
 }
+
 .i_education5 {
     background: #1cbec9;
 }
+
 .cf:after {
     content: "";
     display: block;
@@ -983,6 +1059,7 @@ a {
     visibility: hidden;
     clear: both;
 }
+
 .panel-body .tabs a.current {
     background: #3389D4;
     border-color: #3389D4;
@@ -991,3 +1068,309 @@ a {
     margin: -1px 0;
     padding: 1px 20px;
 }
+
+/*==================================404错误页面css======================================*/
+/* reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* start editing from here */
+a {
+    text-decoration: none;
+}
+
+.txt-rt {
+    text-align: right;
+}
+
+/* text align right */
+.txt-lt {
+    text-align: left;
+}
+
+/* text align left */
+.txt-center {
+    text-align: center;
+}
+
+/* text align center */
+.float-rt {
+    float: right;
+}
+
+/* float right */
+.float-lt {
+    float: left;
+}
+
+/* float left */
+.clear {
+    clear: both;
+}
+
+/* clear float */
+.pos-relative {
+    position: relative;
+}
+
+/* Position Relative */
+.pos-absolute {
+    position: absolute;
+}
+
+/* Position Absolute */
+.vertical-base {
+    vertical-align: baseline;
+}
+
+/* vertical align baseline */
+.vertical-top {
+    vertical-align: top;
+}
+
+/* vertical align top */
+.underline {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    margin: 0 0 20px 0;
+}
+
+/* Add 5px bottom padding and a underline */
+nav.vertical ul li {
+    display: block;
+}
+
+/* vertical menu */
+nav.horizontal ul li {
+    display: inline-block;
+}
+
+/* horizontal menu */
+img {
+    max-width: 100%;
+}
+
+/*end reset*/
+body {
+    font-family: "Century Gothic" Geneva Helvetica, sans-serif;
+    background: url('../images/bg.png');
+}
+
+.wrap {
+    margin: 0 auto;
+    width: 96%;
+}
+
+h1 {
+    margin-top: 20px;
+    color: #603813;
+    font-size: 3em;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.banner {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.banner img {
+    margin-top: 0px;
+}
+
+.page {
+    text-align: center;
+    font-family: "Century Gothic";
+}
+
+.page h2 {
+    font-size: 3em;
+    color: rgb(99, 44, 37);
+    font-weight: bold;
+}
+
+.footer {
+    font-family: "Century Gothic";
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
+}
+
+.footer p {
+    font-size: 1em;
+    color: #603813;
+}
+
+.footer a {
+    color: #f9614d;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/*media queries*/
+@media all and (max-width: 1366px) and (min-width: 1280px) {
+    .wrap {
+        width: 90%;
+    }
+
+    .banner {
+        margin-top: 30px;
+    }
+}
+
+@media all and (max-width: 1280px) and (min-width: 1024px) {
+    .wrap {
+        width: 90%;
+    }
+}
+
+@media all and (max-width: 1024px) and (min-width: 800px) {
+    .wrap {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .banner {
+        margin-top: 0px;
+    }
+
+    .page h2 {
+        font-size: 2em;
+    }
+}
+
+@media all and (max-width: 800px) and (min-width: 640px) {
+    .wrap {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .banner {
+        margin-top: 10px;
+    }
+
+    .banner img {
+        width: 34%;
+    }
+
+    .page h2 {
+        font-size: 2em;
+    }
+}
+
+@media all and (max-width: 640px) and (min-width: 480px) {
+    .wrap {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+
+    .banner {
+        margin-top: 0px;
+    }
+
+    .banner img {
+        width: 32%;
+    }
+
+    .page h2 {
+        font-size: 1.6em;
+    }
+}
+
+@media all and (max-width: 480px) and (min-width: 320px) {
+    .wrap {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.4em;
+    }
+
+    .banner {
+        margin-top: 0px;
+    }
+
+    .banner img {
+        width: 32%;
+    }
+
+    .page h2 {
+        font-size: 1.4em;
+    }
+
+    .footer p {
+        font-size: 0.9em;
+    }
+}
+
+@media all and (max-width: 320px) {
+    .wrap {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.4em;
+    }
+
+    .banner {
+        margin-top: 10px;
+    }
+
+    .banner img {
+        width: 80%;
+    }
+
+    .page h2 {
+        font-size: 1.4em;
+    }
+
+    .footer {
+        bottom: 10px;
+    }
+
+    .footer p {
+        font-size: 0.9em;
+    }
+}
+
