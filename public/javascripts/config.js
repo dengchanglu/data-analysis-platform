@@ -40,6 +40,13 @@ dataAP.config(function ($stateProvider, $urlRouterProvider) {
             cache: 'true'
         })
         //渠道分析
+        .state("index.appSurvey", {
+            url: "/appSurvey",
+            templateUrl: "views/analysisViews/appSurvey.html",
+            controller: "appSurveyCtr",
+            cache: 'true'
+        })
+        //渠道分析
         .state("index.channelDis", {
             url: "/channelDis",
             templateUrl: "views/analysisViews/channelDistribution.html",
