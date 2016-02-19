@@ -36,6 +36,14 @@
             }
 
         };
+        $scope.terminalMenu = function () {
+            if (document.getElementById("terminalMenu").style.display == "none") {
+                document.getElementById("terminalMenu").style.display = "block";
+            } else {
+                document.getElementById("terminalMenu").style.display = "none";
+            }
+
+        };
         $scope.changeUrl = function (url) {
             $location.path(url)
         };

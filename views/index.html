@@ -42,13 +42,13 @@
             <div class="navbar" style="padding-top: 20px;">
                 <div class="navbar-left" style="width: 100%">
                     <ul id="left-content" class="nav" style="text-align: center;font-size: large">
+                        <li ui-sref=".appSurvey"><a>应用概况</a></li>
                         <li><a>基本指标</a></li>
                         <li><a ng-click="userMenu()">用户分析</a>
 
                             <div id="userMenu" class="navbar"
                                  style="display: block;font-size: 70%">
                                 <ul class="nav">
-                                    <li ui-sref=".terminalDev"><a href="">终端设备</a></li>
                                     <li ui-sref=".userRetained"><a href="">用户留存</a></li>
                                     <li ui-sref=".userPortrait"><a href="">用户画像</a></li>
                                 </ul>
@@ -60,14 +60,21 @@
                                  style="display: block;font-size: 70%">
                                 <ul class="nav">
                                     <li ui-sref=".accessPage"><a href="">访问页面</a></li>
-                                    <li ui-sref=".pathAnalysis"><a href="">路径分析</a></li>
+                                    <!--<li ui-sref=".pathAnalysis"><a href="">路径分析</a></li>-->
                                     <li ui-sref=".sourceAnalysis"><a href="">页面来源</a></li>
                                     <li ui-sref=".usingTimeLength"><a href="">使用时长</a></li>
-                                    <li ui-sref="."><a href="">使用频率</a></li>
+                                    <!--<li ui-sref="."><a href="">使用频率</a></li>-->
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="#">使用分析</a></li>
+                        <li><a ng-click="terminalMenu()">终端属性</a>
+                            <div id="terminalMenu" class="navbar"
+                                 style="display: block;font-size: 70%">
+                                <ul class="nav">
+                                    <li ui-sref=".terminalDev"><a href="">终端设备</a></li>
+                                </ul>
+                            </div>
+                        </li>
                         <li><a ng-click="channelVersionMenu()">渠道版本</a>
 
                             <div id="channelVersionMenu" class="navbar"

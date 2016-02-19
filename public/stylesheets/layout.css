@@ -3,6 +3,7 @@
     padding-left: 10px;
     vertical-align: middle;
 }
+
 a.current:hover {
     background: #3389D4;
     border-color: #3389D4;
@@ -11,10 +12,12 @@ a.current:hover {
     margin: -1px 0;
     padding: 1px 20px;
 }
+
 a.last {
     border-right: 0 none;
 }
-.title .tabs a.current, .mod_basic>.title .tabs a.current:hover {
+
+.title .tabs a.current, .mod_basic > .title .tabs a.current:hover {
     background: #3389D4;
     border-color: #3389D4;
     color: #fff;
@@ -22,6 +25,7 @@ a.last {
     margin: -1px 0;
     padding: 1px 20px;
 }
+
 .title {
     min-height: 30px;
     background: #f9f9f9;
@@ -31,6 +35,7 @@ a.last {
     min-height: 40px;
     position: relative;
 }
+
 .title:after {
     clear: both;
     content: '.';
@@ -40,6 +45,7 @@ a.last {
     visibility: hidden;
     width: 0;
 }
+
 .title h3 {
     min-height: 30px;
     line-height: 30px;
@@ -50,9 +56,11 @@ a.last {
     display: inline-block;
     vertical-align: middle;
 }
+
 .title-trigger {
     color: #000;
 }
+
 a.current:hover {
     background: #3389D4;
     border-color: #3389D4;
@@ -61,6 +69,7 @@ a.current:hover {
     margin: -1px 0;
     padding: 1px 20px;
 }
+
 .tabs a {
     border-right: 1px solid #e2e2e2;
     color: #000;
@@ -71,15 +80,18 @@ a.current:hover {
     padding: 0 20px;
     position: relative;
 }
+
 #con {
     margin: 0 10px;
     max-height: 225px;
     overflow: auto;
     padding: 10px 0;
 }
+
 #con ul {
     list-style: none;
 }
+
 .list-horizontal a {
     color: #555;
     overflow: hidden;
@@ -87,10 +99,12 @@ a.current:hover {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .list-horizontal .selected a {
     background: #08c;
     color: #fff;
 }
+
 .list-horizontal a {
     color: #555;
     overflow: hidden;
@@ -98,15 +112,18 @@ a.current:hover {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .list-horizontal label {
     line-height: 30px;
 }
+
 .list-horizontal li {
     float: left;
     margin-bottom: 2px;
     margin-right: 2%;
     width: 23%;
 }
+
 .condition-footer {
     background: #f4f5f8;
     border-top: 1px solid #c6cdd3;
@@ -114,7 +131,8 @@ a.current:hover {
     padding-right: 85px;
     position: relative;
 }
-.list-horizontal ul{
+
+.list-horizontal ul {
     display: block;
     list-style-type: disc;
     -webkit-margin-before: 1em;
@@ -123,9 +141,11 @@ a.current:hover {
     -webkit-margin-end: 0px;
     -webkit-padding-start: 40px;
 }
+
 .content-selected {
     padding: 10px 10px 5px;
 }
+
 .content-selected h5 {
     float: left;
     font-size: 12px;
@@ -133,6 +153,7 @@ a.current:hover {
     padding: 0;
     margin: 10px auto;
 }
+
 .form-actions {
     border-left: 1px dashed #a0a9b8;
     bottom: 0;
@@ -142,7 +163,8 @@ a.current:hover {
     top: 0;
     width: 90px;
 }
-.form-actions button{
+
+.form-actions button {
     background: #5c96db;
     border-radius: 2px;
     border: 1px solid #2166A1;
@@ -159,25 +181,31 @@ a.current:hover {
     top: 50%;
     width: 54px;
 }
-a:link{
-    text-decoration:none;
+
+a:link {
+    text-decoration: none;
 }
-a:visited{
-    text-decoration:none;
+
+a:visited {
+    text-decoration: none;
 
 }
-a:hover{
-    text-decoration:none;
+
+a:hover {
+    text-decoration: none;
     cursor: pointer;
 }
-a:active{
-    text-decoration:none;
+
+a:active {
+    text-decoration: none;
 }
+
 #CustomFlowContainer {
     overflow: hidden;
     width: 100%;
     position: relative;
 }
+
 #CustomFlow {
     margin: 26px 0 0;
     position: relative;
@@ -188,16 +216,19 @@ a:active{
 div.site-flow {
     margin-top: 10px;
 }
+
 .clearfix {
     display: block;
 }
+
 /*svg[Attributes Style] {*/
-    /*height: 100%;*/
-    /*width: 100%;*/
+/*height: 100%;*/
+/*width: 100%;*/
 /*}*/
 * {
     transform-origin: 0px 0px 0px;
 }
+
 .custom-flow-pages div.radio {
     width: 62px;
     height: 20px;
@@ -205,11 +236,13 @@ div.site-flow {
     margin-top: 8px;
     font-weight: bold;
 }
+
 .radio.topn {
     color: white;
 }
+
 /*.custom-flow-page-detail:hover{*/
-    /*display:none;*/
+/*display:none;*/
 /*}*/
 .custom-flow-page-detail {
     width: 173px;
@@ -219,13 +252,16 @@ div.site-flow {
     z-index: 99;
     font-size: 11px;
 }
+
 .custom-flow-page-detail .cf-page-detail-arrow {
     margin: 0;
 }
+
 .custom-flow-page-detail div {
     color: #7f9db9;
     margin: 3px 5px;
 }
+
 .cf-page-detail-arrow {
     position: absolute;
     width: 24px;
@@ -238,6 +274,7 @@ div.site-flow {
     -background-image: url('/public/images/custom_flow-4d5147946612cde20a17e4016f4f135c.png');
     background-position: left -0px;
 }
+
 .custom-flow-page-detail div.info-top {
     margin-top: 10px;
 }
@@ -248,14 +285,17 @@ span.page-label {
     text-align: right;
     vertical-align: middle;
 }
+
 .cf-page-title {
-    font-family: 'Microsoft YaHei','\5b8b\4f53',Arial;
+    font-family: 'Microsoft YaHei', '\5b8b\4f53', Arial;
 }
+
 span.ellips.page-label {
     margin-left: 1em;
     text-align: left;
     _width: 5em;
 }
+
 span.page-label {
     width: 73px;
     display: inline-block;
@@ -268,10 +308,12 @@ span.page-label {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
 .custom-flow-page-detail div {
     color: #7f9db9;
     margin: 3px 5px;
 }
+
 .custom-flow-pages div {
     color: #216cc7;
     width: 161px;
@@ -282,6 +324,7 @@ span.page-label {
     margin-left: 7px;
     font-size: small;
 }
+
 .active-monitor-page {
     background-color: #9fccff;
     background-repeat: no-repeat;
@@ -293,6 +336,7 @@ span.page-label {
     color: #fff;
     position: relative;
 }
+
 .active-monitor-page .monitor-page-url {
     height: 25px;
     word-wrap: break-word;
@@ -300,16 +344,19 @@ span.page-label {
     margin: 5px 0 13px;
     text-align: center;
 }
+
 .active-monitor-page .monitor-page-pv, .active-monitor-page .monitor-page-exit {
     margin-bottom: 10px;
     text-shadow: 1px 1px 1px #8db7e6;
 }
+
 .active-monitor-page span.page-label {
     font-size: small;
     text-align: left;
     width: 6em;
     margin-left: 18px;
 }
+
 span.page-label {
     font-size: small;
     width: 73px;
@@ -317,34 +364,40 @@ span.page-label {
     text-align: right;
     vertical-align: middle;
 }
+
 span.ellips.page-label {
     font-size: small;
     margin-left: 1em;
     text-align: left;
     _width: 5em;
 }
+
 .active-monitor-page span.page-label {
     font-size: small;
     text-align: left;
     width: 6em;
     margin-left: 15px;
 }
+
 .active-monitor-page .mp-pv-no, .active-monitor-page .mp-exit-no {
     font-size: small;
     color: #1969c5;
     text-shadow: 1px 1px 1px #cbe3ff;
     margin-left: 10px;
 }
+
 .ellips {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
 .active-monitor-page .monitor-page-pv, .active-monitor-page .monitor-page-exit {
     font-size: small;
     margin-bottom: 5px;
     text-shadow: 1px 1px 1px #8db7e6;
 }
+
 .active-monitor-page .mp-page-select {
     font-size: small;
     position: absolute;
@@ -354,15 +407,18 @@ span.ellips.page-label {
     top: 0;
     right: 0;
 }
+
 .active-monitor-page .monitor-page-exit {
     font-size: small;
     margin-bottom: 0;
 }
+
 .page-flow-legend {
     position: absolute;
     top: 10px;
     left: 45px;
 }
+
 .page-flow-legend span {
     background-repeat: no-repeat;
     background-image: url('/public/images/custom_flow-4d5147946612cde20a17e4016f4f135c.png');
@@ -374,6 +430,7 @@ span.ellips.page-label {
     vertical-align: middle;
     margin: 0 3px;
 }
+
 .custom-flow-view-downpages .fset {
     margin-bottom: 2px;
     border-bottom: 1px solid #88b0d8;
@@ -381,6 +438,7 @@ span.ellips.page-label {
     -background-image: url('/public/images/custom_flow-4d5147946612cde20a17e4016f4f135c.png');
     background-position: left -164px;
 }
+
 .custom-flow-view-downpages div {
     cursor: pointer;
     background-color: #bdd8f3;
@@ -388,11 +446,248 @@ span.ellips.page-label {
     width: 26px;
     height: 27px;
 }
+
 .custom-flow-view-downpages .fdetail {
     background-image: url('/public/images/custom_flow-4d5147946612cde20a17e4016f4f135c.png');
     -background-image: url('/public/images/custom_flow-4d5147946612cde20a17e4016f4f135c.png');
     background-position: left -210px;
 }
+
 .custom-flow-pages {
     cursor: pointer;
+}
+
+/*========================================应用概况页面样式表===================================================*/
+.l {
+    float: left;
+}
+.title-bar {
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 18px;
+    position: relative;
+}
+.title-bar h1 {
+    font-size: 16px;
+    padding: 0;
+    color: #333;
+    font-weight: bolder;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+.table-list table.list {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+.table-list table.list tr.title {
+    background-color: #f1f1f1;
+    border-bottom: 0;
+}
+.table-list table.list th {
+    height: 16px;
+    line-height: 16px;
+    padding: 7px 10px;
+    text-align: right;
+    color: #666;
+    white-space: nowrap;
+    font-weight: normal;
+}
+th {
+    text-align: left;
+}
+th {
+    font-weight: bold;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+.table-list table.list tr.highlight td {
+    font-size: 16px;
+    font-weight: bolder;
+}
+.table-list table.list tr td {
+    border-bottom: 1px #e5e5e5 solid;
+    padding: 6px 10px 6px 5px;
+    height: 17px;
+    line-height: 17px;
+    white-space: nowrap;
+    text-align: right;
+    color: #666;
+}
+.table-list table.list tr td.normal {
+    width: 85px;
+}
+.table-list table.list tr td.normal {
+    width: 85px;
+}
+.table-list table.list tr.highlight td.normal {
+    font-size: 12px;
+    font-weight: normal;
+}
+.outline-summary {
+    margin-bottom: 15px;
+    padding-top: 8px;
+}
+.outline-summary table {
+    width: 100%;
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: center;
+    margin: 8px 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.outline-summary td.val0 {
+    text-align: left;
+}
+.outline-summary td {
+    width: 25%;
+    white-space: nowrap;
+}
+.outline-summary .val {
+    color: #333;
+    margin-right: 8px;
+    font-size: 20px;
+}
+.outline-summary .label {
+    color: #497abe;
+}
+.outline-summary a {
+    color: #0965b8;
+    text-decoration: none;
+    cursor: pointer;
+}
+.outline-summary td {
+    width: 25%;
+    white-space: nowrap;
+}
+.outline-summary td.val3 {
+    text-align: right;
+}
+.section-title {
+    color: #666;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 25px;
+}
+.control-bar-wrapper {
+    position: relative;
+    z-index: 2;
+}
+.control-bar-wrapper .control-bar {
+    line-height: 44px;
+    border: 1px solid #DDD;
+    background-color: #f9f9f9;
+    height: 44px;
+}
+.date-select-bar {
+    margin-top: 9px;
+    padding-left: 8px;
+    padding-right: 7px;
+    margin-bottom: 13px;
+    height: 22px;
+    line-height: 22px;
+}
+.date-select-bar a.cur {
+    background-color: #3389D4;
+    color: #fff;
+    font-weight: bold;
+    line-height: 22px;
+    padding: 2px 7px;
+}
+.date-select-bar a {
+    display: inline-block;
+    color: #666;
+    height: 22px;
+    line-height: 22px;
+    padding: 4px 7px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.section {
+    margin: 0 0;
+}
+.area-list-container {
+    width: 52.5%;
+}
+.r {
+    float: right;
+}
+.section a.button {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    color: #666;
+    text-decoration: none;
+    background-color: #fff;
+    padding: 3px 8px;
+    cursor: pointer;
+}
+.section a.button span{
+    background: 0;
+    border: 0;
+    display: block;
+    line-height: normal;
+    cursor: pointer;
+}
+.area-list {
+    table-layout: fixed;
+    width: 100%;
+}
+.area-list th {
+    background-color: #eaeaea;
+    line-height: 20px;
+    font-weight: normal;
+    white-space: nowrap;
+}
+.flash-area-td {
+    overflow: hidden;
+}
+.page-list-container {
+    width: 46%;
+}
+.page-list-container .title, .area-list-container .title {
+    height: 30px;
+}
+.page-list th {
+    background-color: #eaeaea;
+    line-height: 20px;
+    padding: 0 10px;
+    font-weight: normal;
+}
+.page-list td {
+    line-height: 25px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #fcfcfc;
+    padding: 0 10px;
+    width: 25%;
+}
+.page-title {
+    color: #333;
+    white-space: nowrap;
+}
+.page-order {
+    color: red;
+    margin-right: 10px;
+    text-align: right;
+    display: inline-block;
+    width: 1em;
 }
