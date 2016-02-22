@@ -68,6 +68,7 @@
                             </div>
                         </li>
                         <li><a ng-click="terminalMenu()">终端属性</a>
+
                             <div id="terminalMenu" class="navbar"
                                  style="display: block;font-size: 70%">
                                 <ul class="nav">
@@ -91,8 +92,10 @@
             </div>
         </div>
         <div class="right panel panel-default" style="height: 100%;width: 90%;float: left">
-            <div class="content" ui-view style="height: 100%;width: 100%">
+            <div class="content" ui-view="" style="height: 100%;width: 100%">
+                <div ng-include="'/views/analysisViews/appSurvey.html'"></div>
             </div>
+            <div ng-include=""></div>
         </div>
         <div class="panel-footer" style="height: 10%;">
         </div>
