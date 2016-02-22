@@ -1243,6 +1243,94 @@ var upAnalysis = {
             }
             callback(data);
         });
+    },
+    appSurvey_user: function (es, queryData, callback) {
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": {
+                    "match_all": {}
+                },
+                "aggs": {
+                    "all_time": {
+                        "terms": {
+                            "field": "ip",
+                            "size": 0
+                        },
+                        "aggs": {
+                            "max_time": {
+                                "max": {
+                                    "field": "time"
+                                }
+                            },
+                            "min_time": {
+                                "min": {
+                                    "field": "time"
+                                }
+                            }
+                        }
+                    },
+                    "data": {
+                        "filters": {
+                            "filters": {
+                                "is_start": {
+                                    "bool": {
+                                        "must": {
+                                            "term": {
+                                                "is": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "not_start": {}
+                            }
+                        },
+                        "aggs": {
+                            "is_sum": {
+                                "sum": {
+                                    "field": "is"
+                                }
+                            },
+                            "uv": {
+                                "cardinality": {
+                                    "field": "ip"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        es.search(requestJson).then(function (response) {
+            var data = [];
+            if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
+                var res = response.aggregations.all_time.buckets;
+                var other_data = response.aggregations.data.buckets;
+                var time_data = 0;
+                var i = 0;
+                for (; i < res.length; i++) {
+                    time_data += (res[i].max_time.value - res[i].min_time.value) / 1000;
+                }
+                for (i = 0; i < time.length; i++) {
+                    data.push({
+                        date: time[i],
+                        start_count: other_data.is_start.is_sum.value,
+                        start_user_count: other_data.is_start.uv.value,
+                        uv: other_data.not_start.uv.value,
+                        time_sum: time_data
+                    });
+                }
+            }
+            callback(data);
+        });
     }
 };
 exports.upAnalysis = upAnalysis;
