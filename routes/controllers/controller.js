@@ -214,4 +214,34 @@ app.get('/api/appSurvey_timeRange_startCount', function (req, res) {
         res.send(data);
     });
 });
+
+/**
+ * 应用概括地域分析
+ * 请求参数：url?time=2016-01-18&cm=all&av=all
+ * time时间参数，值的格式：2016-01-01,时间1,时间2,时间3,时间4,...
+ * cm-渠道标记;av:av-app版本
+ * 请求url示例 ： http://ip:端口/api/sourceAnalysis?time=2016-01-18&cm=all&av=all
+ * 返回值示例： {"dataForm":[{"day":"app-2016-01-12","time_difference":"0"}],"dataTable":[{"key":"[0,4)秒","activeUser":6000,"newUser":638,"activeUser_percentage":"100.00","newUser_percentage":"100.00"},
+ */
+app.get('/api/appSurvey_areaAnalysis', function (req, res) {
+    var queryData = requestParsedUtil.getParamJson(req.url);
+    upAnalysis.upAnalysis.appSurvey_areaAnalysis(es.client, queryData, function (data) {
+        res.send(data);
+    });
+});
+
+/**
+ * 应用概括页面分析
+ * 请求参数：url?time=2016-01-18&cm=all&av=all
+ * time时间参数，值的格式：2016-01-01,时间1,时间2,时间3,时间4,...
+ * cm-渠道标记;av:av-app版本
+ * 请求url示例 ： http://ip:端口/api/sourceAnalysis?time=2016-01-18&cm=all&av=all
+ * 返回值示例： {"dataForm":[{"day":"app-2016-01-12","time_difference":"0"}],"dataTable":[{"key":"[0,4)秒","activeUser":6000,"newUser":638,"activeUser_percentage":"100.00","newUser_percentage":"100.00"},
+ */
+app.get('/api/appSurvey_pageAnalysis', function (req, res) {
+    var queryData = requestParsedUtil.getParamJson(req.url);
+    upAnalysis.upAnalysis.appSurvey_pageAnalysis(es.client, queryData, function (data) {
+        res.send(data);
+    });
+});
 module.exports = app;

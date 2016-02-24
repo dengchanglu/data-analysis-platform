@@ -12,7 +12,8 @@
             dateTime: [],
             series: []
         };
-        $scope.dateTime = "2016-2-24";
+        $scope.pageData = [];
+        $scope.dateTime = "2016-2-25";
         var option;
         var appSurvey_timeRangeChart;
         var appSurvey_areaChart;
@@ -22,9 +23,8 @@
             var date = new Date(time);
             return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
         };
-        $scope.getTimes = function () {
+        $scope.getTimes = function (days) {
             var date1 = new Date();
-            var days = 2;
             var time = "";
             for (var i = 0; i < days; i++) {
                 var dataTem = new Date(date1.getTime() - i * (24 * 3600 * 1000));
@@ -33,12 +33,13 @@
             return time.substring(0, time.length - 1);
         };
         $scope.appSurvey = function () {
-            $http.get(URL + "appSurvey_user?time=" + $scope.getTimes()).success(function (data) {
+            $http.get(URL + "appSurvey_user?time=" + $scope.getTimes(2)).success(function (data) {
                 $scope.data = data;
             }).error(function (data, status, headers, config) {
                 //document.getElementById("errorShow").innerHTML = "链接错误，请重新刷新一下！"
             });
         };
+        $scope.appSurvey();
         $scope.timeRangeAnalysis = function (analysisType) {
             var url = URL;
             var legend = "";
@@ -146,8 +147,8 @@
                     series: []
                 };
 
-                appSurvey_timeRangeChart.setOption(option);
-
+                //appSurvey_timeRangeChart.setOption(option);
+                $scope.timeRangeAnalysis(2);
             });
         //$scope.appSurvey();
         $scope.triggerKey = function (index) {
@@ -157,6 +158,7 @@
             document.getElementById("key_app_" + index).setAttribute("class", "current");
             $scope.timeRangeAnalysis(index);
         };
+
         require(
             [
                 'echarts',
@@ -183,33 +185,27 @@
 
 
                 areaOption = {
-                    title : {
+                    title: {
                         text: '',
                         subtext: '',
-                        x:'right'
+                        x: 'right'
                     },
-                    tooltip : {
+                    tooltip: {
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
                     legend: {
                         orient: 'horizontal',
                         left: 'left',
-                        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                        data: []
                     },
-                    series : [
+                    series: [
                         {
-                            name: '访问来源',
+                            name: '地域分析',
                             type: 'pie',
-                            radius : '55%',
+                            radius: '55%',
                             center: ['50%', '60%'],
-                            data:[
-                                {value:335, name:'直接访问'},
-                                {value:310, name:'邮件营销'},
-                                {value:234, name:'联盟广告'},
-                                {value:135, name:'视频广告'},
-                                {value:1548, name:'搜索引擎'}
-                            ],
+                            data: [],
                             itemStyle: {
                                 emphasis: {
                                     shadowBlur: 10,
@@ -221,8 +217,54 @@
                     ]
                 };
 
-                appSurvey_areaChart.setOption(areaOption);
-
+                //appSurvey_areaChart.setOption(areaOption);
+                $scope.areaAnalysis();
             });
+        $scope.areaAnalysis = function () {
+            if (areaOption == undefined) {
+                return;
+            }
+            $http.get(URL + "appSurvey_areaAnalysis?time=" + $scope.getTimes(1)).success(function (data) {
+                var legend_area = [];
+                areaOption.series[0].data = [];
+                for (var i = 0; i < data.length; i++) {
+                    legend_area.push(data[i].city);
+                    areaOption.series[0].data.push({
+                        value: data[i].start_count,
+                        name: data[i].city
+                    });
+                }
+                areaOption.legend.data = legend_area;
+                appSurvey_areaChart.setOption(areaOption);
+            }).error(function (data, status, headers, config) {
+                //document.getElementById("errorShow").innerHTML = "链接错误，请重新刷新一下！"
+            });
+        };
+
+        $scope.pageAnalysis = function () {
+            $http.get(URL + "appSurvey_pageAnalysis?time=" + $scope.getTimes(1)).success(function (data) {
+                $scope.pageData = [];
+                var i = 0;
+                var pv_sum = 0;
+                for (; i < data.length; i++) {
+                    pv_sum += data[i].pv;
+                }
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].page == "-") {
+                        data[i].page = "其他页面";
+                    }
+                    $scope.pageData.push({
+                        num: (i + 1),
+                        page: data[i].page,
+                        pv: data[i].pv,
+                        pageName: "-",
+                        pv_percentage: Number((data[i].pv / pv_sum).toFixed(2)) * 100
+                    });
+                }
+            }).error(function (data, status, headers, config) {
+                //document.getElementById("errorShow").innerHTML = "链接错误，请重新刷新一下！"
+            });
+        };
+        $scope.pageAnalysis();
     }
 })();

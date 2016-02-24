@@ -91,43 +91,6 @@
                     <div class="area-list" id="areaAnalysis">
 
                     </div>
-                    <!--<table class="area-list">-->
-                    <!--<tbody>-->
-                    <!--<tr>-->
-                    <!--<th style="width: 240px;">&nbsp;</th>-->
-                    <!--<th></th>-->
-                    <!--<th style="width: 60px;">地域</th>-->
-                    <!--<th></th>-->
-                    <!--<th style="width: 60px;">启动次数</th>-->
-                    <!--<th></th>-->
-                    <!--<th style="width: 45px;">占比</th>-->
-                    <!--<th></th>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                    <!--<td colspan="8" class="flash-area-td">-->
-                    <!--<div id="FlashAreaContainer" class="flash-area-content">-->
-                    <!--<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"-->
-                    <!--codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"-->
-                    <!--id="FlashArea" width="100%" height="255" align="middle">-->
-                    <!--<param name="bgcolor" value="#FFFFFF">-->
-                    <!--<param name="wmode" value="transparent">-->
-                    <!--<param name="allowscriptaccess" value="always">-->
-                    <!--<param name="movie" value="/web/flash/pie.swf">-->
-                    <!--<param name="flashvars"-->
-                    <!--value="flashId=FlashArea&amp;baseUrl=%2Fweb%2Fflash%2Ffla">-->
-                    <!--<embed width="100%" height="255" bgcolor="#FFFFFF" wmode="transparent"-->
-                    <!--errormessage="载入FLASH出错" ver="9.0.0" allowscriptaccess="always"-->
-                    <!--align="middle"-->
-                    <!--flashvars="flashId=FlashArea&amp;baseUrl=%2Fweb%2Fflash%2Ffla"-->
-                    <!--src="/web/flash/pie.swf" name="FlashArea"-->
-                    <!--type="application/x-shockwave-flash"-->
-                    <!--pluginspage="http://www.macromedia.com/go/getflashplayer">-->
-                    <!--</object>-->
-                    <!--</div>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                    <!--</table>-->
                 </div>
                 <div id="Entrance" class="page-list-container r">
                     <div class="title clearfix">
@@ -142,117 +105,15 @@
                             <th>访问次数</th>
                             <th>访问次数占比</th>
                         </tr>
-                        <tr>
-                            <td title="searchindex" class="page-title"><span class="page-order">1</span>searchindex</td>
-                            <td title="搜索页" class="page-title">搜索页</td>
-                            <td class="ar">16,076</td>
+                        <tr ng-repeat="page in pageData">
+                            <td title="album_view_pv" class="page-title"><span class="page-order">{{page.num}}</span>{{page.page}}
+                            </td>
+                            <td title="图册页" class="page-title">{{page.pageName}}</td>
+                            <td class="ar">{{page.pv}}</td>
                             <td class="ratio">
-                                <div title="32.96%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:32.96%;">
-                                    32.96%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="online_view" class="page-title"><span class="page-order">2</span>online_view</td>
-                            <td title="在线词条页" class="page-title">在线词条页</td>
-                            <td class="ar">13,196</td>
-                            <td class="ratio">
-                                <div title="27.06%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:27.06%;">
-                                    27.06%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="logsHomePagePv" class="page-title"><span class="page-order">3</span>logsHomePagePv
-                            </td>
-                            <td title="2.0首页精彩推荐tab" class="page-title">2.0首页精...</td>
-                            <td class="ar">9,934</td>
-                            <td class="ratio">
-                                <div title="20.37%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:20.37%;">
-                                    20.37%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="logsSearResultPagePv" class="page-title"><span class="page-order">4</span>logsSearResul...
-                            </td>
-                            <td title="2.0搜索结果页" class="page-title">2.0搜索结果页</td>
-                            <td class="ar">4,528</td>
-                            <td class="ratio">
-                                <div title="9.28%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:9.28%;">
-                                    9.28%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="image_view" class="page-title"><span class="page-order">5</span>image_view</td>
-                            <td title="图片页（不含翻页）" class="page-title">图片页（不含...</td>
-                            <td class="ar">1,390</td>
-                            <td class="ratio">
-                                <div title="2.85%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:2.85%;">
-                                    2.85%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="summary_view" class="page-title"><span class="page-order">6</span>summary_view
-                            </td>
-                            <td title="目录页" class="page-title">目录页</td>
-                            <td class="ar">1,227</td>
-                            <td class="ratio">
-                                <div title="2.52%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:2.52%;">
-                                    2.52%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="my_baike_pv" class="page-title"><span class="page-order">7</span>my_baike_pv</td>
-                            <td title="我的百科页" class="page-title">我的百科页</td>
-                            <td class="ar">1,051</td>
-                            <td class="ratio">
-                                <div title="2.15%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:2.15%;">
-                                    2.15%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="more_view" class="page-title"><span class="page-order">8</span>more_view</td>
-                            <td title="更多页" class="page-title">更多页</td>
-                            <td class="ar">609</td>
-                            <td class="ratio">
-                                <div title="1.25%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:1.25%;">
-                                    1.25%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="off_view" class="page-title"><span class="page-order">9</span>off_view</td>
-                            <td title="离线词条页" class="page-title">离线词条页</td>
-                            <td class="ar">415</td>
-                            <td class="ratio">
-                                <div title="0.85%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:0.85%;">
-                                    0.85%
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="album_view_pv" class="page-title"><span class="page-order">10</span>album_view_pv
-                            </td>
-                            <td title="图册页" class="page-title">图册页</td>
-                            <td class="ar">348</td>
-                            <td class="ratio">
-                                <div title="0.71%"
-                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:0.71%;">
-                                    0.71%
+                                <div title="{{page.pv_percentage}}%"
+                                     style="height: 16px; line-height: 16px;background-color:#DCEBFE; width:{{page.pv_percentage}}%;">
+                                    {{page.pv_percentage}}%
                                 </div>
                             </td>
                         </tr>
