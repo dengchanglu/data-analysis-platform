@@ -1331,6 +1331,97 @@ var upAnalysis = {
             }
             callback(data);
         });
+    },
+    appSurvey_timeRange_activeUser: function (es, queryData, callback) {
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": {
+                    "match_all": {}
+                },
+                "aggs": {
+                    "data": {
+                        "terms": {
+                            "field": "_index"
+                        },
+                        "aggs": {
+                            "uv": {
+                                "cardinality": {
+                                    "field": "uuid"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        es.search(requestJson).then(function (response) {
+            var data = [];
+            if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
+                var res = response.aggregations.data.buckets;
+
+                for (var i = 0; i < res.length; i++) {
+                    data.push(
+                        {
+                            "dateTime": res[i].key.toString().substring(4, res[i].key.toString().length),
+                            "uv": res[i].uv.value
+                        }
+                    );
+                }
+            }
+            callback(data);
+        });
+    },
+    appSurvey_timeRange_startCount: function (es, queryData, callback) {
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": {
+                    "match": {
+                        "is": 1
+                    }
+                },
+                "aggs": {
+                    "data": {
+                        "terms": {
+                            "field": "_index"
+                        }
+                    }
+                }
+            }
+        };
+
+        es.search(requestJson).then(function (response) {
+            var data = [];
+            if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
+                var res = response.aggregations.data.buckets;
+
+                for (var i = 0; i < res.length; i++) {
+                    data.push(
+                        {
+                            "dateTime": res[i].key.toString().substring(4, res[i].key.toString().length),
+                            "start_count": res[i].doc_count
+                        }
+                    );
+                }
+            }
+            callback(data);
+        });
     }
 };
 exports.upAnalysis = upAnalysis;
