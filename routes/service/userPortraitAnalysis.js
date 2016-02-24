@@ -1422,6 +1422,97 @@ var upAnalysis = {
             }
             callback(data);
         });
+    },
+    appSurvey_areaAnalysis: function (es, queryData, callback) {
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": {
+                    "match": {
+                        "is": 1
+                    }
+                },
+                "aggs": {
+                    "data": {
+                        "terms": {
+                            "field": "city"
+                        },
+                        "aggs": {
+                            "start_count": {
+                                "terms": {
+                                    "field": "is"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        es.search(requestJson).then(function (response) {
+            var data = [];
+            if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
+                var res = response.aggregations.data.buckets;
+
+                for (var i = 0; i < res.length; i++) {
+                    data.push(
+                        {
+                            "city": res[i].key,
+                            "start_count": res[i].doc_count
+                        }
+                    );
+                }
+            }
+            callback(data);
+        });
+    },
+    appSurvey_pageAnalysis: function (es, queryData, callback) {
+        var index = [];
+        var time = queryData.time.split(",");
+        for (var i = 0; i < time.length; i++) {
+            index.push("app-" + time[i]);
+        }
+        var requestJson = {
+            "index": index,
+            "type": "appLog",
+            "body": {
+                "size": 0,
+                "query": {
+                    "match_all": {}
+                },
+                "aggs": {
+                    "data": {
+                        "terms": {
+                            "field": "locPage"
+                        }
+                    }
+                }
+            }
+        };
+
+        es.search(requestJson).then(function (response) {
+            var data = [];
+            if (response != null && response.aggregations != null && response.aggregations.data.buckets != []) {
+                var res = response.aggregations.data.buckets;
+
+                for (var i = 0; i < res.length; i++) {
+                    data.push(
+                        {
+                            "page": res[i].key,
+                            "pv": res[i].doc_count
+                        }
+                    );
+                }
+            }
+            callback(data);
+        });
     }
 };
 exports.upAnalysis = upAnalysis;
