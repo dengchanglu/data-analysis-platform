@@ -651,6 +651,7 @@ tr {
 .area-list {
     table-layout: fixed;
     width: 100%;
+    height: 370px;
 }
 .area-list th {
     background-color: #eaeaea;

@@ -42,15 +42,15 @@
             <div class="navbar" style="padding-top: 20px;">
                 <div class="navbar-left" style="width: 100%">
                     <ul id="left-content" class="nav" style="text-align: center;font-size: large">
-                        <li ui-sref=".appSurvey"><a>应用概况</a></li>
+                        <li ui-sref=".appSurvey" ng-click="changeInclude()"><a>应用概况</a></li>
                         <li><a>基本指标</a></li>
                         <li><a ng-click="userMenu()">用户分析</a>
 
                             <div id="userMenu" class="navbar"
                                  style="display: block;font-size: 70%">
                                 <ul class="nav">
-                                    <li ui-sref=".userRetained"><a href="">用户留存</a></li>
-                                    <li ui-sref=".userPortrait"><a href="">用户画像</a></li>
+                                    <li ui-sref=".userRetained" ng-click="changeInclude()"><a href="">用户留存</a></li>
+                                    <li ui-sref=".userPortrait" ng-click="changeInclude()"><a href="">用户画像</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -59,10 +59,10 @@
                             <div id="behaviorMenu" class="navbar"
                                  style="display: block;font-size: 70%">
                                 <ul class="nav">
-                                    <li ui-sref=".accessPage"><a href="">访问页面</a></li>
+                                    <li ui-sref=".accessPage" ng-click="changeInclude()"><a href="">访问页面</a></li>
                                     <!--<li ui-sref=".pathAnalysis"><a href="">路径分析</a></li>-->
-                                    <li ui-sref=".sourceAnalysis"><a href="">页面来源</a></li>
-                                    <li ui-sref=".usingTimeLength"><a href="">使用时长</a></li>
+                                    <li ui-sref=".sourceAnalysis" ng-click="changeInclude()"><a href="">页面来源</a></li>
+                                    <li ui-sref=".usingTimeLength" ng-click="changeInclude()"><a href="">使用时长</a></li>
                                     <!--<li ui-sref="."><a href="">使用频率</a></li>-->
                                 </ul>
                             </div>
@@ -72,7 +72,7 @@
                             <div id="terminalMenu" class="navbar"
                                  style="display: block;font-size: 70%">
                                 <ul class="nav">
-                                    <li ui-sref=".terminalDev"><a href="">终端设备</a></li>
+                                    <li ui-sref=".terminalDev" ng-click="changeInclude()"><a href="">终端设备</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -81,8 +81,8 @@
                             <div id="channelVersionMenu" class="navbar"
                                  style="display: block;font-size: 70%">
                                 <ul class="nav">
-                                    <li ui-sref=".channelDis"><a href="">渠道分析</a></li>
-                                    <li ui-sref=".versionDis"><a href="">版本分布</a></li>
+                                    <li ui-sref=".channelDis" ng-click="changeInclude()"><a href="">渠道分析</a></li>
+                                    <li ui-sref=".versionDis" ng-click="changeInclude()"><a href="">版本分布</a></li>
                                     <!--<li><a href="#">渠道来源细分</a></li>-->
                                 </ul>
                             </div>
@@ -93,9 +93,11 @@
         </div>
         <div class="right panel panel-default" style="height: 100%;width: 90%;float: left">
             <div class="content" ui-view="" style="height: 100%;width: 100%">
+
+            </div>
+            <div id="index_app">
                 <div ng-include="'/views/analysisViews/appSurvey.html'"></div>
             </div>
-            <div ng-include=""></div>
         </div>
         <div class="panel-footer" style="height: 10%;">
         </div>

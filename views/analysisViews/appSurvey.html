@@ -33,20 +33,17 @@
             <table cellspacing="0" cellpadding="0" class="list">
                 <tbody>
                 <tr>
-                    <td class="val0"><span class="val">暂未统计</span><span class="label"><a
-                            >累计启动用户</a></span><a
+                    <td class="val0"><span class="val">暂未统计</span><span class="label"><a>累计启动用户</a></span><a
                             class="help"
                             data="accumulative_user_count"></a>
                     </td>
-                    <td class="val1"><span class="val">暂未统计<                                                                                                                                                                                                                        /span><span class="label"><a
-                            >周活跃用户</a></span><a
+                    <td class="val1"><span class="val">暂未统计</span><span class="label"><a>周活跃用户</a></span><a
                             class="help"
                             data="weekly_user_count"></a></td>
-                    <td class="val2"><span class="val">0.00%</span><span class="label"><a
-                            >月留存率</a></span><a class="help"
-                                               data="monthly_retained_ratio"></a></td>
-                    <td class="val3"><span class="val">暂未统计</span><span class="label"><a
-                            >人均日启动次数</a></span><a
+                    <td class="val2"><span class="val">0.00%</span><span class="label"><a>月留存率</a></span><a class="help"
+                                                                                                            data="monthly_retained_ratio"></a>
+                    </td>
+                    <td class="val3"><span class="val">暂未统计</span><span class="label"><a>人均日启动次数</a></span><a
                             class="help"
                             data="session_count_per_user_one_day"></a>
                     </td>
@@ -57,8 +54,9 @@
         <div class="section-title">时段分析:</div>
         <div class="control-bar clearfix bg-iframe panel" id="ControlBar">
             <div class="l date-select-bar" id="DateSelectBar">
-                <a href="#0" class="cur">今天</a><a href="#-1" class="">昨天</a><a href="#-6" class="">最近7天</a><a
-                    href="#-29" class="">最近30天</a><a href="#-59" class="">最近60天</a></div>
+                <!--<a href="#0" class="cur">今天</a><a href="#-1" class="">昨天</a>-->
+                <a class="cur">最近7天</a><a
+                    class="">最近30天</a><a class="">最近60天</a></div>
         </div>
 
         <div class="panel panel-default" style="margin-left: 20px;margin-right: 20px;margin-top: 8px">
@@ -69,17 +67,17 @@
                             style="font-size: 18px; font-weight: 700; color: black">统计字段</label></a>
                 </div>
                 <div class="tabs" id="div_item_tabs" style="padding-top: 8px">
-                    <a class="first current" id="key_page_0" ng-click="triggerKey(0)">人均访问页面数</a>
-                    <a class="last" id="key_page_1" ng-click="triggerKey(1)">人均访问时长</a>
-                    <a class="first" id="key_page_2" ng-click="triggerKey(0)">人均访问页面数</a>
-                    <a class="last" id="key_page_3" ng-click="triggerKey(1)">人均访问时长</a>
-                    <a class="first" id="key_page_4" ng-click="triggerKey(0)">人均访问页面数</a>
-                    <a class="last" id="key_page_5" ng-click="triggerKey(1)">人均访问时长</a>
+                    <a class="first current" id="key_app_0" ng-click="triggerKey(0)">新增用户</a>
+                    <a class="last" id="key_app_1" ng-click="triggerKey(1)">活跃用户</a>
+                    <a class="first" id="key_app_2" ng-click="triggerKey(2)">启动次数</a>
+                    <!--<a class="last" id="key_page_3" ng-click="triggerKey(3)">人均访问时长</a>-->
+                    <!--<a class="first" id="key_page_4" ng-click="triggerKey(4)">人均访问页面数</a>-->
+                    <!--<a class="last" id="key_page_5" ng-click="triggerKey(5)">人均访问时长</a>-->
                 </div>
             </nav>
             <label style="margin-left: 40px">趋势图</label>
 
-            <div id="pageView" style="width: 100%;height: 400px"></div>
+            <div id="timeRangeAnalysis" style="width: 100%;height: 400px"></div>
             <hr>
             <label style="margin-left: 40px;margin-bottom: 20px">详细数据</label>
         </div>
@@ -87,46 +85,49 @@
             <div class="section">
                 <div id="Area" class="area-list-container l">
                     <div class="title clearfix">
-                        <div class="r"><a class="button" href="/web/region?appId=19"><span>查看全部</span></a></div>
+                        <!--<div class="r"><a class="button" href="/web/region?appId=19"><span>查看全部</span></a></div>-->
                         <div class="l section-title">地域分布:</div>
                     </div>
-                    <table class="area-list">
-                        <tbody>
-                        <tr>
-                            <th style="width: 240px;">&nbsp;</th>
-                            <th></th>
-                            <th style="width: 60px;">地域</th>
-                            <th></th>
-                            <th style="width: 60px;">启动次数</th>
-                            <th></th>
-                            <th style="width: 45px;">占比</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td colspan="8" class="flash-area-td">
-                                <div id="FlashAreaContainer" class="flash-area-content">
-                                    <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-                                            codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-                                            id="FlashArea" width="100%" height="255" align="middle">
-                                        <param name="bgcolor" value="#FFFFFF">
-                                        <param name="wmode" value="transparent">
-                                        <param name="allowscriptaccess" value="always">
-                                        <param name="movie" value="/web/flash/pie.swf">
-                                        <param name="flashvars"
-                                               value="flashId=FlashArea&amp;baseUrl=%2Fweb%2Fflash%2Ffla">
-                                        <embed width="100%" height="255" bgcolor="#FFFFFF" wmode="transparent"
-                                               errormessage="载入FLASH出错" ver="9.0.0" allowscriptaccess="always"
-                                               align="middle"
-                                               flashvars="flashId=FlashArea&amp;baseUrl=%2Fweb%2Fflash%2Ffla"
-                                               src="/web/flash/pie.swf" name="FlashArea"
-                                               type="application/x-shockwave-flash"
-                                               pluginspage="http://www.macromedia.com/go/getflashplayer">
-                                    </object>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="area-list" id="areaAnalysis">
+
+                    </div>
+                    <!--<table class="area-list">-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<th style="width: 240px;">&nbsp;</th>-->
+                    <!--<th></th>-->
+                    <!--<th style="width: 60px;">地域</th>-->
+                    <!--<th></th>-->
+                    <!--<th style="width: 60px;">启动次数</th>-->
+                    <!--<th></th>-->
+                    <!--<th style="width: 45px;">占比</th>-->
+                    <!--<th></th>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td colspan="8" class="flash-area-td">-->
+                    <!--<div id="FlashAreaContainer" class="flash-area-content">-->
+                    <!--<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"-->
+                    <!--codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"-->
+                    <!--id="FlashArea" width="100%" height="255" align="middle">-->
+                    <!--<param name="bgcolor" value="#FFFFFF">-->
+                    <!--<param name="wmode" value="transparent">-->
+                    <!--<param name="allowscriptaccess" value="always">-->
+                    <!--<param name="movie" value="/web/flash/pie.swf">-->
+                    <!--<param name="flashvars"-->
+                    <!--value="flashId=FlashArea&amp;baseUrl=%2Fweb%2Fflash%2Ffla">-->
+                    <!--<embed width="100%" height="255" bgcolor="#FFFFFF" wmode="transparent"-->
+                    <!--errormessage="载入FLASH出错" ver="9.0.0" allowscriptaccess="always"-->
+                    <!--align="middle"-->
+                    <!--flashvars="flashId=FlashArea&amp;baseUrl=%2Fweb%2Fflash%2Ffla"-->
+                    <!--src="/web/flash/pie.swf" name="FlashArea"-->
+                    <!--type="application/x-shockwave-flash"-->
+                    <!--pluginspage="http://www.macromedia.com/go/getflashplayer">-->
+                    <!--</object>-->
+                    <!--</div>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
                 </div>
                 <div id="Entrance" class="page-list-container r">
                     <div class="title clearfix">
