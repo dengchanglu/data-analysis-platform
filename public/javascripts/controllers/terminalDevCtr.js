@@ -180,7 +180,6 @@
 
                 })
                 .error(function (data, header, config, status) {
-                    console.log('响应失败');
                     //处理响应失败
                     myChart.hideLoading();
                     myChart.showLoading({
@@ -221,6 +220,16 @@
                 });
 
                 option = {
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: false, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
                     title: {
                         text: 'TOP10新增用户操作系统版本分布',
                         textStyle: {
@@ -411,9 +420,6 @@
                 $scope.getChartData($scope.formatTime($scope.singleDate), $scope.key, $scope.key, $scope.av, null, $scope.state)
 
             }
-
-            //console.log($scope.date);
-            //console.log('New date set: ', newDate);
         }, false);
 
 

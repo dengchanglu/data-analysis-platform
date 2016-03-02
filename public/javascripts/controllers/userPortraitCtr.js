@@ -604,7 +604,16 @@
                 $scope.legendData = [];
 
                 sexOption = {
-
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: false, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
                     tooltip: {
                         show: true,
                         trigger: 'item',
@@ -627,7 +636,16 @@
                 };
                 //直辖市不能下钻设置数据
                 mapOption = {
-
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: false, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
                     tooltip: {
                         show: true,
                         trigger: 'item'
