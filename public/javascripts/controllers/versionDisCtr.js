@@ -193,8 +193,13 @@
                             containLabel: true
                         },
                         toolbox: {
-                            feature: {
-                                saveAsImage: {}
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: false, type: ['line', 'bar', 'stack', 'tiled']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
                             }
                         },
                         xAxis: [

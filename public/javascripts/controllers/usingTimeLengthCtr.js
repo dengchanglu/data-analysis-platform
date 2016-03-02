@@ -25,7 +25,7 @@
             time_difference: [],
             dataTable: []
         };
-        $scope.date = {
+        $scope.date_time = {
             startDate: moment().subtract(1, "days"),
             endDate: moment()
         };
@@ -33,8 +33,22 @@
             var date = new Date(time);
             return (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
         };
+        $scope.getTimes = function () {
+            var date1 = new Date($scope.formatTime($scope.date_time.startDate));  //开始时间
+            var date2 = new Date($scope.formatTime($scope.date_time.endDate));    //结束时间
+            var date3 = date2.getTime() - date1.getTime(); //时间差的毫秒数
+            //计算出相差天数
+            var days = Math.floor(date3 / (24 * 3600 * 1000));
+            var time = "";
+            for (var i = 0; i < days; i++) {
+                var dataTem = new Date(date1.getTime() + i * (24 * 3600 * 1000));
+                time += $scope.formatTime(dataTem) + ",";
+            }
+            time += $scope.formatTime($scope.date_time.endDate);
+            return time;
+        };
         //对比数据legend的修改
-        $scope.legend = [$scope.formatTime($scope.date.startDate) + "-" + $scope.formatTime($scope.date.endDate)];
+        $scope.legend = [$scope.formatTime($scope.date_time.startDate) + "-" + $scope.formatTime($scope.date_time.endDate)];
 
         var usingTimeLengthChart;
         var option;
@@ -64,6 +78,7 @@
             if (usingTimeLengthChart == undefined) {
                 return;
             }
+
             usingTimeLengthChart.showLoading({
                 text: "数据读取中...",
                 effect: "whirling",
@@ -71,7 +86,8 @@
                     fontSize: 20
                 }
             });
-            time = "2016-1-12";//es硬件条件更不上，暂时的解决方法
+            console.log("数据请求中。。。。")
+            //time = "2016-1-12";//es硬件条件更不上，暂时的解决方法
             $http.get(URL + "timeOfUsingAnalysis?time=" + time + "&cm=" + cm + "&av=" + av).success(function (data) {
                 usingTimeLengthChart.hideLoading();
                 var i = 0;
@@ -83,11 +99,11 @@
                 if ($scope.isContrast) {
                     option.series[1].data = $scope.templateData.time_difference;
                     option.series[1].name = $scope.formatTime($scope.dateContrast.startDate) + "-" + $scope.formatTime($scope.dateContrast.endDate);
-                    option.legend.data = [$scope.formatTime($scope.date.startDate) + "-" + $scope.formatTime($scope.date.endDate), $scope.formatTime($scope.dateContrast.startDate) + "-" + $scope.formatTime($scope.dateContrast.endDate)];
+                    option.legend.data = [$scope.formatTime($scope.date_time.startDate) + "-" + $scope.formatTime($scope.date_time.endDate), $scope.formatTime($scope.dateContrast.startDate) + "-" + $scope.formatTime($scope.dateContrast.endDate)];
                 } else {
 
-                    option.series[0].name = $scope.formatTime($scope.date.startDate) + "-" + $scope.formatTime($scope.date.endDate);
-                    option.legend.data = [$scope.formatTime($scope.date.startDate) + "-" + $scope.formatTime($scope.date.endDate)];
+                    option.series[0].name = $scope.formatTime($scope.date_time.startDate) + "-" + $scope.formatTime($scope.date_time.endDate);
+                    option.legend.data = [$scope.formatTime($scope.date_time.startDate) + "-" + $scope.formatTime($scope.date_time.endDate)];
                     option.series[0].data = $scope.templateData.time_difference;
                     option.xAxis[0].data = $scope.templateData.time;
                 }
@@ -117,14 +133,17 @@
             ],
             function (ec) {
                 usingTimeLengthChart = ec.init(document.getElementById('usingTimeLengthChart'));
-
                 option = {
-
-                    //title: {
-                    //    text: '人均使用时长',
-                    //    x: 'center'
-                    //
-                    //},
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: false, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
                     legend: {
                         data: []
                     },
@@ -222,10 +241,11 @@
                         }
                     ]
                 };
-
                 usingTimeLengthChart.setOption(option);
-                $scope.getUsingTimeLengthData($scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate), $scope.templateCM, $scope.templateAV);
+                $scope.getUsingTimeLengthData($scope.formatTime($scope.date_time.startDate) + "," + $scope.formatTime($scope.date_time.endDate), $scope.templateCM, $scope.templateAV);
             });
+
+
         $scope.opts = {
             locale: {
                 applyClass: 'btn-green',
@@ -246,9 +266,9 @@
                 '30天': [moment().subtract(29, 'days'), moment()]
             }
         };
-        $scope.$watch('date', function (newDate) {
-            var date1 = new Date($scope.formatTime(newDate.startDate));  //开始时间
-            var date2 = new Date($scope.formatTime(newDate.endDate));    //结束时间
+        $scope.$watch('date_time', function (newDate) {
+            var date1 = newDate.startDate._d;  //开始时间
+            var date2 = newDate.endDate._d;    //结束时间
             var date3 = date2.getTime() - date1.getTime(); //时间差的毫秒数
             //计算出相差天数
             var days = Math.floor(date3 / (24 * 3600 * 1000));
@@ -270,12 +290,12 @@
         $scope.chooseCM_time = function (cm, id) {
             $scope.changeActive("cm", id, 6);
             $scope.templateCM = cm;
-            $scope.getUsingTimeLengthData($scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate), cm, $scope.templateAV);
+            $scope.getUsingTimeLengthData($scope.getTimes(), cm, $scope.templateAV);
         };
         $scope.chooseVersion_time = function (av, id) {
             $scope.changeActive("av", id, 7);
             $scope.templateAV = av;
-            $scope.getUsingTimeLengthData($scope.formatTime($scope.date.startDate) + "," + $scope.formatTime($scope.date.endDate), $scope.templateCM, av);
+            $scope.getUsingTimeLengthData($scope.getTimes(), $scope.templateCM, av);
         };
 
         //对时间数据方法
@@ -284,15 +304,12 @@
                 $scope.isContrast = false;
                 document.getElementById("contrastHtml").style.display = "none";
                 document.getElementById("btn_createContrastData").textContent = "按时间对比";
-                //console.log(option.legend)
                 //option.legend.selected[$scope.formatTime($scope.dateContrast.startDate) + "-" + $scope.formatTime($scope.dateContrast.endDate)] = false;
-                option.legend.data = [$scope.formatTime($scope.date.startDate) + "-" + $scope.formatTime($scope.date.endDate)];
+                option.legend.data = [$scope.formatTime($scope.date_time.startDate) + "-" + $scope.formatTime($scope.date_time.endDate)];
                 option.series = option.series[0];
 
 
                 usingTimeLengthChart.setOption(option);
-                console.log(option.legend.data)
-                console.log(option)
                 $scope.dateContrast = {
                     startDate: moment().subtract(2, "days"),
                     endDate: moment().subtract(1, "days")
@@ -322,14 +339,17 @@
                 time += $scope.formatTime(dataTem) + ",";
             }
             time += $scope.formatTime(newDate.endDate);
+
             if ($scope.isContrast) {
                 $scope.getUsingTimeLengthData(time, $scope.templateCM, $scope.templateAV);
-            }else{
-                if (usingTimeLengthChart == undefined) {
-                    return;
-                }
-                option.legend.data = [$scope.formatTime($scope.date.startDate) + "-" + $scope.formatTime($scope.date.endDate)];
-                usingTimeLengthChart.setOption(option);
+
+            } else {
+                return;
+                //if (usingTimeLengthChart == undefined) {
+                //    return;
+                //}
+                //option.legend.data = [$scope.formatTime($scope.date.startDate) + "-" + $scope.formatTime($scope.date.endDate)];
+                //usingTimeLengthChart.setOption(option);
             }
         }, false);
     }

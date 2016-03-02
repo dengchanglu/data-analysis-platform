@@ -55,8 +55,8 @@
         <div class="control-bar clearfix bg-iframe panel" id="ControlBar">
             <div class="l date-select-bar" id="DateSelectBar">
                 <!--<a href="#0" class="cur">今天</a><a href="#-1" class="">昨天</a>-->
-                <a class="cur">最近7天</a><a
-                    class="">最近30天</a><a class="">最近60天</a></div>
+                <a class="cur" id="appSurvey_7" ng-click="getAnalysisDataByTime(7)">最近7天</a><a
+                    class="" id="appSurvey_30" ng-click="getAnalysisDataByTime(30)">最近30天</a><a class="" id="appSurvey_60" ng-click="getAnalysisDataByTime(60)">最近60天</a></div>
         </div>
 
         <div class="panel panel-default" style="margin-left: 20px;margin-right: 20px;margin-top: 8px">
@@ -94,7 +94,7 @@
                 </div>
                 <div id="Entrance" class="page-list-container r">
                     <div class="title clearfix">
-                        <div class="r"><a class="button" href="/web/visit/page?appId=19"><span>查看全部</span></a></div>
+                        <div class="r"><a class="button" ui-sref=".accessPage" ng-click="changeInclude()"><span>查看全部</span></a></div>
                         <div class="l section-title">访问页面：</div>
                     </div>
                     <table class="page-list">

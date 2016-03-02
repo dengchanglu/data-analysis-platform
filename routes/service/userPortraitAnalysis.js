@@ -591,65 +591,41 @@ var upAnalysis = {
                             "field": "_index"
                         },
                         "aggs": {
-                            "DD_sr": {
+                            "activeUserCount": {
+                                "cardinality": {
+                                    "field": "sessionkey"
+                                }
+                            },
+                            "DD_IP_count": {
                                 "terms": {
-                                    "field": "sr",
-                                    "size": "0"
+                                    "field": "sessionkey"
                                 },
                                 "aggs": {
-                                    "DD_ne": {
-                                        "terms": {
-                                            "field": "ne",
-                                            "size": "0"
+                                    "userCount": {
+                                        "filters": {
+                                            "filters": {
+                                                "hasAdd": {
+                                                    "term": {
+                                                        "btn": "注册"
+                                                    }
+                                                },
+                                                "all": {}
+                                            }
                                         },
                                         "aggs": {
-                                            "DD_co": {
+                                            "term_time": {
                                                 "terms": {
-                                                    "field": "co",
-                                                    "size": "0"
+                                                    "field": "time"
                                                 },
                                                 "aggs": {
-                                                    "activeUserCount": {
-                                                        "cardinality": {
-                                                            "field": "ip"
+                                                    "time_max": {
+                                                        "max": {
+                                                            "field": "time"
                                                         }
                                                     },
-                                                    "DD_IP_count": {
-                                                        "terms": {
-                                                            "field": "ip"
-                                                        },
-                                                        "aggs": {
-                                                            "userCount": {
-                                                                "filters": {
-                                                                    "filters": {
-                                                                        "hasAdd": {
-                                                                            "term": {
-                                                                                "btn": "注册"
-                                                                            }
-                                                                        },
-                                                                        "all": {}
-                                                                    }
-                                                                },
-                                                                "aggs": {
-                                                                    "term_time": {
-                                                                        "terms": {
-                                                                            "field": "time"
-                                                                        },
-                                                                        "aggs": {
-                                                                            "time_max": {
-                                                                                "max": {
-                                                                                    "field": "time"
-                                                                                }
-                                                                            },
-                                                                            "time_min": {
-                                                                                "min": {
-                                                                                    "field": "time"
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
+                                                    "time_min": {
+                                                        "min": {
+                                                            "field": "time"
                                                         }
                                                     }
                                                 }
@@ -658,6 +634,8 @@ var upAnalysis = {
                                     }
                                 }
                             }
+
+
                         }
                     }
                 }
@@ -692,77 +670,53 @@ var upAnalysis = {
                 for (i = 0; i < index_term.length; i++) {
                     var time_sum = 0;
                     var active_user_sum = 0;
-                    var DD_sr = index_term[i].DD_sr.buckets;
-                    if (DD_sr.length == 0) {
-                        continue;
-                    }
-                    for (var j = 0; j < DD_sr.length; j++) {
-                        var DD_ne = DD_sr[j].DD_ne.buckets;
 
-                        if (DD_ne.length == 0) {
-                            continue;
+                    var DD_IP = index_term[0].DD_IP_count.buckets;
+                    for (var p = 0; p < DD_IP.length; p++) {
+                        var activeUserCount = DD_IP[p].userCount.buckets.all.term_time.buckets;
+                        if (activeUserCount.length != 0) {
+                            time_sum += activeUserCount[0].time_max.value - activeUserCount[0].time_min.value;
+                            active_user_sum += 1;
+                            if (time_sum >= 0 && time_sum < (4 * 1000)) {
+                                s0_s4_activeUser += 1;
+                            } else if (time_sum >= (4 * 1000) && time_sum < (10 * 1000)) {
+                                s4_s10_activeUser += 1;
+                            } else if (time_sum >= (10 * 1000) && time_sum < (30 * 1000)) {
+                                s10_s30_activeUser += 1;
+                            } else if (time_sum >= (30 * 1000) && time_sum < (60 * 1000)) {
+                                s30_s60_activeUser += 1;
+                            } else if (time_sum >= (60 * 1000) && time_sum < (3 * 60 * 1000)) {
+                                m1_m3_activeUser += 1;
+                            } else if (time_sum >= (3 * 60 * 1000) && time_sum < (10 * 60 * 1000)) {
+                                m3_m10_activeUser += 1;
+                            } else if (time_sum >= (10 * 60 * 1000) && time_sum < (30 * 60 * 1000)) {
+                                m10_m30_activeUser += 1;
+                            } else {
+                                m30_more_activeUser += 1;
+                            }
                         }
-                        for (var k = 0; k < DD_ne.length; k++) {
-                            var DD_co = DD_ne[k].DD_co.buckets;
-
-                            if (DD_co.length == 0) {
-                                continue;
+                        var newUserCount = DD_IP[p].userCount.buckets.hasAdd.term_time.buckets;
+                        if (newUserCount.length != 0) {
+                            time_sum += newUserCount[0].time_max.value - newUserCount[0].time_min.value;
+                            newUser_all_sum += 1;
+                            if (time_sum >= 0 && time_sum < (4 * 1000)) {
+                                s0_s4_newUser += 1;
+                            } else if (time_sum >= (4 * 1000) && time_sum < (10 * 1000)) {
+                                s4_s10_newUser += 1;
+                            } else if (time_sum >= (10 * 1000) && time_sum < (30 * 1000)) {
+                                s10_s30_newUser += 1;
+                            } else if (time_sum >= (30 * 1000) && time_sum < (60 * 1000)) {
+                                s30_s60_newUser += 1;
+                            } else if (time_sum >= (60 * 1000) && time_sum < (3 * 60 * 1000)) {
+                                m1_m3_newUser += 1;
+                            } else if (time_sum >= (3 * 60 * 1000) && time_sum < (10 * 60 * 1000)) {
+                                m3_m10_newUser += 1;
+                            } else if (time_sum >= (10 * 60 * 1000) && time_sum < (30 * 60 * 1000)) {
+                                m10_m30_newUser += 1;
+                            } else {
+                                m30_more_newUser += 1;
                             }
-                            for (var l = 0; l < DD_co.length; l++) {
-                                //active_user_sum += DD_co[l].activeUserCount.value;
-                                var DD_IP = DD_co[l].DD_IP_count.buckets;
 
-                                if (DD_IP.length == 0) {
-                                    continue;
-                                }
-                                for (var p = 0; p < DD_IP.length; p++) {
-                                    var activeUserCount = DD_IP[p].userCount.buckets.all.term_time.buckets;
-                                    if (activeUserCount.length != 0) {
-                                        time_sum += activeUserCount[0].time_max.value - activeUserCount[0].time_min.value;
-                                        active_user_sum += 1;
-                                        if (time_sum >= 0 && time_sum < (4 * 1000)) {
-                                            s0_s4_activeUser += 1;
-                                        } else if (time_sum >= (4 * 1000) && time_sum < (10 * 1000)) {
-                                            s4_s10_activeUser += 1;
-                                        } else if (time_sum >= (10 * 1000) && time_sum < (30 * 1000)) {
-                                            s10_s30_activeUser += 1;
-                                        } else if (time_sum >= (30 * 1000) && time_sum < (60 * 1000)) {
-                                            s30_s60_activeUser += 1;
-                                        } else if (time_sum >= (60 * 1000) && time_sum < (3 * 60 * 1000)) {
-                                            m1_m3_activeUser += 1;
-                                        } else if (time_sum >= (3 * 60 * 1000) && time_sum < (10 * 60 * 1000)) {
-                                            m3_m10_activeUser += 1;
-                                        } else if (time_sum >= (10 * 60 * 1000) && time_sum < (30 * 60 * 1000)) {
-                                            m10_m30_activeUser += 1;
-                                        } else {
-                                            m30_more_activeUser += 1;
-                                        }
-                                    }
-                                    var newUserCount = DD_IP[p].userCount.buckets.hasAdd.term_time.buckets;
-                                    if (newUserCount.length != 0) {
-                                        time_sum += newUserCount[0].time_max.value - newUserCount[0].time_min.value;
-                                        newUser_all_sum += 1;
-                                        if (time_sum >= 0 && time_sum < (4 * 1000)) {
-                                            s0_s4_newUser += 1;
-                                        } else if (time_sum >= (4 * 1000) && time_sum < (10 * 1000)) {
-                                            s4_s10_newUser += 1;
-                                        } else if (time_sum >= (10 * 1000) && time_sum < (30 * 1000)) {
-                                            s10_s30_newUser += 1;
-                                        } else if (time_sum >= (30 * 1000) && time_sum < (60 * 1000)) {
-                                            s30_s60_newUser += 1;
-                                        } else if (time_sum >= (60 * 1000) && time_sum < (3 * 60 * 1000)) {
-                                            m1_m3_newUser += 1;
-                                        } else if (time_sum >= (3 * 60 * 1000) && time_sum < (10 * 60 * 1000)) {
-                                            m3_m10_newUser += 1;
-                                        } else if (time_sum >= (10 * 60 * 1000) && time_sum < (30 * 60 * 1000)) {
-                                            m10_m30_newUser += 1;
-                                        } else {
-                                            m30_more_newUser += 1;
-                                        }
-
-                                    }
-                                }
-                            }
                         }
                     }
                     dataForm.push({

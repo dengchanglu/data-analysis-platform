@@ -124,6 +124,16 @@
                 // 基于准备好的dom，初始化echarts图表}
                 pageView = ec.init(document.getElementById('pageView'));
                 option = {
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: false, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
                     title: {
                         text: '人均访问页面数',
                         x: 'center'

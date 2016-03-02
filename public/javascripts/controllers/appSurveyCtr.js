@@ -12,6 +12,7 @@
             dateTime: [],
             series: []
         };
+        $scope.timeRangeType = 0;
         $scope.pageData = [];
         $scope.dateTime = "2016-2-25";
         var option;
@@ -43,7 +44,7 @@
         $scope.timeRangeAnalysis = function (analysisType) {
             var url = URL;
             var legend = "";
-
+            $scope.timeRangeType = analysisType;
             switch (analysisType) {
                 case 0:
                     url += "appSurvey_timeRange_activeUser?time=" + $scope.dateTime;
@@ -126,8 +127,13 @@
                         containLabel: true
                     },
                     toolbox: {
-                        feature: {
-                            saveAsImage: {}
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: false, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
                         }
                     },
                     xAxis: [
@@ -158,7 +164,26 @@
             document.getElementById("key_app_" + index).setAttribute("class", "current");
             $scope.timeRangeAnalysis(index);
         };
-
+        $scope.areaAnalysis = function () {
+            if (areaOption == undefined) {
+                return;
+            }
+            $http.get(URL + "appSurvey_areaAnalysis?time=" + $scope.getTimes(1)).success(function (data) {
+                var legend_area = [];
+                areaOption.series[0].data = [];
+                for (var i = 0; i < data.length; i++) {
+                    legend_area.push(data[i].city);
+                    areaOption.series[0].data.push({
+                        value: data[i].start_count,
+                        name: data[i].city
+                    });
+                }
+                areaOption.legend.data = legend_area;
+                appSurvey_areaChart.setOption(areaOption);
+            }).error(function (data, status, headers, config) {
+                //document.getElementById("errorShow").innerHTML = "链接错误，请重新刷新一下！"
+            });
+        };
         require(
             [
                 'echarts',
@@ -220,26 +245,7 @@
                 //appSurvey_areaChart.setOption(areaOption);
                 $scope.areaAnalysis();
             });
-        $scope.areaAnalysis = function () {
-            if (areaOption == undefined) {
-                return;
-            }
-            $http.get(URL + "appSurvey_areaAnalysis?time=" + $scope.getTimes(1)).success(function (data) {
-                var legend_area = [];
-                areaOption.series[0].data = [];
-                for (var i = 0; i < data.length; i++) {
-                    legend_area.push(data[i].city);
-                    areaOption.series[0].data.push({
-                        value: data[i].start_count,
-                        name: data[i].city
-                    });
-                }
-                areaOption.legend.data = legend_area;
-                appSurvey_areaChart.setOption(areaOption);
-            }).error(function (data, status, headers, config) {
-                //document.getElementById("errorShow").innerHTML = "链接错误，请重新刷新一下！"
-            });
-        };
+
 
         $scope.pageAnalysis = function () {
             $http.get(URL + "appSurvey_pageAnalysis?time=" + $scope.getTimes(1)).success(function (data) {
@@ -266,5 +272,13 @@
             });
         };
         $scope.pageAnalysis();
+        $scope.getAnalysisDataByTime = function (time) {
+            document.getElementById("appSurvey_7").setAttribute("class", "");
+            document.getElementById("appSurvey_30").setAttribute("class", "");
+            document.getElementById("appSurvey_60").setAttribute("class", "");
+            document.getElementById("appSurvey_" + time).setAttribute("class", "cur");
+            $scope.dateTime = $scope.getTimes(time);
+            $scope.timeRangeAnalysis($scope.timeRangeType);
+        }
     }
 })();

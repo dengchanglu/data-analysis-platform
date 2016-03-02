@@ -26,7 +26,7 @@ var dataAP = angular.module('dataAP', ['ui.router', 'ipCookie', 'ui.bootstrap', 
     })
 
 }).factory('URL', function () {
-    return "http://192.168.1.32:3000/api/";
+    return "http://192.168.2.47:3000/api/";
 });
 dataAP.config(function ($stateProvider, $urlRouterProvider) {
 
